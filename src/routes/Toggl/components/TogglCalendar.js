@@ -10,9 +10,6 @@ BigCalendar.setLocalizer(
   BigCalendar.globalizeLocalizer(globalize)
 );
 
-
-import testevents from './testevents'
-
 import type { TimeEntriesObject } from '../interfaces/toggl'
 
 type Props = {

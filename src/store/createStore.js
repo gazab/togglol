@@ -1,5 +1,7 @@
 import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'react-router-redux'
+import promiseMiddleware from 'redux-promise-middleware';
+import combineActionsMiddleware from 'redux-combine-actions';
 import thunk from 'redux-thunk'
 import makeRootReducer from './reducers'
 
@@ -7,7 +9,7 @@ export default (initialState = {}, history) => {
   // ======================================================
   // Middleware Configuration
   // ======================================================
-  const middleware = [thunk, routerMiddleware(history)]
+  const middleware = [thunk, routerMiddleware(history), promiseMiddleware(), combineActionsMiddleware]
 
   // ======================================================
   // Store Enhancers

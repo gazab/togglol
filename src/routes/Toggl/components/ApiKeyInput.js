@@ -8,8 +8,6 @@ class ApiKeyInput extends React.Component {
     constructor(props) {
         super(props);
         
-        console.log(JSON.parse(localStorage.getItem(state_key)))
-        
         if(localStorage.getItem(state_key) == null) {
             this.state = {
             value: ''
@@ -24,17 +22,24 @@ class ApiKeyInput extends React.Component {
             <form className="form-inline">
                 <div className="form-group">
                     <label for="apikeyInput" className="sr-only">Password</label>
-                    <input value={this.state.value} style={inputStyle} pattern=".{32,32}" maxlength="32" id="apikeyInput" placeholder="Toggl API key" className="form-control" type="text" onChange={this.handleChange.bind(this)}/> 
+                    <input value={this.state.value} style={inputStyle} maxlength="32" id="apikeyInput" placeholder="Toggl API key" className="form-control" type="text" onChange={this.handleChange.bind(this)}/> 
                 </div>
-                <button className="btn btn-default" onClick={this.handlePress.bind(this)}>Use API key</button>
+                <button className="btn btn-default" onClick={this.handlePress.bind(this)}>Set API key</button>
+                <button className="btn btn-default" onClick={this.handleLoadPress.bind(this)}>Load user info</button>
             </form>
             );
     }
     
     handlePress(event) {
         event.preventDefault();
-        this.props.onSet(this.state.value)
+        //this.props.onSet(this.state.value);
+        this.props.onSet(this.state.value);
         localStorage.setItem(state_key, JSON.stringify(this.state));
+    }
+
+    handleLoadPress(event) {
+        event.preventDefault();
+        this.props.onLoad();
     }
     
     handleChange(event) {
@@ -43,7 +48,8 @@ class ApiKeyInput extends React.Component {
 }
 
 ApiKeyInput.propTypes = {  
-  onSet: React.PropTypes.func.isRequired
+  onSet: React.PropTypes.func.isRequired,
+  onLoad: React.PropTypes.func.isRequired
 }
 
 var inputStyle = {

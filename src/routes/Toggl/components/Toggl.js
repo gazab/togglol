@@ -10,12 +10,21 @@ type Props = {
   time_entries: Array<TimeEntriesObject>,
   user_loaded: boolean,
   fetchTimeEntries: Function,
-  setApiKey: Function
+  fetchUserInfo: Function,
+  setApiKey: Function,
+  setApiKeyAndFetchUserInfo: Function,
+  getUserInfo: Function
 }
 
 class Toggl extends React.Component {
   constructor(props) {
     super(props);
+  }
+
+  setApiKeyAndFetchUserInfo(api_key) {
+    console.log("Set: " + api_key);
+    console.log(this);
+    //this.setApiKey({api_key: api_key});
   }
   
   render() {
@@ -23,7 +32,7 @@ class Toggl extends React.Component {
           return(<TogglCalendar time_entries={this.props.time_entries} fetchTimeEntries={this.props.fetchTimeEntries}/>);
         }
         else {
-          return (<ApiKeyInput onSet={this.props.setApiKey}/>)
+          return (<ApiKeyInput onSet={this.props.setApiKey} onLoad={this.props.fetchUserInfo}/>)
         }
     }
 }

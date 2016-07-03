@@ -10,6 +10,8 @@ import type { TimeEntryObject, TogglStateObject } from '../interfaces/toggl.js'
 
 export const REQUEST_TIME_ENTRIES = 'REQUEST_TIME_ENTRIES'
 export const RECEIVE_TIME_ENTRIES = 'RECEIVE_TIME_ENTRIES'  
+export const GET_USER_INFO = 'GET_USER_INFO'
+export const GET_USER_INFO_FULFILLED = 'GET_USER_INFO_FULFILLED'
 export const REQUEST_USER_INFO = 'REQUEST_USER_INFO'
 export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO'  
 export const SAVE_TIME_ENTRY = 'SAVE_TIME_ENTRY'
@@ -31,7 +33,7 @@ export function requestTimeEntries (start_date: string, end_date: string): Actio
 
 export function requestUserInfo (): Action {  
   return {
-    type: REQUEST_USER_INFO,
+    type: REQUEST_USER_INFO
   }
 }
 
@@ -42,16 +44,16 @@ export function receiveTimeEntries (time_entries: Array<TimeEntryObject>): Actio
   }
 }
 
-export function receiveUserInfo (user_info: Array<ProjectObject>): Action {
+export function getUserInfo (user_info: Array<ProjectObject>): Action {
   return {
-    type: RECEIVE_USER_INFO,
+    type: GET_USER_INFO,
     payload: user_info
   }
 }
 
 export function fetchTimeEntries(start: string, end: string): Function {  
   return (dispatch: Function, getState: Function): Promise => {
-    dispatch(requestTimeEntries("start", "end"))
+    dispatch(requestTimeEntries(start, end))
     
     return fetch('https://www.toggl.com/api/v8/time_entries?start_date=' + start + '&end_date=' + end, {
         headers: buildRequestHeader(getState())
@@ -63,16 +65,25 @@ export function fetchTimeEntries(start: string, end: string): Function {
 
 export function fetchUserInfo(): Function {
   return (dispatch: Function, getState: Function): Promise => {
-    dispatch(requestUserInfo())
-    
     return fetch('https://www.toggl.com/api/v8/me?with_related_data=true', {
         headers: buildRequestHeader(getState())
     })
-      .then(response => response.json())
-      .then(user_data => console.log(user_data) /*dispatch(receiveUserInfo(user_data.projects))*/)
+      .then(response => dispatch(getUserInfo(response.json())))
   }
 }
 
+export function fetchUserInfoTwo(): Function {
+  console.log("fetchUserInfo");
+  return (resolve: Function, getState: Function): Promise => {
+    console.log("asd")
+    fetch('https://www.toggl.com/api/v8/me?with_related_data=true', {
+        headers: buildRequestHeader(getState())
+      })
+      .then(response => response.json())
+      .then(user_info => resolve(user_info))
+    }
+}
+  
 function buildRequestHeader(state: TogglStateObject) {
     // Construct header
     var api_key = state.toggl.api_key;
@@ -88,11 +99,40 @@ export function setApiKey(api_key: string): Action {
   }
 }
 
+export function getUserInfoTest(): Action {
+    return {
+        type: 'USER_INFO_GET_PENDING',
+        payload: {
+            promise: fetchUserInfoOld()
+        }
+    };
+}
+
+export function setApiKeyAndFetchUserInfo(api_key: string): Action {
+  return {
+        types: [
+            'COMBINED_ACTION_START',
+            'COMBINED_ACTION_SUCCESS',
+            'COMBINED_ACTION_ERROR'
+        ],
+
+        // Set true for sequential actions
+        sequence: false,
+
+        // Pass actions in array
+        payload: [setApiKey.bind(null, api_key), fetchUserInfoOld]
+    };
+}
+
 export const actions = {  
   requestTimeEntries,
   receiveTimeEntries,
+  requestUserInfo,
   fetchTimeEntries,
-  setApiKey
+  getUserInfo,
+  setApiKey,
+  setApiKeyAndFetchUserInfo,
+  fetchUserInfo
 }
 
 // ------------------------------------
@@ -109,7 +149,7 @@ const TOGGL_ACTION_HANDLERS = {
   [RECEIVE_TIME_ENTRIES]: (state: TogglStateObject, action: {payload: Array<TimeEntryObject>}): TogglStateObject => {
     return ({ ...state, time_entries: action.payload, fetching: false })
   },
-  [RECEIVE_USER_INFO]: (state: TogglStateObject, action: {payload: Array<ProjectObject>}): TogglStateObject => {
+  [GET_USER_INFO_FULFILLED]: (state: TogglStateObject, action: {payload: Array<ProjectObject>}): TogglStateObject => {
     return ({ ...state, projects: action.payload, fetching: false, user_loaded: true })
   },
   [SET_API_KEY]: (state: TogglStateObject, action: {payload: string}): TogglStateObject => {
