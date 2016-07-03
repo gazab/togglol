@@ -150,7 +150,7 @@ const TOGGL_ACTION_HANDLERS = {
     return ({ ...state, time_entries: action.payload, fetching: false })
   },
   [GET_USER_INFO_FULFILLED]: (state: TogglStateObject, action: {payload: Array<ProjectObject>}): TogglStateObject => {
-    return ({ ...state, projects: action.payload, fetching: false, user_loaded: true })
+    return ({ ...state, projects: action.payload.data.projects, fetching: false, user_loaded: true })
   },
   [SET_API_KEY]: (state: TogglStateObject, action: {payload: string}): TogglStateObject => {
     return ({ ...state, api_key: action.payload })
