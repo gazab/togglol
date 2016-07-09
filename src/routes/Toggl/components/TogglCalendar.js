@@ -11,9 +11,11 @@ BigCalendar.setLocalizer(
 );
 
 import type { TimeEntriesObject } from '../interfaces/toggl'
+import type { ProjectObject } from '../interfaces/toggl'
 
 type Props = {
     time_entries: Array<TimeEntriesObject>,
+    projects: Array<ProjectObject>,
     fetchTimeEntries: Function,
     // createTimeEntry: Function
 }
@@ -34,6 +36,7 @@ var TogglCalendar = React.createClass({
     },
     propTypes: {
         time_entries: React.PropTypes.array.isRequired,
+        //projects: React.PropTypes.array.isRequired,
         fetchTimeEntries: React.PropTypes.func.isRequired
         //createTimeEntry: React.PropTypes.func.isRequired
     },
@@ -66,10 +69,21 @@ var TogglCalendar = React.createClass({
             break;    
         default:
     }
-    console.log(startDate);
-    console.log(endDate);
-    
     this.props.fetchTimeEntries(startDate.toISOString(), endDate.toISOString());  
+    },
+    eventStyleGetter: function(event, start, end, isSelected) {
+        var backgroundColor = '#' + 'F00';
+        var style = {
+            backgroundColor: backgroundColor,
+            borderRadius: '0px',
+            opacity: 0.8,
+            color: 'black',
+            border: '0px',
+            display: 'block'
+        };
+        return {
+            style: style
+        };
     },
     render: function() {
         var eventList = this.props.time_entries.map(function(entry) {
@@ -78,9 +92,11 @@ var TogglCalendar = React.createClass({
             event["end"] = new Date(entry.stop);
             event["allDay"] = false;
             event["title"] = entry.description || "No description";
+            event["pid"] = entry.pid;
             
             return event;
         });
+        console.log(eventList);
         
         // Create shown time span
         var minTime = new Date(2016,4,2, 6, 0, 0, 0);
@@ -96,6 +112,7 @@ var TogglCalendar = React.createClass({
                     onNavigate={this.fetchShownEntries}
                     onView={this.changeView}
                     selectable={true}
+                    eventPropGetter={(this.eventStyleGetter)}
                  />
              );
     }

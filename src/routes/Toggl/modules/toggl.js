@@ -12,6 +12,8 @@ export const REQUEST_TIME_ENTRIES = 'REQUEST_TIME_ENTRIES'
 export const RECEIVE_TIME_ENTRIES = 'RECEIVE_TIME_ENTRIES'  
 export const GET_USER_INFO = 'GET_USER_INFO'
 export const GET_USER_INFO_FULFILLED = 'GET_USER_INFO_FULFILLED'
+export const GET_TIME_ENTRIES = 'GET_TIME_ENTRIES'
+export const GET_TIME_ENTRIES_FULFILLED = 'GET_TIME_ENTRIES_FULFILLED'
 export const REQUEST_USER_INFO = 'REQUEST_USER_INFO'
 export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO'  
 export const SAVE_TIME_ENTRY = 'SAVE_TIME_ENTRY'
@@ -44,6 +46,13 @@ export function receiveTimeEntries (time_entries: Array<TimeEntryObject>): Actio
   }
 }
 
+export function getTimeEntries (time_entries: Array<TimeEntryObject>): Action {
+  return {
+    type: GET_TIME_ENTRIES,
+    payload: time_entries
+  }
+}
+
 export function getUserInfo (user_info: Array<ProjectObject>): Action {
   return {
     type: GET_USER_INFO,
@@ -51,15 +60,23 @@ export function getUserInfo (user_info: Array<ProjectObject>): Action {
   }
 }
 
-export function fetchTimeEntries(start: string, end: string): Function {  
+export function fetchTimeEntries2(start: string, end: string): Function {  
   return (dispatch: Function, getState: Function): Promise => {
     dispatch(requestTimeEntries(start, end))
     
     return fetch('https://www.toggl.com/api/v8/time_entries?start_date=' + start + '&end_date=' + end, {
         headers: buildRequestHeader(getState())
     })
-      .then(response => response.json())
-      .then(time_entries => dispatch(receiveTimeEntries(time_entries)))
+      .then(response => dispatch(receiveTimeEntries(response.json())))
+  }
+}
+
+export function fetchTimeEntries(start: string, end: string): Function {
+  return (dispatch: Function, getState: Function): Promise => {
+    return fetch('https://www.toggl.com/api/v8/time_entries?start_date=' + start + '&end_date=' + end, {
+        headers: buildRequestHeader(getState())
+    })
+      .then(response => dispatch(getTimeEntries(response.json())))
   }
 }
 
@@ -132,7 +149,8 @@ export const actions = {
   getUserInfo,
   setApiKey,
   setApiKeyAndFetchUserInfo,
-  fetchUserInfo
+  fetchUserInfo,
+  getTimeEntries
 }
 
 // ------------------------------------
@@ -149,6 +167,9 @@ const TOGGL_ACTION_HANDLERS = {
   [RECEIVE_TIME_ENTRIES]: (state: TogglStateObject, action: {payload: Array<TimeEntryObject>}): TogglStateObject => {
     return ({ ...state, time_entries: action.payload, fetching: false })
   },
+  [GET_TIME_ENTRIES_FULFILLED]: (state: TogglStateObject, action: {payload: Array<TimeEntryObject>}): TogglStateObject => {
+    return ({ ...state, time_entries: action.payload, fetching: false })
+  },
   [GET_USER_INFO_FULFILLED]: (state: TogglStateObject, action: {payload: Array<ProjectObject>}): TogglStateObject => {
     return ({ ...state, projects: action.payload.data.projects, fetching: false, user_loaded: true })
   },
@@ -161,7 +182,7 @@ const TOGGL_ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 
-const initialState: TogglStateObject = { user_loaded: false, fetching: false, time_entries: [], api_key: '' }  
+const initialState: TogglStateObject = { user_loaded: false, fetching: false, time_entries: [], api_key: '', projects: [] }  
 export default function togglReducer (state: TogglStateObject = initialState, action: Action): TogglStateObject {  
   const handler = TOGGL_ACTION_HANDLERS[action.type]
 

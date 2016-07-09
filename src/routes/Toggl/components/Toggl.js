@@ -4,10 +4,13 @@ import classes from './Toggl.scss'
 import TogglCalendar from './TogglCalendar'
 import ApiKeyInput from './ApiKeyInput'
 
-import type { TimeEntriesObject } from '../interfaces/toggl'
+import type { TimeEntryObject } from '../interfaces/toggl'
+import type { ProjectObject } from '../interfaces/toggl'
+
 
 type Props = {  
-  time_entries: Array<TimeEntriesObject>,
+  time_entries: Array<TimeEntryObject>,
+  projects: Array<ProjectObject>,
   user_loaded: boolean,
   fetchTimeEntries: Function,
   fetchUserInfo: Function,
@@ -29,7 +32,7 @@ class Toggl extends React.Component {
   
   render() {
         if(this.props.user_loaded) {
-          return(<TogglCalendar time_entries={this.props.time_entries} fetchTimeEntries={this.props.fetchTimeEntries}/>);
+          return(<TogglCalendar projects={this.props.projects} time_entries={this.props.time_entries} fetchTimeEntries={this.props.fetchTimeEntries}/>);
         }
         else {
           return (<ApiKeyInput onSet={this.props.setApiKey} onLoad={this.props.fetchUserInfo}/>)
@@ -39,6 +42,7 @@ class Toggl extends React.Component {
 
 Toggl.propTypes = {  
   time_entries: React.PropTypes.array.isRequired,
+  projects: React.PropTypes.array.isRequired,
   fetchTimeEntries: React.PropTypes.func.isRequired,
   setApiKey: React.PropTypes.func.isRequired
 }
