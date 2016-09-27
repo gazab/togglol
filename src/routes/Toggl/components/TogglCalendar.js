@@ -5,6 +5,8 @@ import classes from './Toggl.scss'
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
+import Modal from 'boron/WaveModal';
+
 import moment from 'moment';
 BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(moment)
@@ -80,6 +82,15 @@ var TogglCalendar = React.createClass({
         });
         return retVal;
     },
+    showModal: function(slotInfo){
+        this.refs.modal.show();
+    },
+    hideModal: function(){
+        this.refs.modal.hide();
+    },
+    callback: function(event){
+        console.log(event);
+    },
     render: function() {
         var that = this;        
         var eventList = this.props.time_entries.map(function(entry) {
@@ -98,7 +109,8 @@ var TogglCalendar = React.createClass({
         var maxTime = new Date(2000,1,1, 22, 0, 0, 0); 
         
         return (
-            <BigCalendar 
+            <div>
+                <BigCalendar 
                     culture="en-GB"
                     events={eventList}
                     defaultView={this.state.view}
@@ -107,8 +119,14 @@ var TogglCalendar = React.createClass({
                     onNavigate={this.fetchShownEntries}
                     onView={this.changeView}
                     selectable={true}
+                    onSelectSlot={(slotInfo) => this.showModal(slotInfo)}
                     eventPropGetter={(this.eventStyleGetter)}
                  />
+                 <Modal ref="modal" keyboard={this.callback}>
+                    <h2>Add time entry</h2>
+                    <button onClick={this.hideModal}>Close</button>
+                </Modal>
+            </div>
              );
     }
 });
