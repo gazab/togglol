@@ -5,9 +5,9 @@ import classes from './Toggl.scss'
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 
-import globalize from 'globalize';
+import moment from 'moment';
 BigCalendar.setLocalizer(
-  BigCalendar.globalizeLocalizer(globalize)
+  BigCalendar.momentLocalizer(moment)
 );
 
 import type { TimeEntriesObject } from '../interfaces/toggl'
@@ -48,36 +48,18 @@ var TogglCalendar = React.createClass({
         this.fetchShownEntries(this.state.date, view);
     },
     fetchShownEntries: function(start, view) {
-    // Calculate correct start and end date for view
-    // TODO: Clean this mess up
-    let startDate = new Date(start);
-    startDate.setHours(0);
-    startDate.setMinutes(0);
-    startDate.setSeconds(0);
-    this.setState({date: startDate});
-    
-    let endDate = new Date(startDate);
-    switch(view) {
-        case 'week':
-            endDate.setDate(endDate.getDate()+7);
-            break;
-        case 'month':
-            console.log("Month");
-            startDate = new Date(startDate.getFullYear(), startDate.getMonth(), 1);
-            endDate = new Date(startDate);
-            endDate.setMonth(endDate.getMonth() + 1);
-            break;    
-        default:
-    }
-    this.props.fetchTimeEntries(startDate.toISOString(), endDate.toISOString());  
+        // Calculate correct start and end date for view
+        this.setState({date: start});
+        let startDate = moment(start).startOf(view).startOf('day');
+        let endDate = moment(startDate).endOf(view).endOf('day');
+        this.props.fetchTimeEntries(startDate.toISOString(), endDate.toISOString());  
     },
     eventStyleGetter: function(event, start, end, isSelected) {
-        var backgroundColor = '#' + 'F00';
+        console.log(event);
+        var backgroundColor = event.project['hex_color'];
         var style = {
             backgroundColor: backgroundColor,
-            borderRadius: '0px',
             opacity: 0.8,
-            color: 'black',
             border: '0px',
             display: 'block'
         };
@@ -85,22 +67,35 @@ var TogglCalendar = React.createClass({
             style: style
         };
     },
+    getProject: function(id) {
+        let retVal = null;
+
+        this.props.projects.forEach(function(project) {
+            if(project.id == id)
+            {
+                retVal = project;
+                return;
+            }
+            
+        });
+        return retVal;
+    },
     render: function() {
+        var that = this;        
         var eventList = this.props.time_entries.map(function(entry) {
             var event = {};
+            var project = that.getProject(entry.pid);
+            event["project"] = project;
             event["start"] = new Date(entry.start);
             event["end"] = new Date(entry.stop);
             event["allDay"] = false;
-            event["title"] = entry.description || "No description";
-            event["pid"] = entry.pid;
-            
+            event["title"] = project.name;
             return event;
         });
-        console.log(eventList);
         
         // Create shown time span
-        var minTime = new Date(2016,4,2, 6, 0, 0, 0);
-        var maxTime = new Date(2016,4,2, 22, 0, 0, 0); 
+        var minTime = new Date(2000,1,1, 6, 0, 0, 0);
+        var maxTime = new Date(2000,1,1, 22, 0, 0, 0); 
         
         return (
             <BigCalendar 
