@@ -32,14 +32,10 @@ class CreateTimeEntryModal extends React.Component {
             duration: this.getEntryDuration(startDate, endDate)
             });
 
-        console.log("State in showModal:");
-        console.log(this.state);
-
         this.refs.modal.show();
     }  
 
     hideModal(){
-        console.log(this);
         this.refs.modal.hide();
     }
 
@@ -60,12 +56,9 @@ class CreateTimeEntryModal extends React.Component {
 
     getEntryDuration(startDate, endDate) {
         return moment.duration(endDate.diff(startDate)).format("h [hrs], m [min]");
-        //return moment.duration(startDate.diff(endDate)).humanize();
     }
 
     render() {
-        console.log("State in render");
-        console.log(this.state);
         return(
             <Modal ref="modal" keyboard={this.callback}>
                 <h2>Add time entry</h2>
