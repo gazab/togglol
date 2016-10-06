@@ -62,8 +62,9 @@ class CreateTimeEntryModal extends React.Component {
         return(
             <Modal ref="modal" keyboard={this.callback}>
                 <h2>Add time entry</h2>
-                <p>Start: <TimePicker style={{width: 50}} value={this.state.startDate} onChange={(e) => this.changeStartTime(e)} showSecond={false} /></p>
-                <p>End: <TimePicker style={{width: 50}} value={this.state.endDate} onChange={(e) => this.changeEndTime(e)} showSecond={false} /></p>
+                <p>
+                    Time: <TimePicker style={{width: 50}} value={this.state.startDate} onChange={(e) => this.changeStartTime(e)} showSecond={false} /> to <TimePicker style={{width: 50}} value={this.state.endDate} onChange={(e) => this.changeEndTime(e)} showSecond={false} />
+                </p>
                 <p>Duration: {this.state.duration}</p>
                 <button onClick={() => this.hideModal()}>Close</button>
             </Modal>
