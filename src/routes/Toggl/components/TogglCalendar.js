@@ -81,7 +81,8 @@ var TogglCalendar = React.createClass({
         return retVal;
     },
     showModal: function(slotInfo){
-        this.refs.modal.showModal(slotInfo);
+        var data = { projects: this.props.projects, slotInfo: slotInfo }
+        this.refs.modal.showModal(data);
     },
     render: function() {
         var that = this;        

@@ -9,6 +9,8 @@ import Modal from 'boron/WaveModal';
 import 'rc-time-picker/assets/index.css';
 import TimePicker from 'rc-time-picker';
 
+import ProjectSelector from './ProjectSelector'
+
 var timeFormat = 'HH:ss';
 
 class CreateTimeEntryModal extends React.Component {
@@ -22,9 +24,10 @@ class CreateTimeEntryModal extends React.Component {
     }
   }
 
-    showModal(slotInfo) {
-        var startDate = moment(slotInfo.start);
-        var endDate = moment(slotInfo.end);
+    showModal(data) {
+        console.log(data);
+        var startDate = moment(data.slotInfo.start);
+        var endDate = moment(data.slotInfo.end);
 
         this.setState({
             startDate: startDate,
@@ -66,6 +69,7 @@ class CreateTimeEntryModal extends React.Component {
                     Time: <TimePicker style={{width: 50}} value={this.state.startDate} onChange={(e) => this.changeStartTime(e)} showSecond={false} /> to <TimePicker style={{width: 50}} value={this.state.endDate} onChange={(e) => this.changeEndTime(e)} showSecond={false} />
                 </p>
                 <p>Duration: {this.state.duration}</p>
+                <ProjectSelector />
                 <button onClick={() => this.hideModal()}>Close</button>
             </Modal>
             );
