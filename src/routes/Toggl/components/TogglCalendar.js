@@ -2,24 +2,23 @@
 import React from 'react'
 import classes from './Toggl.scss'
 
+import moment from 'moment';
+
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-
-import Modal from 'boron/WaveModal';
-
-import moment from 'moment';
 BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(moment)
 );
 
-import type { TimeEntriesObject } from '../interfaces/toggl'
-import type { ProjectObject } from '../interfaces/toggl'
+import CreateTimeEntryModal from './CreateTimeEntryModal';
+
+import type { TimeEntriesObject } from '../interfaces/toggl';
+import type { ProjectObject } from '../interfaces/toggl';
 
 type Props = {
     time_entries: Array<TimeEntriesObject>,
     projects: Array<ProjectObject>,
-    fetchTimeEntries: Function,
-    // createTimeEntry: Function
+    fetchTimeEntries: Function
 }
 
 // TODO: Refactor to use ES6 classes instead like Toggl.js
@@ -57,7 +56,6 @@ var TogglCalendar = React.createClass({
         this.props.fetchTimeEntries(startDate.toISOString(), endDate.toISOString());  
     },
     eventStyleGetter: function(event, start, end, isSelected) {
-        console.log(event);
         var backgroundColor = event.project['hex_color'];
         var style = {
             backgroundColor: backgroundColor,
@@ -83,13 +81,7 @@ var TogglCalendar = React.createClass({
         return retVal;
     },
     showModal: function(slotInfo){
-        this.refs.modal.show();
-    },
-    hideModal: function(){
-        this.refs.modal.hide();
-    },
-    callback: function(event){
-        console.log(event);
+        this.refs.modal.showModal(slotInfo);
     },
     render: function() {
         var that = this;        
@@ -122,10 +114,7 @@ var TogglCalendar = React.createClass({
                     onSelectSlot={(slotInfo) => this.showModal(slotInfo)}
                     eventPropGetter={(this.eventStyleGetter)}
                  />
-                 <Modal ref="modal" keyboard={this.callback}>
-                    <h2>Add time entry</h2>
-                    <button onClick={this.hideModal}>Close</button>
-                </Modal>
+                 <CreateTimeEntryModal ref="modal" />
             </div>
              );
     }
