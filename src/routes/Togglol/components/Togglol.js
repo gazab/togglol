@@ -1,11 +1,11 @@
 /* @flow */
 import React from 'react'  
-import classes from './Toggl.scss'
-import TogglCalendar from './TogglCalendar'
+import classes from './Togglol.scss'
+import TogglolCalendar from './TogglolCalendar'
 import ApiKeyInput from './ApiKeyInput'
 
-import type { TimeEntryObject } from '../interfaces/toggl'
-import type { ProjectObject } from '../interfaces/toggl'
+import type { TimeEntryObject } from '../interfaces/togglol'
+import type { ProjectObject } from '../interfaces/togglol'
 
 
 type Props = {  
@@ -19,7 +19,7 @@ type Props = {
   getUserInfo: Function
 }
 
-class Toggl extends React.Component {
+class Togglol extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -32,7 +32,7 @@ class Toggl extends React.Component {
   
   render() {
         if(this.props.user_loaded) {
-          return(<TogglCalendar projects={this.props.projects} time_entries={this.props.time_entries} fetchTimeEntries={this.props.fetchTimeEntries}/>);
+          return(<TogglolCalendar projects={this.props.projects} time_entries={this.props.time_entries} fetchTimeEntries={this.props.fetchTimeEntries}/>);
         }
         else {
           return (<ApiKeyInput onSet={this.props.setApiKey} onLoad={this.props.fetchUserInfo}/>)
@@ -40,11 +40,11 @@ class Toggl extends React.Component {
     }
 }
 
-Toggl.propTypes = {  
+Togglol.propTypes = {  
   time_entries: React.PropTypes.array.isRequired,
   projects: React.PropTypes.array.isRequired,
   fetchTimeEntries: React.PropTypes.func.isRequired,
   setApiKey: React.PropTypes.func.isRequired
 }
 
-export default Toggl  
+export default Togglol  

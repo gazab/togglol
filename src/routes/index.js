@@ -1,6 +1,6 @@
 // We only need to import the modules necessary for initial render
 import CoreLayout from '../layouts/CoreLayout/CoreLayout'
-import TogglRoute from './Toggl'
+import TogglolRoute from './Togglol'
 
 /*  Note: Instead of using JSX, we recommend using react-router
     PlainRoute objects to build route definitions.   */
@@ -8,7 +8,7 @@ import TogglRoute from './Toggl'
 export const createRoutes = (store) => ({
   path: '/',
   component: CoreLayout,
-  indexRoute: TogglRoute(store),
+  indexRoute: TogglolRoute(store),
   childRoutes: [ ]
 })
 

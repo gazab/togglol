@@ -2,7 +2,7 @@
 
 const base64 = require('base-64');
 
-import type { TimeEntryObject, TogglStateObject } from '../interfaces/toggl.js'
+import type { TimeEntryObject, TogglolStateObject } from '../interfaces/togglol.js'
 
 // ------------------------------------
 // Constants
@@ -101,9 +101,9 @@ export function fetchUserInfoTwo(): Function {
     }
 }
   
-function buildRequestHeader(state: TogglStateObject) {
+function buildRequestHeader(state: TogglolStateObject) {
     // Construct header
-    var api_key = state.toggl.api_key;
+    var api_key = state.togglol.api_key;
     var headers = new Headers();
     headers.append("Authorization", "Basic " + base64.encode(api_key + ":api_token"));
     return headers;
@@ -157,23 +157,23 @@ export const actions = {
 // Action Handlers
 // ------------------------------------
 
-const TOGGL_ACTION_HANDLERS = {  
-  [REQUEST_TIME_ENTRIES]: (state: TogglStateObject): TogglStateObject => {
+const TOGGLOL_ACTION_HANDLERS = {  
+  [REQUEST_TIME_ENTRIES]: (state: TogglolStateObject): TogglolStateObject => {
     return ({ ...state, fetching: true })
   },
-  [REQUEST_USER_INFO]: (state: TogglStateObject): TogglStateObject => {
+  [REQUEST_USER_INFO]: (state: TogglolStateObject): TogglolStateObject => {
     return ({ ...state, fetching: true })
   },
-  [RECEIVE_TIME_ENTRIES]: (state: TogglStateObject, action: {payload: Array<TimeEntryObject>}): TogglStateObject => {
+  [RECEIVE_TIME_ENTRIES]: (state: TogglolStateObject, action: {payload: Array<TimeEntryObject>}): TogglolStateObject => {
     return ({ ...state, time_entries: action.payload, fetching: false })
   },
-  [GET_TIME_ENTRIES_FULFILLED]: (state: TogglStateObject, action: {payload: Array<TimeEntryObject>}): TogglStateObject => {
+  [GET_TIME_ENTRIES_FULFILLED]: (state: TogglolStateObject, action: {payload: Array<TimeEntryObject>}): TogglolStateObject => {
     return ({ ...state, time_entries: action.payload, fetching: false })
   },
-  [GET_USER_INFO_FULFILLED]: (state: TogglStateObject, action: {payload: Array<ProjectObject>}): TogglStateObject => {
-    return ({ ...state, projects: action.payload.data.projects, fetching: false, user_loaded: true })
+  [GET_USER_INFO_FULFILLED]: (state: TogglolStateObject, action: {payload: Array<ProjectObject>}): TogglolStateObject => {
+    return ({ ...state, projects: action.payload.data.projects, data: action.payload.data, fetching: false, user_loaded: true })
   },
-  [SET_API_KEY]: (state: TogglStateObject, action: {payload: string}): TogglStateObject => {
+  [SET_API_KEY]: (state: TogglolStateObject, action: {payload: string}): TogglolStateObject => {
     return ({ ...state, api_key: action.payload })
   }
 }
@@ -182,9 +182,9 @@ const TOGGL_ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 
-const initialState: TogglStateObject = { user_loaded: false, fetching: false, time_entries: [], api_key: '', projects: [] }  
-export default function togglReducer (state: TogglStateObject = initialState, action: Action): TogglStateObject {  
-  const handler = TOGGL_ACTION_HANDLERS[action.type]
+const initialState: TogglolStateObject = { user_loaded: false, fetching: false, time_entries: [], api_key: '', projects: [], data: undefined }  
+export default function togglolReducer (state: TogglolStateObject = initialState, action: Action): TogglolStateObject {  
+  const handler = TOGGLOL_ACTION_HANDLERS[action.type]
 
   return handler ? handler(state, action) : state
 }

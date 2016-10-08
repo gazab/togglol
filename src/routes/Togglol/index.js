@@ -9,16 +9,16 @@ export default (store) => ({
     require.ensure([], (require) => {
       /*  Webpack - use require callback to define
           dependencies for bundling   */
-      const Toggl = require('./containers/TogglContainer').default
-      const reducer = require('./modules/toggl').default
+      const Togglol = require('./containers/TogglolContainer').default
+      const reducer = require('./modules/togglol').default
 
       /*  Add the reducer to the store on key 'toggl'  */
-      injectReducer(store, { key: 'toggl', reducer })
+      injectReducer(store, { key: 'togglol', reducer })
 
       /*  Return getComponent   */
-      cb(null, Toggl)
+      cb(null, Togglol)
 
     /* Webpack named bundle   */
-    }, 'toggl')
+    }, 'togglol')
   }
 })

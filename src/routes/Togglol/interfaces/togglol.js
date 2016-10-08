@@ -41,7 +41,7 @@ export type ProjectObject = {
   color: string
 }
 
-export type TogglStateObject = {  
+export type TogglolStateObject = {  
   api_key: ?string,
   fetching: boolean,
   user_loaded: boolean,

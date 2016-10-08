@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react'
-import classes from './Toggl.scss'
+import classes from './Togglol.scss'
 
 import moment from 'moment';
 
@@ -12,8 +12,8 @@ BigCalendar.setLocalizer(
 
 import CreateTimeEntryModal from './CreateTimeEntryModal';
 
-import type { TimeEntriesObject } from '../interfaces/toggl';
-import type { ProjectObject } from '../interfaces/toggl';
+import type { TimeEntriesObject } from '../interfaces/togglol';
+import type { ProjectObject } from '../interfaces/togglol';
 
 type Props = {
     time_entries: Array<TimeEntriesObject>,
@@ -21,8 +21,8 @@ type Props = {
     fetchTimeEntries: Function
 }
 
-// TODO: Refactor to use ES6 classes instead like Toggl.js
-var TogglCalendar = React.createClass({
+// TODO: Refactor to use ES6 classes instead like Togglol.js
+var TogglolCalendar = React.createClass({
     getInitialState: function() {
         
         let date = new Date();
@@ -121,4 +121,4 @@ var TogglCalendar = React.createClass({
     }
 });
 
-export default TogglCalendar  
+export default TogglolCalendar  
