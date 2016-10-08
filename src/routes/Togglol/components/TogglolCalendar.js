@@ -17,7 +17,7 @@ import type { ProjectObject } from '../interfaces/togglol';
 
 type Props = {
     time_entries: Array<TimeEntriesObject>,
-    projects: Array<ProjectObject>,
+    data: Object,
     fetchTimeEntries: Function
 }
 
@@ -70,7 +70,7 @@ var TogglolCalendar = React.createClass({
     getProject: function(id) {
         let retVal = null;
 
-        this.props.projects.forEach(function(project) {
+        this.props.data.projects.forEach(function(project) {
             if(project.id == id)
             {
                 retVal = project;
@@ -81,8 +81,7 @@ var TogglolCalendar = React.createClass({
         return retVal;
     },
     showModal: function(slotInfo){
-        var data = { projects: this.props.projects, slotInfo: slotInfo }
-        this.refs.modal.showModal(data);
+        this.refs.modal.showModal(slotInfo);
     },
     render: function() {
         var that = this;        
@@ -115,7 +114,7 @@ var TogglolCalendar = React.createClass({
                     onSelectSlot={(slotInfo) => this.showModal(slotInfo)}
                     eventPropGetter={(this.eventStyleGetter)}
                  />
-                 <CreateTimeEntryModal ref="modal" />
+                 <CreateTimeEntryModal clients={this.props.data.clients} projects={this.props.data.projects} ref="modal" />
             </div>
              );
     }

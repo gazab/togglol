@@ -24,10 +24,9 @@ class CreateTimeEntryModal extends React.Component {
     }
   }
 
-    showModal(data) {
-        console.log(data);
-        var startDate = moment(data.slotInfo.start);
-        var endDate = moment(data.slotInfo.end);
+    showModal(slotInfo) {
+        var startDate = moment(slotInfo.start);
+        var endDate = moment(slotInfo.end);
 
         this.setState({
             startDate: startDate,
@@ -69,12 +68,17 @@ class CreateTimeEntryModal extends React.Component {
                     Time: <TimePicker style={{width: 50}} value={this.state.startDate} onChange={(e) => this.changeStartTime(e)} showSecond={false} /> to <TimePicker style={{width: 50}} value={this.state.endDate} onChange={(e) => this.changeEndTime(e)} showSecond={false} />
                 </p>
                 <p>Duration: {this.state.duration}</p>
-                <ProjectSelector />
+                <ProjectSelector clients={this.props.clients} projects={this.props.projects} />
                 <button onClick={() => this.hideModal()}>Close</button>
             </Modal>
             );
     }
 }
+
+CreateTimeEntryModal.propTypes = {
+  clients: React.PropTypes.array.isRequired,
+  projects: React.PropTypes.array.isRequired
+};
 
 export default CreateTimeEntryModal
 

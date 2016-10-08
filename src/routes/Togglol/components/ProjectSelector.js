@@ -13,4 +13,10 @@ class ProjectSelector extends React.Component {
   }
 }
 
+ProjectSelector.propTypes = {
+  clients: React.PropTypes.array.isRequired,
+  projects: React.PropTypes.array.isRequired
+};
+
+
 export default ProjectSelector

@@ -171,7 +171,7 @@ const TOGGLOL_ACTION_HANDLERS = {
     return ({ ...state, time_entries: action.payload, fetching: false })
   },
   [GET_USER_INFO_FULFILLED]: (state: TogglolStateObject, action: {payload: Array<ProjectObject>}): TogglolStateObject => {
-    return ({ ...state, projects: action.payload.data.projects, data: action.payload.data, fetching: false, user_loaded: true })
+    return ({ ...state, data: action.payload.data, fetching: false, user_loaded: true })
   },
   [SET_API_KEY]: (state: TogglolStateObject, action: {payload: string}): TogglolStateObject => {
     return ({ ...state, api_key: action.payload })
@@ -182,7 +182,7 @@ const TOGGLOL_ACTION_HANDLERS = {
 // Reducer
 // ------------------------------------
 
-const initialState: TogglolStateObject = { user_loaded: false, fetching: false, time_entries: [], api_key: '', projects: [], data: undefined }  
+const initialState: TogglolStateObject = { user_loaded: false, fetching: false, time_entries: [], api_key: '', data: undefined }  
 export default function togglolReducer (state: TogglolStateObject = initialState, action: Action): TogglolStateObject {  
   const handler = TOGGLOL_ACTION_HANDLERS[action.type]
 

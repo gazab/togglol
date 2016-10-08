@@ -14,10 +14,9 @@ const mapActionCreators: {fetchTimeEntries: Function, fetchUserInfo: Function, s
   setApiKeyAndFetchUserInfo
 }
 
-const mapStateToProps = (state): { time_entries: Array<TimeEntryObject>, projects: Array<ProjectObject> } => ({  
+const mapStateToProps = (state): { time_entries: Array<TimeEntryObject>, data: Object } => ({  
   time_entries: state.togglol.time_entries,
   user_loaded: state.togglol.user_loaded,
-  projects: state.togglol.projects,
   data: state.togglol.data
 })
 
