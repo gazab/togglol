@@ -3,6 +3,7 @@ import React from 'react'
 import classes from './Togglol.scss'
 
 import moment from 'moment';
+require("moment-duration-format");
 
 import BigCalendar from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -99,6 +100,13 @@ var TogglolCalendar = React.createClass({
         // Create shown time span
         var minTime = new Date(2000,1,1, 6, 0, 0, 0);
         var maxTime = new Date(2000,1,1, 22, 0, 0, 0); 
+
+        // Time formats
+        var formats = {
+             timeGutterFormat: 'HH:mm',
+             selectRangeFormat: ({ start, end }, culture, localizer) =>
+                moment(start).format('HH:mm') + ' — ' + moment(end).format('HH:mm') + ' (' + moment.duration(moment(end).diff(moment(start))).format("h [hrs], m [min]") + ')'
+        }
         
         return (
             <div>
@@ -113,6 +121,7 @@ var TogglolCalendar = React.createClass({
                     selectable={true}
                     onSelectSlot={(slotInfo) => this.showModal(slotInfo)}
                     eventPropGetter={(this.eventStyleGetter)}
+                    formats={formats}
                  />
                  <CreateTimeEntryModal clients={this.props.data.clients} projects={this.props.data.projects} ref="modal" />
             </div>

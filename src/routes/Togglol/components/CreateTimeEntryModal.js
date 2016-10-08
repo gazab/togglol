@@ -4,7 +4,7 @@ import React from 'react'
 import moment from 'moment';
 require("moment-duration-format");
 
-import Modal from 'boron/WaveModal';
+import Modal from 'boron/ScaleModal';
 
 import 'rc-time-picker/assets/index.css';
 import TimePicker from 'rc-time-picker';
@@ -41,10 +41,6 @@ class CreateTimeEntryModal extends React.Component {
         this.refs.modal.hide();
     }
 
-    callback(event){
-        console.log(event);
-    }
-
     changeStartTime(value) {
         var startDate = moment(value);
         this.setState({startDate: startDate, duration: this.getEntryDuration(startDate, this.state.endDate)});
@@ -62,14 +58,14 @@ class CreateTimeEntryModal extends React.Component {
 
     render() {
         return(
-            <Modal ref="modal" keyboard={this.callback}>
+            <Modal ref="modal" contentStyle={contentStyle}>
                 <h2>Add time entry</h2>
                 <p>
                     Time: <TimePicker style={{width: 50}} value={this.state.startDate} onChange={(e) => this.changeStartTime(e)} showSecond={false} /> to <TimePicker style={{width: 50}} value={this.state.endDate} onChange={(e) => this.changeEndTime(e)} showSecond={false} />
                 </p>
                 <p>Duration: {this.state.duration}</p>
                 <ProjectSelector clients={this.props.clients} projects={this.props.projects} />
-                <button onClick={() => this.hideModal()}>Close</button>
+                <button className="btn btn-default" onClick={() => this.hideModal()}>Close</button>
             </Modal>
             );
     }
@@ -79,6 +75,12 @@ CreateTimeEntryModal.propTypes = {
   clients: React.PropTypes.array.isRequired,
   projects: React.PropTypes.array.isRequired
 };
+
+// Style
+
+var contentStyle = {
+    padding: '10px'
+}
 
 export default CreateTimeEntryModal
 

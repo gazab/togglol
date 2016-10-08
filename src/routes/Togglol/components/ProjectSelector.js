@@ -1,5 +1,13 @@
 import React from 'react'
 
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+
+var options = [
+    { value: 'one', label: 'One' },
+    { value: 'two', label: 'Two' }
+];
+
 class ProjectSelector extends React.Component {
   constructor(props) {
     super(props);
@@ -8,8 +16,22 @@ class ProjectSelector extends React.Component {
     }
   }
 
+  logChange(val) {
+    console.log("Selected: " + val);
+  }
+
+
   render() {
-    return (<div><p>SELECT PROJECT!</p></div>)
+    return (
+      <div>
+          <Select
+            name="form-field-name"
+            value="one"
+            options={options}
+            onChange={this.logChange}
+          />
+      </div>
+      )
   }
 }
 

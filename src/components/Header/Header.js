@@ -3,7 +3,7 @@ import { IndexLink, Link } from 'react-router'
 import classes from './Header.scss'
 
 export const Header = () => (
-  <div>
+  <div className="text-center">
     <h1>Togglol</h1>
     <p>For us who have to use Toggl the wrong way</p>
     <IndexLink to='/' activeClassName={classes.activeRoute}>
