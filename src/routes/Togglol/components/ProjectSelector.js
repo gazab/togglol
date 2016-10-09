@@ -48,8 +48,8 @@ class ProjectSelector extends React.Component {
         return retVal;
   }
 
-  logChange(val) {
-    console.log("Selected: " + val);
+  onChange(project) {
+    this.setState({project: project.value});
   }
 
 
@@ -58,9 +58,10 @@ class ProjectSelector extends React.Component {
       <div>
           <Select
             name="form-field-name"
-            value="one"
+            value={this.state.project}
             options={this.state.options}
-            onChange={this.logChange}
+            clearable={false}
+            onChange={(val) => this.onChange(val)}
           />
       </div>
       )
