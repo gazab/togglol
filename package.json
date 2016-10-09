@@ -122,7 +122,7 @@
     "react-redux": "^4.0.0",
     "react-router": "^2.2.0",
     "react-router-redux": "^4.0.0",
-    "react-select": "^1.0.0-rc.2",
+    "react-select-plus": "^1.0.0-beta14.patch1",
     "redux": "^3.0.0",
     "redux-combine-actions": "^0.1.2",
     "redux-localstorage": "^0.4.0",
