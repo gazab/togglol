@@ -3,47 +3,6 @@ import React from 'react'
 import Select from 'react-select-plus';
 import 'react-select-plus/dist/react-select-plus.css';
 
-var options = [{
-	label: 'Black',
-	value: 'black',
-}, {
-	label: 'Primary Colors',
-	options: [{
-		label: 'Yellow',
-		value: 'yellow'
-	}, {
-		label: 'Red',
-		value: 'red'
-	}, {
-		label: 'Blue',
-		value: 'blue'
-	}]
-}, {
-	label: 'Secondary Colors',
-	options: [{
-		label: 'Orange',
-		value: 'orange'
-	}, {
-		label: 'Purple',
-		options: [{
-			label: 'Light Purple',
-			value: 'light_purple'
-		}, {
-			label: 'Medium Purple',
-			value: 'medium_purple'
-		}, {
-			label: 'Dark Purple',
-			value: 'dark_purple'
-		}]
-	}, {
-		label: 'Green',
-		value: 'green'
-	}]
-}, {
-	label: 'White',
-	value: 'white',
-}];
-
 class ProjectSelector extends React.Component {
   constructor(props) {
     super(props);
@@ -54,9 +13,8 @@ class ProjectSelector extends React.Component {
   }
 
   createOptionsList() {
-
+    // Group project after client id
     var groupedProjects = [];
-
     this.props.projects.forEach(function(project){
         if(project.cid != undefined)
         {
@@ -67,6 +25,7 @@ class ProjectSelector extends React.Component {
         }
     });
 
+    // Create array with client names and its projects
     var options = [];
     let that = this;
     Object.keys(groupedProjects).forEach(function(key) {
@@ -79,17 +38,15 @@ class ProjectSelector extends React.Component {
 
   getClient(id) {
         let retVal = null;
-
         this.props.clients.forEach(function(client) {
             if(client.id == id)
             {
                 retVal = client;
                 return;
             }
-            
         });
         return retVal;
-    }
+  }
 
   logChange(val) {
     console.log("Selected: " + val);
