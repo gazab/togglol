@@ -3,6 +3,8 @@ import React from 'react'
 import Select from 'react-select-plus';
 import 'react-select-plus/dist/react-select-plus.css';
 
+import ProjectRadioGroups from './ProjectRadioGroups'
+
 class ProjectSelector extends React.Component {
   constructor(props) {
     super(props);
@@ -63,6 +65,7 @@ class ProjectSelector extends React.Component {
             clearable={false}
             onChange={(val) => this.onChange(val)}
           />
+          <ProjectRadioGroups />
       </div>
       )
   }
