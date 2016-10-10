@@ -4,7 +4,7 @@ import React from 'react'
 import moment from 'moment';
 require("moment-duration-format");
 
-import Modal from 'boron/ScaleModal';
+import Modal from 'react-modal';
 
 import 'rc-time-picker/assets/index.css';
 import TimePicker from 'rc-time-picker';
@@ -20,7 +20,8 @@ class CreateTimeEntryModal extends React.Component {
          startDate: undefined,
          endDate: undefined,
          projectId: undefined,
-         duration: undefined
+         duration: undefined,
+         isModalOpen: false
     }
   }
 
@@ -31,14 +32,13 @@ class CreateTimeEntryModal extends React.Component {
         this.setState({
             startDate: startDate,
             endDate: endDate,
-            duration: this.getEntryDuration(startDate, endDate)
+            duration: this.getEntryDuration(startDate, endDate),
+            isModalOpen: true
             });
-
-        this.refs.modal.show();
     }  
 
     hideModal(){
-        this.refs.modal.hide();
+        this.setState({isModalOpen: false});
     }
 
     changeStartTime(value) {
@@ -58,14 +58,49 @@ class CreateTimeEntryModal extends React.Component {
 
     render() {
         return(
-            <Modal ref="modal" contentStyle={contentStyle}>
-                <h2>Add time entry</h2>
-                <p>
-                    Time: <TimePicker style={{width: 50}} value={this.state.startDate} onChange={(e) => this.changeStartTime(e)} showSecond={false} /> to <TimePicker style={{width: 50}} value={this.state.endDate} onChange={(e) => this.changeEndTime(e)} showSecond={false} />
-                </p>
-                <p>Duration: {this.state.duration}</p>
-                <ProjectSelector clients={this.props.clients} projects={this.props.projects} />
-                <button className="btn btn-default" onClick={() => this.hideModal()}>Close</button>
+            <Modal 
+                className="Modal__Bootstrap modal-dialog"
+                isOpen={this.state.isModalOpen} 
+                onRequestClose={(e) => this.hideModal(e)}
+                >
+                <div className="modal-content">
+                    <div className="modal-header">
+                    <button type="button" className="close" onClick={this.handleModalCloseRequest}>
+                        <span aria-hidden="true">&times;</span>
+                        <span className="sr-only">Close</span>
+                    </button>
+                    <h4 className="modal-title">Add time entry</h4>
+                    </div>
+                    <div className="modal-body">
+                        <form className="container">
+                        <div className="form-group row">
+                            <label for="start-time-input" className="col-xs-2 col-form-label">Start time</label>
+                            <div className="col-xs-10">
+                                <TimePicker style={{width: 50}} value={this.state.startDate} onChange={(e) => this.changeStartTime(e)} showSecond={false} />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label for="start-time-input" className="col-xs-2 col-form-label">End time</label>
+                            <div className="col-xs-10">
+                                <TimePicker style={{width: 50}} value={this.state.endDate} onChange={(e) => this.changeEndTime(e)} showSecond={false} />
+                            </div>
+                        </div>
+                        <div className="form-group row">
+                            <label className="col-sm-2 col-form-label">Duration</label>
+                            <div className="col-sm-10">
+                                <p className="form-control-static">{this.state.duration}</p>
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <label className="col-sm-2 col-form-label">Project</label>
+                            <div className="col-sm-10">
+                                <ProjectSelector clients={this.props.clients} projects={this.props.projects} />
+                            </div>
+                            <button className="btn btn-default" onClick={() => this.hideModal()}>Close</button>
+                        </div>
+                        </form>
+                        </div>
+                        </div>
             </Modal>
             );
     }
@@ -77,7 +112,6 @@ CreateTimeEntryModal.propTypes = {
 };
 
 // Style
-
 var contentStyle = {
     padding: '10px'
 }
