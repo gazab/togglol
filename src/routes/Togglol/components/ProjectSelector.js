@@ -23,7 +23,7 @@ class ProjectSelector extends React.Component {
           if(groupedProjects[project.cid] == null)
             groupedProjects[project.cid] = [];
 
-          groupedProjects[project.cid].push({label: project.name, value: project.id});
+          groupedProjects[project.cid].push({label: project.name, value: project.id, color: project.hex_color});
         }
     });
 
@@ -52,6 +52,7 @@ class ProjectSelector extends React.Component {
 
   onChange(project) {
     this.setState({project: project.value});
+    this.refs.prg.addToProjectList(project);
   }
 
 
@@ -59,13 +60,14 @@ class ProjectSelector extends React.Component {
     return (
       <div>
           <Select
+            autofocus={true}
             name="form-field-name"
             value={this.state.project}
             options={this.state.options}
             clearable={false}
             onChange={(val) => this.onChange(val)}
           />
-          <ProjectRadioGroups />
+          <ProjectRadioGroups ref="prg" clients={this.props.clients} projects={this.props.projects} />
       </div>
       )
   }
