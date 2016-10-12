@@ -32,7 +32,6 @@ class CreateTimeEntryModal extends React.Component {
         this.setState({
             startDate: startDate,
             endDate: endDate,
-            duration: this.getEntryDuration(startDate, endDate),
             isModalOpen: true
             });
     }  
@@ -43,20 +42,18 @@ class CreateTimeEntryModal extends React.Component {
 
     changeStartTime(value) {
         var startDate = moment(value);
-        this.setState({startDate: startDate, duration: this.getEntryDuration(startDate, this.state.endDate)});
+        this.setState({startDate: startDate});
     }
 
 
     changeEndTime(value) {
         var endDate = moment(value);
-        this.setState({endDate: endDate, duration: this.getEntryDuration(this.state.startDate, value)});
-    }
-
-    getEntryDuration(startDate, endDate) {
-        return moment.duration(endDate.diff(startDate)).format("h [hrs], m [min]");
+        this.setState({endDate: endDate});
     }
 
     render() {
+        var duration = (this.state.startDate != undefined && this.state.endDate != undefined) ? moment.duration(this.state.endDate.diff(this.state.startDate)).format("h [hrs], m [min]") : "";
+
         return(
             <Modal 
                 className="Modal__Bootstrap modal-dialog"
@@ -79,7 +76,7 @@ class CreateTimeEntryModal extends React.Component {
                                     <p className="form-control-static">
                                         <TimePicker style={timepickerStyle} value={this.state.startDate} onChange={(e) => this.changeStartTime(e)} showSecond={false} />&nbsp;-&nbsp;
                                         <TimePicker style={timepickerStyle} value={this.state.endDate} onChange={(e) => this.changeEndTime(e)} showSecond={false} />
-                                        &nbsp;({this.state.duration})
+                                        &nbsp;({duration})
                                     </p>
                                 </div>
                             </div>
