@@ -10,34 +10,57 @@ class ProjectRadioGroups extends React.Component {
   }
 
   addToProjectList(project) {
-      console.log("Add!");
-      console.log(project);
+      this.setState({selectedProject: project.value, projectList: this.state.projectList.concat([project])});
   }
 
-  render() {
-      return(
-          <div>
-            <br/>
-            <p><strong>Client</strong></p>
-            <div className="btn-group" data-toggle="buttons">
-                <label className="btn btn-secondary">
-                    <input type="radio" name="options" id="option1" autocomplete="off" /> Radio 1
-                </label>
-                <label className="btn btn-secondary">
-                    <input type="radio" name="options" id="option2" autocomplete="off" /> Radio 2
-                </label>
-                <label className="btn btn-secondary">
-                    <input type="radio" name="options" id="option3" autocomplete="off" /> Radio 3
-                </label>
+render() {
+    console.log(this.state);
+
+    // Group project after client id
+    var groupedProjects = [];
+    var that = this;
+    this.state.projectList.forEach(function(project){
+        if(groupedProjects[project.client] == null)
+            groupedProjects[project.client] = [];
+
+          groupedProjects[project.client].push(project);
+    });
+
+    //TODO: Fix sort
+    groupedProjects.sort();
+
+    var buttonGroups = Object.keys(groupedProjects).map(function(client) {        
+        var projectButtons = groupedProjects[client].map(function(project) {
+            var cls = "btn btn-secondary";
+            if(project.value == that.state.selectedProject) { 
+                cls += " active" 
+            }
+            return (<button type="button" className={cls}>{project.label}</button>)
+        });
+
+        return (
+            <div>
+                <br/>
+                <p>{client}</p>
+                <div className="btn-group" role="group">
+                    {projectButtons}
+                </div>
             </div>
-        </div>
+        );
+        });
+
+      return(
+            <div>
+                {buttonGroups}
+            </div>
       );
   }
 }
 
-ProjectRadioGroups.propTypes = {
-  clients: React.PropTypes.array.isRequired,
-  projects: React.PropTypes.array.isRequired
-};
+var dotStyle = {
+    width: '10px',
+    height: '10px',
+    backgroundColor: '#F0F'
+}
 
 export default ProjectRadioGroups

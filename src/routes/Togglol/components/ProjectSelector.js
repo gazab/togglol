@@ -17,19 +17,19 @@ class ProjectSelector extends React.Component {
   createOptionsList() {
     // Group project after client id
     var groupedProjects = [];
+    var that = this;
     this.props.projects.forEach(function(project){
         if(project.cid != undefined)
         {
           if(groupedProjects[project.cid] == null)
             groupedProjects[project.cid] = [];
 
-          groupedProjects[project.cid].push({label: project.name, value: project.id, color: project.hex_color});
+          groupedProjects[project.cid].push({label: project.name, value: project.id, color: project.hex_color, client: that.getClient(project.cid).name});
         }
     });
 
     // Create array with client names and its projects
     var options = [];
-    let that = this;
     Object.keys(groupedProjects).forEach(function(key) {
       var values = groupedProjects[key];
       options.push({label: that.getClient(key).name, options: values})
@@ -60,6 +60,7 @@ class ProjectSelector extends React.Component {
     return (
       <div>
           <Select
+            style={{zIndex: 999}}
             autofocus={true}
             name="form-field-name"
             value={this.state.project}
@@ -67,7 +68,7 @@ class ProjectSelector extends React.Component {
             clearable={false}
             onChange={(val) => this.onChange(val)}
           />
-          <ProjectRadioGroups ref="prg" clients={this.props.clients} projects={this.props.projects} />
+          <ProjectRadioGroups ref="prg" />
       </div>
       )
   }
