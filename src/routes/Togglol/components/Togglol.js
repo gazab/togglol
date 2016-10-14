@@ -1,6 +1,5 @@
 /* @flow */
 import React from 'react'  
-import classes from './Togglol.scss'
 import TogglolCalendar from './TogglolCalendar'
 import ApiKeyInput from './ApiKeyInput'
 
