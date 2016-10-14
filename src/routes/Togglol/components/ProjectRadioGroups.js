@@ -47,6 +47,7 @@ class ProjectRadioGroups extends React.Component {
         width: '13px',
         height: '13px',
         display: 'inline-block',
+        borderRadius: '100%',
         marginRight: '5px',
         backgroundColor: project.color
     }
