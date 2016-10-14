@@ -1,7 +1,7 @@
 {
-  "name": "react-redux-starter-kit",
-  "version": "3.0.0-alpha.0",
-  "description": "Get started with React, Redux, and React-Router!",
+  "name": "Togglol",
+  "version": "1.0.0",
+  "description": "Your alternative Toggl client. For us who can't use Toggl the correct way.!",
   "main": "index.js",
   "engines": {
     "node": ">=4.2.0",
@@ -72,9 +72,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/davezuko/react-redux-starter-kit.git"
+    "url": "git+https://github.com/gazab/Togglol.git"
   },
-  "author": "David Zukowski <david@zuko.me> (http://zuko.me)",
+  "author": "Gustav Tonér <gustav.toner@gmail.com> (https://www.gazab.se)",
   "license": "MIT",
   "dependencies": {
     "babel-cli": "^6.5.1",
