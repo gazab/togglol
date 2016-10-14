@@ -25,8 +25,17 @@
     flex-basis: 0% !important; /* react-big-calendar 0.9.12 workaround */
   }
 
+  .rbc-time-header>.rbc-row:first-child {
+    border-bottom: none !important;
+  }
+
+  .rbc-time-header>.rbc-row:nth-child(2) {
+    display: none !important;
+  }
+
   // Fix react-select-plus z-index problem
   .Select-menu-outer {
     z-index: 999 !important;  
   }
+
 }
