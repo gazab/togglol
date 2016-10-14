@@ -10,7 +10,28 @@ class ProjectRadioGroups extends React.Component {
   }
 
   addToProjectList(project) {
-      this.setState({selectedProject: project.value, projectList: this.state.projectList.concat([project])});
+      var projectList = this.state.projectList;
+      if(projectList.indexOf(project) == -1)
+        projectList = this.state.projectList.concat([project])
+
+      this.setState({selectedProject: project.value, projectList: projectList});
+  }
+
+  selectProject(project) {
+      console.log("Select!");
+      this.setState({selectedProject: project.value});
+  }
+
+  createDotStyle(project) {
+
+    var dotStyle = {
+        width: '13px',
+        height: '13px',
+        display: 'inline-block',
+        marginRight: '5px',
+        backgroundColor: project.color
+    }
+    return dotStyle;
   }
 
 render() {
@@ -35,13 +56,12 @@ render() {
             if(project.value == that.state.selectedProject) { 
                 cls += " active" 
             }
-            return (<button type="button" className={cls}>{project.label}</button>)
+            return (<button key={project.value} onClick={() => that.selectProject(project)} type="button" className={cls}><span style={that.createDotStyle(project)}/>{project.label}</button>)
         });
 
         return (
             <div>
-                <br/>
-                <p>{client}</p>
+                <p style={{marginBottom: '2px', marginTop: '10px'}}><strong>{client}</strong></p>
                 <div className="btn-group" role="group">
                     {projectButtons}
                 </div>
@@ -55,12 +75,6 @@ render() {
             </div>
       );
   }
-}
-
-var dotStyle = {
-    width: '10px',
-    height: '10px',
-    backgroundColor: '#F0F'
 }
 
 export default ProjectRadioGroups
