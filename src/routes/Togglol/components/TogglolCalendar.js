@@ -1,6 +1,5 @@
 /* @flow */
 import React from 'react'
-import classes from './Togglol.scss'
 
 import moment from 'moment';
 require("moment-duration-format");
