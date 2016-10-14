@@ -10,7 +10,3 @@ For example:
 @import './variables/components';
 @import './themes/default';
 */
-
-.rbc-time-content {
-    flex-basis: 0% !important; /* react-big-calendar 0.9.12 workaround */
-}

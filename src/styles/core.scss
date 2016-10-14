@@ -20,4 +20,13 @@
   *:after {
     box-sizing: inherit;
   }
+
+  .rbc-time-content {
+    flex-basis: 0% !important; /* react-big-calendar 0.9.12 workaround */
+  }
+
+  // Fix react-select-plus z-index problem
+  .Select-menu-outer {
+    z-index: 999 !important;  
+  }
 }
