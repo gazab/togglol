@@ -108,7 +108,11 @@ var TogglolCalendar = React.createClass({
         var formats = {
              timeGutterFormat: 'HH:mm',
              selectRangeFormat: ({ start, end }, culture, localizer) =>
-                moment(start).format('HH:mm') + ' — ' + moment(end).format('HH:mm') + ' (' + moment.duration(moment(end).diff(moment(start))).format("h [hrs], m [min]") + ')'
+                moment(start).format('HH:mm') + ' — ' + moment(end).format('HH:mm') + ' (' + moment.duration(moment(end).diff(moment(start))).format("h [hrs], m [min]") + ')',
+            eventTimeRangeFormat:
+                ({ start, end }, culture, localizer) =>
+                moment(start).format('HH:mm') + '—' + moment(end).format('HH:mm')
+
         }
         
         return (
