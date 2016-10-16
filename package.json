@@ -12,7 +12,7 @@
     "compile": "npm compile",
     "lint": "eslint src tests server",
     "lint:fix": "npm run lint -- --fix",
-    "start": "npm start",
+    "start": "node bin/server.js",
     "dev": "npm dev",
     "dev:no-debug": "npm run dev -- --no_debug",
     "test": "npm test",
