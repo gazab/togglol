@@ -8,43 +8,21 @@ import type { TimeEntryObject, TogglolStateObject } from '../interfaces/togglol.
 // Constants
 // ------------------------------------
 
-export const REQUEST_TIME_ENTRIES = 'REQUEST_TIME_ENTRIES'
-export const RECEIVE_TIME_ENTRIES = 'RECEIVE_TIME_ENTRIES'  
 export const GET_USER_INFO = 'GET_USER_INFO'
+export const GET_USER_INFO_PENDING = 'GET_USER_INFO_PENDING'
 export const GET_USER_INFO_FULFILLED = 'GET_USER_INFO_FULFILLED'
+
 export const GET_TIME_ENTRIES = 'GET_TIME_ENTRIES'
+export const GET_TIME_ENTRIES_PENDING = 'GET_TIME_ENTRIES_PENDING'
 export const GET_TIME_ENTRIES_FULFILLED = 'GET_TIME_ENTRIES_FULFILLED'
-export const REQUEST_USER_INFO = 'REQUEST_USER_INFO'
-export const RECEIVE_USER_INFO = 'RECEIVE_USER_INFO'  
+
 export const SAVE_TIME_ENTRY = 'SAVE_TIME_ENTRY'
-export const SET_API_KEY = 'SET_API_KEY'  
+export const SET_API_KEY = 'SET_API_KEY'
+export const CREATE_TIME_ENTRY = 'CREATE_TIME_ENTRY'  
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-
-export function requestTimeEntries (start_date: string, end_date: string): Action {  
-  return {
-    type: REQUEST_TIME_ENTRIES,
-    payload: {
-      start_date: start_date,
-      end_date: end_date
-    }
-  }
-}
-
-export function requestUserInfo (): Action {  
-  return {
-    type: REQUEST_USER_INFO
-  }
-}
-
-export function receiveTimeEntries (time_entries: Array<TimeEntryObject>): Action {
-  return {
-    type: RECEIVE_TIME_ENTRIES,
-    payload: time_entries
-  }
-}
 
 export function getTimeEntries (time_entries: Array<TimeEntryObject>): Action {
   return {
@@ -60,14 +38,10 @@ export function getUserInfo (user_info: Array<ProjectObject>): Action {
   }
 }
 
-export function fetchTimeEntries2(start: string, end: string): Function {  
-  return (dispatch: Function, getState: Function): Promise => {
-    dispatch(requestTimeEntries(start, end))
-    
-    return fetch('https://www.toggl.com/api/v8/time_entries?start_date=' + start + '&end_date=' + end, {
-        headers: buildRequestHeader(getState())
-    })
-      .then(response => dispatch(receiveTimeEntries(response.json())))
+export function createTimeEntry (time_entry: TimeEntryObject) {
+  return {
+    type: CREATE_TIME_ENTRY,
+    payload: time_entry
   }
 }
 
@@ -89,16 +63,15 @@ export function fetchUserInfo(): Function {
   }
 }
 
-export function fetchUserInfoTwo(): Function {
-  console.log("fetchUserInfo");
-  return (resolve: Function, getState: Function): Promise => {
-    console.log("asd")
-    fetch('https://www.toggl.com/api/v8/me?with_related_data=true', {
-        headers: buildRequestHeader(getState())
-      })
-      .then(response => response.json())
-      .then(user_info => resolve(user_info))
-    }
+export function requestCreateTimeEntry(time_entry): Function {
+  return (dispatch: Function, getState: Function): Promise => {
+    return fetch('https://www.toggl.com/api/v8/time_entries', {
+        headers: buildRequestHeader(getState()),
+        method: "POST",
+        body: JSON.stringify(time_entry)
+    })
+      .then(response => dispatch(createTimeEntry(response.json())))
+  }
 }
   
 function buildRequestHeader(state: TogglolStateObject) {
@@ -114,15 +87,6 @@ export function setApiKey(api_key: string): Action {
     type: SET_API_KEY,
     payload: api_key
   }
-}
-
-export function getUserInfoTest(): Action {
-    return {
-        type: 'USER_INFO_GET_PENDING',
-        payload: {
-            promise: fetchUserInfoOld()
-        }
-    };
 }
 
 export function setApiKeyAndFetchUserInfo(api_key: string): Action {
@@ -142,34 +106,33 @@ export function setApiKeyAndFetchUserInfo(api_key: string): Action {
 }
 
 export const actions = {  
-  requestTimeEntries,
-  receiveTimeEntries,
-  requestUserInfo,
   fetchTimeEntries,
+  getTimeEntries,
+  
+  fetchUserInfo,
   getUserInfo,
+  
   setApiKey,
   setApiKeyAndFetchUserInfo,
-  fetchUserInfo,
-  getTimeEntries
+  
+  requestCreateTimeEntry,
+  createTimeEntry
 }
 
 // ------------------------------------
 // Action Handlers
 // ------------------------------------
 
-const TOGGLOL_ACTION_HANDLERS = {  
-  [REQUEST_TIME_ENTRIES]: (state: TogglolStateObject): TogglolStateObject => {
+const TOGGLOL_ACTION_HANDLERS = {
+  [GET_TIME_ENTRIES_PENDING]: (state: TogglolStateObject): TogglolStateObject => {
     return ({ ...state, fetching: true })
-  },
-  [REQUEST_USER_INFO]: (state: TogglolStateObject): TogglolStateObject => {
-    return ({ ...state, fetching: true })
-  },
-  [RECEIVE_TIME_ENTRIES]: (state: TogglolStateObject, action: {payload: Array<TimeEntryObject>}): TogglolStateObject => {
-    return ({ ...state, time_entries: action.payload, fetching: false })
-  },
+  }, 
   [GET_TIME_ENTRIES_FULFILLED]: (state: TogglolStateObject, action: {payload: Array<TimeEntryObject>}): TogglolStateObject => {
     return ({ ...state, time_entries: action.payload, fetching: false })
   },
+  [GET_USER_INFO_PENDING]: (state: TogglolStateObject): TogglolStateObject => {
+    return ({ ...state, fetching: true })
+  }, 
   [GET_USER_INFO_FULFILLED]: (state: TogglolStateObject, action: {payload: Array<ProjectObject>}): TogglolStateObject => {
     console.log(action.payload.data);
     return ({ ...state, data: action.payload.data, fetching: false, user_loaded: true })
