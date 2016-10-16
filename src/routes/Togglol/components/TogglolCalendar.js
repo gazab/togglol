@@ -49,6 +49,10 @@ var TogglolCalendar = React.createClass({
         this.fetchShownEntries(this.state.date, view);
     },
     fetchShownEntries: function(start, view) {
+        // To make moment start weeks on monday
+        if(view == 'week')
+            view = 'isoweek';
+
         // Calculate correct start and end date for view
         this.setState({date: start});
         let startDate = moment(start).startOf(view).startOf('day');
@@ -122,7 +126,7 @@ var TogglolCalendar = React.createClass({
                     eventPropGetter={(this.eventStyleGetter)}
                     formats={formats}
                  />
-                 <CreateTimeEntryModal clients={this.props.data.clients} projects={this.props.data.projects} ref="modal" />
+                 <CreateTimeEntryModal onCreateEntry={(e) => this.createTimeEntry(e)} clients={this.props.data.clients} projects={this.props.data.projects} ref="modal" />
             </div>
              );
     }
