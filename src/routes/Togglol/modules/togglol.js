@@ -48,7 +48,8 @@ export function createTimeEntry (time_entry: TimeEntryObject) {
 export function fetchTimeEntries(start: string, end: string): Function {
   return (dispatch: Function, getState: Function): Promise => {
     return fetch('https://www.toggl.com/api/v8/time_entries?start_date=' + start + '&end_date=' + end, {
-        headers: buildRequestHeader(getState())
+        headers: buildRequestHeader(getState()),
+        mode: 'cors',
     })
       .then(response => dispatch(getTimeEntries(response.json())))
   }
@@ -57,7 +58,8 @@ export function fetchTimeEntries(start: string, end: string): Function {
 export function fetchUserInfo(): Function {
   return (dispatch: Function, getState: Function): Promise => {
     return fetch('https://www.toggl.com/api/v8/me?with_related_data=true', {
-        headers: buildRequestHeader(getState())
+        headers: buildRequestHeader(getState()),
+        mode: 'cors',
     })
       .then(response => dispatch(getUserInfo(response.json())))
   }
@@ -67,7 +69,8 @@ export function requestCreateTimeEntry(time_entry): Function {
   return (dispatch: Function, getState: Function): Promise => {
     return fetch('https://www.toggl.com/api/v8/time_entries', {
         headers: buildRequestHeader(getState()),
-        method: "POST",
+        method: 'POST',
+        mode: 'cors',
         body: JSON.stringify(time_entry)
     })
       .then(response => dispatch(createTimeEntry(response.json())))
