@@ -105,10 +105,10 @@ IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   popd
 )
 
-:: 4. webpack
-IF EXIST "%DEPLOYMENT_TARGET%\webpack.config.js" (
+:: 4. Build static files
+IF EXIST "%DEPLOYMENT_TARGET%\package.json" (
   pushd "%DEPLOYMENT_TARGET%"
-  call :ExecuteCmd !NPM_CMD! run webpack
+  call :ExecuteCmd !NPM_CMD! run deploy:prod
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
