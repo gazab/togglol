@@ -1,18 +1,18 @@
 /* @flow */
 import { connect } from 'react-redux'  
-import { fetchTimeEntries, setApiKey, fetchUserInfo, setApiKeyAndFetchUserInfo, createTimeEntry } from '../modules/togglol'
+import { fetchTimeEntries, setApiKey, fetchUserInfo, setApiKeyAndFetchUserInfo, requestCreateTimeEntry } from '../modules/togglol'
 
 import Togglol from '../components/Togglol'
 
 import type { TimeEntryObject } from '../interfaces/togglol'
 import type { ProjectObject } from '../interfaces/togglol'
 
-const mapActionCreators: {fetchTimeEntries: Function, fetchUserInfo: Function, setApiKey: Function, setApiKeyAndFetchUserInfo: Function, createTimeEntry: Function} = {  
+const mapActionCreators: {fetchTimeEntries: Function, fetchUserInfo: Function, setApiKey: Function, setApiKeyAndFetchUserInfo: Function, requestCreateTimeEntry: Function} = {  
   fetchTimeEntries,
   fetchUserInfo,
   setApiKey,
   setApiKeyAndFetchUserInfo,
-  createTimeEntry
+  requestCreateTimeEntry
 }
 
 const mapStateToProps = (state): { time_entries: Array<TimeEntryObject>, data: Object } => ({  

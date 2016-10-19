@@ -8,7 +8,7 @@ class ProjectRadioGroups extends React.Component {
     super(props);
     if(localStorage.getItem(state_key) == null) {
         this.state = {
-            selectedProject: undefined,
+            value: undefined,
             projectList: []
         }
     }
@@ -23,11 +23,12 @@ class ProjectRadioGroups extends React.Component {
       if(projectList.indexOf(project) == -1)
         projectList = this.state.projectList.concat([project])
 
-      this.setState({selectedProject: project.value, projectList: projectList});
+      this.setState({value: project.value, projectList: projectList});
   }
 
   selectProject(project) {
-      this.setState({selectedProject: project.value});
+      this.setState({value: project.value});
+      this.props.onChange(project);
   }
 
   removeProject(event, project) {
@@ -74,9 +75,10 @@ render() {
     var buttonGroups = Object.keys(groupedProjects).map(function(client) {        
         var projectButtons = groupedProjects[client].map(function(project) {
             var cls = "btn btn-secondary";
-            if(project.value == that.state.selectedProject) { 
+            if(project.value == that.state.value) { 
                 cls += " active" 
             }
+            
             return (<button style={{paddingRight: '30px'}} key={project.value} onClick={() => that.selectProject(project)} type="button" className={cls}><span style={that.createDotStyle(project)}/>
                         {project.label}
                         <a aria-hidden="true" style={{marginLeft: '5px', fontWeight: '700', opacity: '0.7', fontSize: '1.5em', position: 'absolute', bottom: '5px'}} onClick={(e) => that.removeProject(e, project)} >&times;</a>                            
@@ -100,5 +102,11 @@ render() {
       );
   }
 }
+
+
+ProjectRadioGroups.propTypes = {
+  value: React.PropTypes.string,
+  onChange: React.PropTypes.func
+};
 
 export default ProjectRadioGroups

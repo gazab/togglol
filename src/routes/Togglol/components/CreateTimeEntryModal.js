@@ -17,10 +17,11 @@ class CreateTimeEntryModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+         entryId: undefined,
          startDate: undefined,
          endDate: undefined,
          projectId: undefined,
-         duration: undefined,
+         description: undefined,
          isModalOpen: false
     }
   }
@@ -49,6 +50,18 @@ class CreateTimeEntryModal extends React.Component {
     changeEndTime(value) {
         var endDate = moment(value);
         this.setState({endDate: endDate});
+    }
+
+    changeSelectedProject(project) {
+        this.setState({projectId: project.value});
+    }
+
+    createTimeEntry() {
+        var timeEntry = null;
+        console.log(this.state);
+        this.hideModal();
+        console.log("Should create time entry now!");
+        //this.props.onCreateTimeEntry(timeEntry);
     }
 
     render() {
@@ -83,14 +96,14 @@ class CreateTimeEntryModal extends React.Component {
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Project</label>
                                 <div className="col-sm-10">
-                                    <ProjectSelector clients={this.props.clients} projects={this.props.projects} />
+                                    <ProjectSelector onChange={(project) => this.changeSelectedProject(project)} ref={(ref) => this.projectSelector = ref} clients={this.props.clients} projects={this.props.projects} />
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div className="modal-footer">
                         <button className="btn btn-secondary" onClick={() => this.hideModal()}>Close</button>&nbsp;
-                        <button type="button" className="btn btn-primary">Save changes</button>
+                        <button type="button" className="btn btn-primary" onClick={(e) => this.createTimeEntry(e)}>Create</button>
                     </div>
                     </div>
             </Modal>

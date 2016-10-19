@@ -14,7 +14,9 @@ type Props = {
   fetchUserInfo: Function,
   setApiKey: Function,
   setApiKeyAndFetchUserInfo: Function,
-  getUserInfo: Function,
+
+  requestCreateTimeEntry: Function,
+
   data: Object
 }
 
@@ -36,6 +38,7 @@ class Togglol extends React.Component {
                 data={this.props.data} 
                 time_entries={this.props.time_entries} 
                 fetchTimeEntries={this.props.fetchTimeEntries}
+                onCreateTimeEntry={this.props.requestCreateTimeEntry}
               />
             );
         }

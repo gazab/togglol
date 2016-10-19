@@ -9,7 +9,6 @@ class ProjectSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-         project: undefined,
          options: this.createOptionsList()
     }
   }
@@ -50,12 +49,6 @@ class ProjectSelector extends React.Component {
         return retVal;
   }
 
-  onChange(project) {
-    this.setState({project: project.value});
-    this.refs.prg.addToProjectList(project);
-  }
-
-
   render() {
     return (
       <div>
@@ -63,12 +56,12 @@ class ProjectSelector extends React.Component {
             style={{zIndex: 999}}
             autofocus={true}
             name="form-field-name"
-            value={this.state.project}
+            value={this.state.value}
             options={this.state.options}
             clearable={false}
-            onChange={(val) => this.onChange(val)}
+            onChange={(project) => this.projectRadioGroups.addToProjectList(project)}
           />
-          <ProjectRadioGroups ref="prg" />
+          <ProjectRadioGroups ref={(ref) => this.projectRadioGroups = ref} onChange={(project) => this.props.onChange(project)} />
       </div>
       )
   }
@@ -76,7 +69,8 @@ class ProjectSelector extends React.Component {
 
 ProjectSelector.propTypes = {
   clients: React.PropTypes.array.isRequired,
-  projects: React.PropTypes.array.isRequired
+  projects: React.PropTypes.array.isRequired,
+  onChange: React.PropTypes.func.isRequired
 };
 
 

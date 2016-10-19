@@ -18,7 +18,8 @@ import type { ProjectObject } from '../interfaces/togglol';
 type Props = {
     time_entries: Array<TimeEntriesObject>,
     data: Object,
-    fetchTimeEntries: Function
+    fetchTimeEntries: Function,
+    requestCreateTimeEntry: Function
 }
 
 // TODO: Refactor to use ES6 classes instead like Togglol.js
@@ -85,7 +86,11 @@ var TogglolCalendar = React.createClass({
         return retVal;
     },
     showModal: function(slotInfo){
-        this.refs.modal.showModal(slotInfo);
+        this.createTimeEntryModal.showModal(slotInfo);
+    },
+    createTimeEntry: function(timeEntry) {
+        console.log("Create!");
+        this.props.onCreateTimeEntry(timeEntry);
     },
     render: function() {
         var that = this;        
@@ -130,7 +135,7 @@ var TogglolCalendar = React.createClass({
                     eventPropGetter={(this.eventStyleGetter)}
                     formats={formats}
                  />
-                 <CreateTimeEntryModal onCreateEntry={(e) => this.createTimeEntry(e)} clients={this.props.data.clients} projects={this.props.data.projects} ref="modal" />
+                 <CreateTimeEntryModal onCreateTimeEntry={(e) => this.createTimeEntry(e)} clients={this.props.data.clients} projects={this.props.data.projects} ref={(ref) => this.createTimeEntryModal = ref} />
             </div>
              );
     }
