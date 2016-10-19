@@ -19,14 +19,17 @@ class ApiKeyInput extends React.Component {
     }
     render() {
         return(
-            <form className="form-inline">
-                <div className="form-group">
-                    <label for="apikeyInput" className="sr-only">Password</label>
-                    <input value={this.state.value} style={inputStyle} maxlength="32" id="apikeyInput" placeholder="Toggl API key" className="form-control" type="text" onChange={this.handleChange.bind(this)}/> 
+            <div className="row">
+                <div className="col-lg-12">
+                    <div className="input-group input-group-lg">
+                        <input value={this.state.value} maxlength="32" id="apikeyInput" placeholder="Toggl API key" className="form-control" type="text" onChange={this.handleChange.bind(this)}/>
+                        <span className="input-group-btn">
+                            <button className="btn btn-outline-primary" onClick={this.handlePress.bind(this)}>1. Set API key</button>
+                            <button className="btn btn-outline-primary" onClick={this.handleLoadPress.bind(this)}>2. Load user info</button>
+                        </span>
+                    </div>
                 </div>
-                <button className="btn btn-default" onClick={this.handlePress.bind(this)}>Set API key</button>
-                <button className="btn btn-default" onClick={this.handleLoadPress.bind(this)}>Load user info</button>
-            </form>
+            </div>
             );
     }
     
@@ -53,8 +56,7 @@ ApiKeyInput.propTypes = {
 }
 
 var inputStyle = {
-    marginRight: '5px',
-    width: '280px'
+    width: '300px'
 }
 
 export default ApiKeyInput
