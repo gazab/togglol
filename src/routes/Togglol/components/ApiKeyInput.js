@@ -14,39 +14,49 @@ class ApiKeyInput extends React.Component {
             };    
         }
         else {
-            this.state = JSON.parse(localStorage.getItem(state_key));    
+            var savedState = JSON.parse(localStorage.getItem(state_key));
+            this.state = savedState;   
         }
     }
+
+    componentDidMount() {
+        this.enterApiKey(this.state.value);
+    }
+
     render() {
         return(
             <div className="row">
-                <div className="col-lg-12">
+                <div className="col-lg-8">
                     <div className="input-group input-group-lg">
-                        <input value={this.state.value} maxlength="32" id="apikeyInput" placeholder="Toggl API key" className="form-control" type="text" onChange={this.handleChange.bind(this)}/>
+                        <input value={this.state.value} maxlength="32" id="apikeyInput" placeholder="Toggl API key" className="form-control" type="text" onChange={(e) => this.onChange(e)}/>
                         <span className="input-group-btn">
-                            <button className="btn btn-outline-primary" onClick={this.handlePress.bind(this)}>1. Set API key</button>
-                            <button className="btn btn-outline-primary" onClick={this.handleLoadPress.bind(this)}>2. Load user info</button>
+                            <button className="btn btn-outline-primary" onClick={this.handleLoadPress.bind(this)}>Login</button>
                         </span>
                     </div>
                 </div>
             </div>
             );
     }
+
+    onChange(event) {
+        var apiKey = event.target.value;
+        this.enterApiKey(apiKey);
+    }
     
-    handlePress(event) {
-        event.preventDefault();
-        //this.props.onSet(this.state.value);
-        this.props.onSet(this.state.value);
-        localStorage.setItem(state_key, JSON.stringify(this.state));
+    enterApiKey(apiKey) {
+        // Store state
+        var newState = {value: apiKey};
+        this.setState(newState);
+        localStorage.setItem(state_key, JSON.stringify(newState));
+
+        // Send action
+        this.props.onSet(apiKey);
+        
     }
 
     handleLoadPress(event) {
         event.preventDefault();
         this.props.onLoad();
-    }
-    
-    handleChange(event) {
-        this.setState({value: event.target.value})
     }
 }
 
