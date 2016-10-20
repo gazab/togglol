@@ -20,10 +20,13 @@ class ProjectRadioGroups extends React.Component {
 
   addToProjectList(project) {
       var projectList = this.state.projectList;
-      if(projectList.indexOf(project) == -1)
-        projectList = this.state.projectList.concat([project])
+      if(projectList.indexOf(project) == -1) {
+          console.log(projectList);
+          projectList = this.state.projectList.concat([project])
+      }
 
       this.setState({value: project.value, projectList: projectList});
+      this.props.onChange(project);
   }
 
   selectProject(project) {

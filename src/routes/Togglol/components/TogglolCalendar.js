@@ -73,6 +73,10 @@ var TogglolCalendar = React.createClass({
         };
     },
     getProject: function(id) {
+        if(id == null) {
+            return {name: '', hex_color: '#b7b7b7'}
+        }
+
         let retVal = null;
 
         this.props.data.projects.forEach(function(project) {

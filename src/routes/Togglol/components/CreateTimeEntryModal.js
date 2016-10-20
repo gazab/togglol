@@ -54,14 +54,20 @@ class CreateTimeEntryModal extends React.Component {
 
     changeSelectedProject(project) {
         this.setState({projectId: project.value});
+        this.submitButton.focus();
     }
 
     createTimeEntry() {
-        var timeEntry = null;
-        console.log(this.state);
+        var timeEntry = {
+            description: this.state.description,
+            pid: this.state.projectId,
+            start: this.state.startDate.toISOString(),
+            duration: this.state.endDate.diff(this.state.startDate, 'seconds'),
+            created_with: "Togglol"
+        };
+        console.log(timeEntry);
         this.hideModal();
-        console.log("Should create time entry now!");
-        //this.props.onCreateTimeEntry(timeEntry);
+        this.props.onCreateTimeEntry(timeEntry);
     }
 
     render() {
@@ -103,7 +109,7 @@ class CreateTimeEntryModal extends React.Component {
                     </div>
                     <div className="modal-footer">
                         <button className="btn btn-secondary" onClick={() => this.hideModal()}>Close</button>&nbsp;
-                        <button type="button" className="btn btn-primary" onClick={(e) => this.createTimeEntry(e)}>Create</button>
+                        <button type="button" ref={(ref) => this.submitButton = ref} className="btn btn-primary" onClick={(e) => this.createTimeEntry(e)}>Create</button>
                     </div>
                     </div>
             </Modal>

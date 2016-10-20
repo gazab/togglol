@@ -18,7 +18,10 @@ export const GET_TIME_ENTRIES_FULFILLED = 'GET_TIME_ENTRIES_FULFILLED'
 
 export const SAVE_TIME_ENTRY = 'SAVE_TIME_ENTRY'
 export const SET_API_KEY = 'SET_API_KEY'
+
 export const CREATE_TIME_ENTRY = 'CREATE_TIME_ENTRY'  
+export const CREATE_TIME_ENTRY_PENDING = 'CREATE_TIME_ENTRY_PENDING'
+export const CREATE_TIME_ENTRY_FULFILLED = 'CREATE_TIME_ENTRY_FULFILLED'
 
 // ------------------------------------
 // Actions
@@ -71,7 +74,7 @@ export function requestCreateTimeEntry(time_entry): Function {
         headers: buildRequestHeader(getState()),
         method: 'POST',
         mode: 'cors',
-        body: JSON.stringify(time_entry)
+        body: JSON.stringify({time_entry:time_entry})
     })
       .then(response => dispatch(createTimeEntry(response.json())))
   }
@@ -139,6 +142,12 @@ const TOGGLOL_ACTION_HANDLERS = {
   [GET_USER_INFO_FULFILLED]: (state: TogglolStateObject, action: {payload: Array<ProjectObject>}): TogglolStateObject => {
     console.log(action.payload.data);
     return ({ ...state, data: action.payload.data, fetching: false, user_loaded: true })
+  },
+  [CREATE_TIME_ENTRY_PENDING]: (state: TogglolStateObject): TogglolStateObject => {
+    return ({ ...state, fetching: true })
+  },
+  [CREATE_TIME_ENTRY_FULFILLED]: (state: TogglolStateObject, action: {payload: TimeEntryObject}): TogglolStateObject => {
+    return ({ ...state, time_entries: state.time_entries.concat([action.payload.data]), fetching: false })
   },
   [SET_API_KEY]: (state: TogglolStateObject, action: {payload: string}): TogglolStateObject => {
     return ({ ...state, api_key: action.payload })
