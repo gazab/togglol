@@ -11,7 +11,10 @@ import TimePicker from 'rc-time-picker';
 
 import ProjectSelector from './ProjectSelector'
 
+var LocalStorageMixin = require('react-localstorage'); 
+
 var timeFormat = 'HH:ss';
+const LAST_PROJECT_KEY = "togglol-last-project";
 
 class CreateTimeEntryModal extends React.Component {
   constructor(props) {
@@ -20,7 +23,7 @@ class CreateTimeEntryModal extends React.Component {
          entryId: undefined,
          startDate: undefined,
          endDate: undefined,
-         projectId: undefined,
+         projectId: localStorage.getItem(LAST_PROJECT_KEY),
          description: undefined,
          isModalOpen: false
     }
@@ -58,9 +61,9 @@ class CreateTimeEntryModal extends React.Component {
         this.setState({endDate: endDate});
     }
 
-    changeSelectedProject(project) {
-        console.log("Selected project: " + project);
-        this.setState({projectId: project.value});
+    changeSelectedProject(projectId) {
+        this.setState({projectId: projectId});
+        localStorage.setItem(LAST_PROJECT_KEY, projectId);
         this.submitButton.focus();
     }
 
@@ -72,7 +75,6 @@ class CreateTimeEntryModal extends React.Component {
             duration: this.state.endDate.diff(this.state.startDate, 'seconds'),
             created_with: "Togglol"
         };
-        console.log(timeEntry);
         this.hideModal();
         this.props.onCreateTimeEntry(timeEntry);
     }
@@ -109,7 +111,7 @@ class CreateTimeEntryModal extends React.Component {
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Project</label>
                                 <div className="col-sm-10">
-                                    <ProjectSelector onChange={(project) => this.changeSelectedProject(project)} ref={(ref) => this.projectSelector = ref} clients={this.props.clients} projects={this.props.projects} />
+                                    <ProjectSelector onChange={(project) => this.changeSelectedProject(project)} clients={this.props.clients} projects={this.props.projects} />
                                 </div>
                             </div>
                         </form>

@@ -140,7 +140,6 @@ const TOGGLOL_ACTION_HANDLERS = {
     return ({ ...state, fetching: true })
   }, 
   [GET_USER_INFO_FULFILLED]: (state: TogglolStateObject, action: {payload: Array<ProjectObject>}): TogglolStateObject => {
-    console.log(action.payload.data);
     return ({ ...state, data: action.payload.data, fetching: false, user_loaded: true })
   },
   [CREATE_TIME_ENTRY_PENDING]: (state: TogglolStateObject): TogglolStateObject => {

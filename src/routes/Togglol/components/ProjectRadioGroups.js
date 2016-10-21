@@ -20,18 +20,17 @@ class ProjectRadioGroups extends React.Component {
 
   addToProjectList(project) {
       var projectList = this.state.projectList;
-      if(projectList.indexOf(project) == -1) {
-          console.log(projectList);
-          projectList = this.state.projectList.concat([project])
+      if(JSON.stringify(projectList).indexOf(JSON.stringify(project)) == -1) {
+          projectList = this.state.projectList.concat([project]);
       }
-
+    
       this.setState({value: project.value, projectList: projectList});
-      this.props.onChange(project);
+      this.props.onChange(project.value);
   }
 
   selectProject(project) {
       this.setState({value: project.value});
-      this.props.onChange(project);
+      this.props.onChange(project.value);
   }
 
   getSelectedProject() {
@@ -110,9 +109,7 @@ render() {
   }
 }
 
-
 ProjectRadioGroups.propTypes = {
-  value: React.PropTypes.string,
   onChange: React.PropTypes.func
 };
 
