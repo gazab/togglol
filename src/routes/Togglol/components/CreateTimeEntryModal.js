@@ -61,6 +61,10 @@ class CreateTimeEntryModal extends React.Component {
         this.setState({endDate: endDate});
     }
 
+    changeDescription(value) {
+        this.setState({description: value});
+    }
+
     changeSelectedProject(projectId) {
         this.setState({projectId: projectId});
         localStorage.setItem(LAST_PROJECT_KEY, projectId);
@@ -102,9 +106,17 @@ class CreateTimeEntryModal extends React.Component {
                                 <label className="col-sm-2 col-form-label">Time </label>
                                 <div className="col-sm-10">
                                     <p className="form-control-static">
-                                        <TimePicker style={timepickerStyle} value={this.state.startDate} onChange={(e) => this.changeStartTime(e)} showSecond={false} />&nbsp;-&nbsp;
-                                        <TimePicker style={timepickerStyle} value={this.state.endDate} onChange={(e) => this.changeEndTime(e)} showSecond={false} />
+                                        <TimePicker style={timepickerStyle} value={this.state.startDate} onChange={(value) => this.changeStartTime(value)} showSecond={false} />&nbsp;-&nbsp;
+                                        <TimePicker style={timepickerStyle} value={this.state.endDate} onChange={(value) => this.changeEndTime(value)} showSecond={false} />
                                         &nbsp;({duration})
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <label className="col-sm-2 col-form-label">Description </label>
+                                <div className="col-sm-10">
+                                    <p className="form-control-static">
+                                        <input type="text" className="form-control" onChange={(event) => this.changeDescription(event.target.value)}/>    
                                     </p>
                                 </div>
                             </div>

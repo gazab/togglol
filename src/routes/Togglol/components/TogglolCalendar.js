@@ -109,11 +109,12 @@ var TogglolCalendar = React.createClass({
         var eventList = this.props.time_entries.map(function(entry) {
             var event = {};
             var project = that.getProject(entry.pid);
+            var description = entry.description == null ? '' : ' - ' + entry.description; 
             event["project"] = project;
             event["start"] = new Date(entry.start);
             event["end"] = new Date(entry.stop);
             event["allDay"] = false;
-            event["title"] = project.name;
+            event["title"] = project.name + description
             return event;
         });
         
