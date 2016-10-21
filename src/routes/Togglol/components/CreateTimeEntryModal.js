@@ -32,10 +32,16 @@ class CreateTimeEntryModal extends React.Component {
 
         this.setState({
             startDate: startDate,
-            endDate: endDate,
-            isModalOpen: true
-            });
-    }  
+            endDate: endDate
+        });
+
+        if(this.props.shiftKeyPressed && this.state.projectId != undefined) {
+            this.createTimeEntry();
+        } else {
+            this.setState({isModalOpen: true});
+        }
+        
+    }
 
     hideModal(){
         this.setState({isModalOpen: false});
@@ -53,6 +59,7 @@ class CreateTimeEntryModal extends React.Component {
     }
 
     changeSelectedProject(project) {
+        console.log("Selected project: " + project);
         this.setState({projectId: project.value});
         this.submitButton.focus();
     }
@@ -119,7 +126,8 @@ class CreateTimeEntryModal extends React.Component {
 
 CreateTimeEntryModal.propTypes = {
   clients: React.PropTypes.array.isRequired,
-  projects: React.PropTypes.array.isRequired
+  projects: React.PropTypes.array.isRequired,
+  shiftKeyPressed: React.PropTypes.bool.isRequired
 };
 
 // Style

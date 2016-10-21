@@ -47,6 +47,10 @@ class ProjectSelector extends React.Component {
             }
         });
         return retVal;
+  } 
+  
+  getSelectedProject() {
+    return this.projectRadioGroups.getSelectedProject();
   }
 
   render() {

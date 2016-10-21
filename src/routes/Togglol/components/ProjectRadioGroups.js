@@ -34,6 +34,10 @@ class ProjectRadioGroups extends React.Component {
       this.props.onChange(project);
   }
 
+  getSelectedProject() {
+      return this.state.value;
+  }
+
   removeProject(event, project) {
       var projectList = this.state.projectList.splice(0);
       var index = projectList.indexOf(project);

@@ -33,7 +33,8 @@ var TogglolCalendar = React.createClass({
                 
         return {
             date: date,
-            view: 'week'
+            view: 'week',
+            shift: false
         };
     },
     propTypes: {
@@ -96,6 +97,14 @@ var TogglolCalendar = React.createClass({
         console.log("Create!");
         this.props.onCreateTimeEntry(timeEntry);
     },
+    onMouseUp: function (e) {
+        if (e.shiftKey) {
+            this.setState({shift: true});
+        }
+        else {
+            this.setState({shift: false});
+        }
+    },
     render: function() {
         var that = this;        
         var eventList = this.props.time_entries.map(function(entry) {
@@ -138,8 +147,9 @@ var TogglolCalendar = React.createClass({
                     onSelectSlot={(slotInfo) => this.showModal(slotInfo)}
                     eventPropGetter={(this.eventStyleGetter)}
                     formats={formats}
+                    onMouseDown={(e) => this.onMouseUp(e)}
                  />
-                 <CreateTimeEntryModal onCreateTimeEntry={(e) => this.createTimeEntry(e)} clients={this.props.data.clients} projects={this.props.data.projects} ref={(ref) => this.createTimeEntryModal = ref} />
+                 <CreateTimeEntryModal shiftKeyPressed={this.state.shift} onCreateTimeEntry={(e) => this.createTimeEntry(e)} clients={this.props.data.clients} projects={this.props.data.projects} ref={(ref) => this.createTimeEntryModal = ref} />
             </div>
              );
     }
