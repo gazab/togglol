@@ -19,7 +19,8 @@ type Props = {
     time_entries: Array<TimeEntriesObject>,
     data: Object,
     fetchTimeEntries: Function,
-    requestCreateTimeEntry: Function
+    requestCreateTimeEntry: Function,
+    requestDeleteTimeEntry: Function
 }
 
 // TODO: Refactor to use ES6 classes instead like Togglol.js
@@ -91,6 +92,7 @@ var TogglolCalendar = React.createClass({
         return retVal;
     },
     showModal: function(slotInfo){
+        console.log(slotInfo);
         this.createTimeEntryModal.showModal(slotInfo);
     },
     createTimeEntry: function(timeEntry) {
@@ -109,7 +111,10 @@ var TogglolCalendar = React.createClass({
         var eventList = this.props.time_entries.map(function(entry) {
             var event = {};
             var project = that.getProject(entry.pid);
-            var description = entry.description == null ? '' : ' - ' + entry.description; 
+            var description = entry.description == null ? '' : ' - ' + entry.description;
+            event["entryId"] = entry.id;
+            event["projectId"] = entry.pid;
+            event["description"] = entry.description; 
             event["project"] = project;
             event["start"] = new Date(entry.start);
             event["end"] = new Date(entry.stop);
@@ -145,11 +150,19 @@ var TogglolCalendar = React.createClass({
                     onView={this.changeView}
                     selectable={true}
                     onSelectSlot={(slotInfo) => this.showModal(slotInfo)}
+                    onSelectEvent={(slotInfo) => this.showModal(slotInfo)}
                     eventPropGetter={(this.eventStyleGetter)}
                     formats={formats}
                     onMouseDown={(e) => this.onMouseUp(e)}
                  />
-                 <CreateTimeEntryModal shiftKeyPressed={this.state.shift} onCreateTimeEntry={(e) => this.createTimeEntry(e)} clients={this.props.data.clients} projects={this.props.data.projects} ref={(ref) => this.createTimeEntryModal = ref} />
+                 <CreateTimeEntryModal 
+                    shiftKeyPressed={this.state.shift}
+                    onDeleteTimeEntry={(entry) => this.props.onDeleteTimeEntry(entry)}
+                    onCreateTimeEntry={(e) => this.createTimeEntry(e)}
+                    clients={this.props.data.clients}
+                    projects={this.props.data.projects}
+                    ref={(ref) => this.createTimeEntryModal = ref}
+                 />
             </div>
              );
     }

@@ -23,6 +23,10 @@ export const CREATE_TIME_ENTRY = 'CREATE_TIME_ENTRY'
 export const CREATE_TIME_ENTRY_PENDING = 'CREATE_TIME_ENTRY_PENDING'
 export const CREATE_TIME_ENTRY_FULFILLED = 'CREATE_TIME_ENTRY_FULFILLED'
 
+export const DELETE_TIME_ENTRY = 'DELETE_TIME_ENTRY'  
+export const DELETE_TIME_ENTRY_PENDING = 'DELETE_TIME_ENTRY_PENDING'
+export const DELETE_TIME_ENTRY_FULFILLED = 'DELETE_TIME_ENTRY_FULFILLED'
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -48,6 +52,13 @@ export function createTimeEntry (time_entry: TimeEntryObject) {
   }
 }
 
+export function deleteTimeEntry (entryId: TimeEntryObject) {
+  return {
+    type: DELETE_TIME_ENTRY,
+    payload: entryId
+  }
+}
+
 export function fetchTimeEntries(start: string, end: string): Function {
   return (dispatch: Function, getState: Function): Promise => {
     return fetch('https://www.toggl.com/api/v8/time_entries?start_date=' + start + '&end_date=' + end, {
@@ -62,7 +73,6 @@ export function fetchUserInfo(): Function {
   return (dispatch: Function, getState: Function): Promise => {
     return fetch('https://www.toggl.com/api/v8/me?with_related_data=true', {
         headers: buildRequestHeader(getState()),
-        mode: 'cors',
     })
       .then(response => dispatch(getUserInfo(response.json())))
   }
@@ -73,10 +83,19 @@ export function requestCreateTimeEntry(time_entry): Function {
     return fetch('https://www.toggl.com/api/v8/time_entries', {
         headers: buildRequestHeader(getState()),
         method: 'POST',
-        mode: 'cors',
         body: JSON.stringify({time_entry:time_entry})
     })
       .then(response => dispatch(createTimeEntry(response.json())))
+  }
+}
+
+export function requestDeleteTimeEntry(entryId): Function {
+  return (dispatch: Function, getState: Function): Promise => {
+    return fetch('https://www.toggl.com/api/v8/time_entries/' + entryId, {
+        headers: buildRequestHeader(getState()),
+        method: 'DELETE'
+    })
+      .then(response => dispatch(deleteTimeEntry(entryId)))
   }
 }
   
@@ -122,7 +141,9 @@ export const actions = {
   setApiKeyAndFetchUserInfo,
   
   requestCreateTimeEntry,
-  createTimeEntry
+  createTimeEntry,
+
+  requestDeleteTimeEntry
 }
 
 // ------------------------------------
@@ -147,6 +168,16 @@ const TOGGLOL_ACTION_HANDLERS = {
   },
   [CREATE_TIME_ENTRY_FULFILLED]: (state: TogglolStateObject, action: {payload: TimeEntryObject}): TogglolStateObject => {
     return ({ ...state, time_entries: state.time_entries.concat([action.payload.data]), fetching: false })
+  },
+  [DELETE_TIME_ENTRY_PENDING]: (state: TogglolStateObject): TogglolStateObject => {
+    return ({ ...state, fetching: true })
+  },
+  [DELETE_TIME_ENTRY]: (state: TogglolStateObject, action): TogglolStateObject => {
+    var entryId = action.payload;
+    var time_entries = state.time_entries.filter(function(entry){
+        return entry.id !== entryId;
+    });
+    return ({ ...state, fetching: false, time_entries: time_entries })
   },
   [SET_API_KEY]: (state: TogglolStateObject, action: {payload: string}): TogglolStateObject => {
     return ({ ...state, api_key: action.payload })

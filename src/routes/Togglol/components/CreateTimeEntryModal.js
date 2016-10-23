@@ -35,7 +35,10 @@ class CreateTimeEntryModal extends React.Component {
 
         this.setState({
             startDate: startDate,
-            endDate: endDate
+            endDate: endDate,
+            entryId: slotInfo.entryId,
+            projectId: slotInfo.projectId,
+            description: slotInfo.description
         });
 
         if(this.props.shiftKeyPressed && this.state.projectId != undefined) {
@@ -83,8 +86,22 @@ class CreateTimeEntryModal extends React.Component {
         this.props.onCreateTimeEntry(timeEntry);
     }
 
+    deleteTimeEntry() {
+        var entryId = this.state.entryId;
+        this.hideModal();
+        this.props.onDeleteTimeEntry(entryId);
+    }
+
+    isEditMode() {
+        return this.state.entryId != undefined;
+    }
+
     render() {
         var duration = (this.state.startDate != undefined && this.state.endDate != undefined) ? moment.duration(this.state.endDate.diff(this.state.startDate)).format("h [hrs], m [min]") : "";
+        let deleteButton = ""
+        if(this.isEditMode()) {
+            deleteButton = (<button type="button" style={{float: 'left'}} className="float-xs-left btn btn-danger" onClick={(e) => this.deleteTimeEntry(e)}>Delete entry</button>);
+        }
 
         return(
             <Modal 
@@ -98,7 +115,7 @@ class CreateTimeEntryModal extends React.Component {
                             <span aria-hidden="true">&times;</span>
                             <span className="sr-only">Close</span>
                         </button>
-                        <h4 className="modal-title">Add time entry</h4>
+                        <h4 className="modal-title">{this.isEditMode() ? 'Edit time entry' : 'Add time entry'}</h4>
                     </div>
                     <div className="modal-body">
                         <form>
@@ -123,14 +140,15 @@ class CreateTimeEntryModal extends React.Component {
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Project</label>
                                 <div className="col-sm-10">
-                                    <ProjectSelector onChange={(project) => this.changeSelectedProject(project)} clients={this.props.clients} projects={this.props.projects} />
+                                    <ProjectSelector selectedProject={this.state.projectId} onChange={(project) => this.changeSelectedProject(project)} clients={this.props.clients} projects={this.props.projects} />
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div className="modal-footer">
+                        {deleteButton}
                         <button className="btn btn-secondary" onClick={() => this.hideModal()}>Close</button>&nbsp;
-                        <button type="button" ref={(ref) => this.submitButton = ref} className="btn btn-primary" onClick={(e) => this.createTimeEntry(e)}>Create</button>
+                        <button type="button" ref={(ref) => this.submitButton = ref} className="btn btn-primary" onClick={(e) => this.createTimeEntry(e)}>{this.isEditMode() ? 'Save entry' : 'Create entry'}</button>
                     </div>
                     </div>
             </Modal>
