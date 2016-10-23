@@ -23,7 +23,7 @@ class CreateTimeEntryModal extends React.Component {
          entryId: undefined,
          startDate: undefined,
          endDate: undefined,
-         projectId: localStorage.getItem(LAST_PROJECT_KEY),
+         projectId: this.getLastProjectId(),
          description: undefined,
          isModalOpen: false
     }
@@ -33,11 +33,13 @@ class CreateTimeEntryModal extends React.Component {
         var startDate = moment(slotInfo.start);
         var endDate = moment(slotInfo.end);
 
+        var projectId = slotInfo.projectId || this.getLastProjectId();
+
         this.setState({
             startDate: startDate,
             endDate: endDate,
             entryId: slotInfo.entryId,
-            projectId: slotInfo.projectId,
+            projectId: projectId,
             description: slotInfo.description
         });
 
@@ -47,6 +49,10 @@ class CreateTimeEntryModal extends React.Component {
             this.setState({isModalOpen: true});
         }
         
+    }
+
+    getLastProjectId() {
+        return Number(localStorage.getItem(LAST_PROJECT_KEY));
     }
 
     hideModal(){

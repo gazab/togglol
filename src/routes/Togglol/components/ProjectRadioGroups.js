@@ -8,7 +8,6 @@ class ProjectRadioGroups extends React.Component {
     super(props);
     if(localStorage.getItem(state_key) == null) {
         this.state = {
-            value: undefined,
             projectList: []
         }
     }
@@ -24,17 +23,12 @@ class ProjectRadioGroups extends React.Component {
           projectList = this.state.projectList.concat([project]);
       }
     
-      this.setState({value: project.value, projectList: projectList});
+      this.setState({projectList: projectList});
       this.props.onChange(project.value);
   }
 
   selectProject(project) {
-      this.setState({value: project.value});
       this.props.onChange(project.value);
-  }
-
-  getSelectedProject() {
-      return this.state.value;
   }
 
   removeProject(event, project) {
@@ -81,7 +75,7 @@ render() {
     var buttonGroups = Object.keys(groupedProjects).map(function(client) {        
         var projectButtons = groupedProjects[client].map(function(project) {
             var cls = "btn btn-secondary";
-            if(project.value == that.state.value) { 
+            if(project.value == that.props.selectedProject) { 
                 cls += " active" 
             }
             
@@ -103,6 +97,7 @@ render() {
 
       return(
             <div>
+                <p>Selected project: {that.props.selectedProject}</p>
                 {buttonGroups}
             </div>
       );
@@ -110,7 +105,8 @@ render() {
 }
 
 ProjectRadioGroups.propTypes = {
-  onChange: React.PropTypes.func
+  onChange: React.PropTypes.func,
+  selectedProject: React.PropTypes.number
 };
 
 export default ProjectRadioGroups

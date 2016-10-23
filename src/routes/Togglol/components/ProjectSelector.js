@@ -48,10 +48,6 @@ class ProjectSelector extends React.Component {
         });
         return retVal;
   } 
-  
-  getSelectedProject() {
-    return this.projectRadioGroups.getSelectedProject();
-  }
 
   render() {
     return (
@@ -65,7 +61,10 @@ class ProjectSelector extends React.Component {
             clearable={false}
             onChange={(project) => this.projectRadioGroups.addToProjectList(project)}
           />
-          <ProjectRadioGroups ref={(ref) => this.projectRadioGroups = ref} onChange={(project) => this.props.onChange(project)} />
+          <ProjectRadioGroups 
+            selectedProject={this.props.selectedProject}
+            onChange={(project) => this.props.onChange(project)}
+          />
       </div>
       )
   }
@@ -74,7 +73,8 @@ class ProjectSelector extends React.Component {
 ProjectSelector.propTypes = {
   clients: React.PropTypes.array.isRequired,
   projects: React.PropTypes.array.isRequired,
-  onChange: React.PropTypes.func.isRequired
+  onChange: React.PropTypes.func.isRequired,
+  selectedProject: React.PropTypes.number
 };
 
 
