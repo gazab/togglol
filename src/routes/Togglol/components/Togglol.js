@@ -13,7 +13,6 @@ type Props = {
   fetchTimeEntries: Function,
   fetchUserInfo: Function,
   setApiKey: Function,
-  setApiKeyAndFetchUserInfo: Function,
 
   requestCreateTimeEntry: Function,
   requestDeleteTimeEntry: Function,
@@ -26,12 +25,6 @@ class Togglol extends React.Component {
     super(props);
   }
 
-  setApiKeyAndFetchUserInfo(api_key) {
-    console.log("Set: " + api_key);
-    console.log(this);
-    //this.setApiKey({api_key: api_key});
-  }
-  
   render() {
         if(this.props.user_loaded) {
           return(
