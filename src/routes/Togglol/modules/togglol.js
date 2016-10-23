@@ -19,9 +19,9 @@ export const GET_TIME_ENTRIES_FULFILLED = 'GET_TIME_ENTRIES_FULFILLED'
 export const SAVE_TIME_ENTRY = 'SAVE_TIME_ENTRY'
 export const SET_API_KEY = 'SET_API_KEY'
 
-export const CREATE_TIME_ENTRY = 'CREATE_TIME_ENTRY'  
-export const CREATE_TIME_ENTRY_PENDING = 'CREATE_TIME_ENTRY_PENDING'
-export const CREATE_TIME_ENTRY_FULFILLED = 'CREATE_TIME_ENTRY_FULFILLED'
+export const CREATE_OR_UPDATE_TIME_ENTRY = 'CREATE_OR_UPDATE_TIME_ENTRY'  
+export const CREATE_OR_UPDATE_TIME_ENTRY_PENDING = 'CREATE_OR_UPDATE_TIME_ENTRY_PENDING'
+export const CREATE_OR_UPDATE_TIME_ENTRY_FULFILLED = 'CREATE_OR_UPDATE_TIME_ENTRY_FULFILLED'
 
 export const DELETE_TIME_ENTRY = 'DELETE_TIME_ENTRY'  
 export const DELETE_TIME_ENTRY_PENDING = 'DELETE_TIME_ENTRY_PENDING'
@@ -45,9 +45,9 @@ export function getUserInfo (user_info: Array<ProjectObject>): Action {
   }
 }
 
-export function createTimeEntry (time_entry: TimeEntryObject) {
+export function createOrUpdateTimeEntry (time_entry: TimeEntryObject) {
   return {
-    type: CREATE_TIME_ENTRY,
+    type: CREATE_OR_UPDATE_TIME_ENTRY,
     payload: time_entry
   }
 }
@@ -78,14 +78,17 @@ export function fetchUserInfo(): Function {
   }
 }
 
-export function requestCreateTimeEntry(time_entry): Function {
+export function requestCreateOrUpdateTimeEntry(timeEntry): Function {
   return (dispatch: Function, getState: Function): Promise => {
-    return fetch('https://www.toggl.com/api/v8/time_entries', {
+    var url = 'https://www.toggl.com/api/v8/time_entries';
+    if(timeEntry.id > 0)
+      url = url + '/' + timeEntry.id;
+    return fetch(url, {
         headers: buildRequestHeader(getState()),
         method: 'POST',
-        body: JSON.stringify({time_entry:time_entry})
+        body: JSON.stringify({time_entry:timeEntry})
     })
-      .then(response => dispatch(createTimeEntry(response.json())))
+      .then(response => dispatch(createOrUpdateTimeEntry(response.json())))
   }
 }
 
@@ -140,8 +143,8 @@ export const actions = {
   setApiKey,
   setApiKeyAndFetchUserInfo,
   
-  requestCreateTimeEntry,
-  createTimeEntry,
+  requestCreateOrUpdateTimeEntry,
+  createOrUpdateTimeEntry,
 
   requestDeleteTimeEntry
 }
@@ -163,11 +166,20 @@ const TOGGLOL_ACTION_HANDLERS = {
   [GET_USER_INFO_FULFILLED]: (state: TogglolStateObject, action: {payload: Array<ProjectObject>}): TogglolStateObject => {
     return ({ ...state, data: action.payload.data, fetching: false, user_loaded: true })
   },
-  [CREATE_TIME_ENTRY_PENDING]: (state: TogglolStateObject): TogglolStateObject => {
+  [CREATE_OR_UPDATE_TIME_ENTRY_PENDING]: (state: TogglolStateObject): TogglolStateObject => {
     return ({ ...state, fetching: true })
   },
-  [CREATE_TIME_ENTRY_FULFILLED]: (state: TogglolStateObject, action: {payload: TimeEntryObject}): TogglolStateObject => {
-    return ({ ...state, time_entries: state.time_entries.concat([action.payload.data]), fetching: false })
+  [CREATE_OR_UPDATE_TIME_ENTRY_FULFILLED]: (state: TogglolStateObject, action: {payload: TimeEntryObject}): TogglolStateObject => {
+    // If itexists, remove old entry
+    var entryId = action.payload.data.id;
+    var time_entries = state.time_entries.filter(function(entry){
+        return entry.id !== entryId;
+    });
+
+    // Add the new or updated one
+    time_entries.push(action.payload.data);
+
+    return ({ ...state, time_entries: time_entries, fetching: false })
   },
   [DELETE_TIME_ENTRY_PENDING]: (state: TogglolStateObject): TogglolStateObject => {
     return ({ ...state, fetching: true })

@@ -81,6 +81,7 @@ class CreateTimeEntryModal extends React.Component {
 
     createTimeEntry() {
         var timeEntry = {
+            id: this.state.entryId,
             description: this.state.description,
             pid: this.state.projectId,
             start: this.state.startDate.toISOString(),

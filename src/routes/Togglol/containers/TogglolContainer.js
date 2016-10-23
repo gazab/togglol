@@ -1,18 +1,18 @@
 /* @flow */
 import { connect } from 'react-redux'  
-import { fetchTimeEntries, setApiKey, fetchUserInfo, setApiKeyAndFetchUserInfo, requestCreateTimeEntry, requestDeleteTimeEntry } from '../modules/togglol'
+import { fetchTimeEntries, setApiKey, fetchUserInfo, setApiKeyAndFetchUserInfo, requestCreateOrUpdateTimeEntry, requestDeleteTimeEntry } from '../modules/togglol'
 
 import Togglol from '../components/Togglol'
 
 import type { TimeEntryObject } from '../interfaces/togglol'
 import type { ProjectObject } from '../interfaces/togglol'
 
-const mapActionCreators: {fetchTimeEntries: Function, fetchUserInfo: Function, setApiKey: Function, setApiKeyAndFetchUserInfo: Function, requestCreateTimeEntry: Function, requestDeleteTimeEntry: Function} = {  
+const mapActionCreators: {fetchTimeEntries: Function, fetchUserInfo: Function, setApiKey: Function, setApiKeyAndFetchUserInfo: Function, requestCreateOrUpdateTimeEntry: Function, requestDeleteTimeEntry: Function} = {  
   fetchTimeEntries,
   fetchUserInfo,
   setApiKey,
   setApiKeyAndFetchUserInfo,
-  requestCreateTimeEntry,
+  requestCreateOrUpdateTimeEntry,
   requestDeleteTimeEntry
 }
 

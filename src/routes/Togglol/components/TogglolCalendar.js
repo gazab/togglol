@@ -19,7 +19,7 @@ type Props = {
     time_entries: Array<TimeEntriesObject>,
     data: Object,
     fetchTimeEntries: Function,
-    requestCreateTimeEntry: Function,
+    requestCreateOrUpdateTimeEntry: Function,
     requestDeleteTimeEntry: Function
 }
 
@@ -95,7 +95,7 @@ var TogglolCalendar = React.createClass({
         this.createTimeEntryModal.showModal(slotInfo);
     },
     createTimeEntry: function(timeEntry) {
-        this.props.onCreateTimeEntry(timeEntry);
+        this.props.onSaveTimeEntry(timeEntry);
     },
     onMouseUp: function (e) {
         if (e.shiftKey) {
