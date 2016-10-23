@@ -47,7 +47,7 @@ class ProjectSelector extends React.Component {
             }
         });
         return retVal;
-  } 
+  }
 
   render() {
     return (
@@ -61,7 +61,8 @@ class ProjectSelector extends React.Component {
             clearable={false}
             onChange={(project) => this.projectRadioGroups.addToProjectList(project)}
           />
-          <ProjectRadioGroups 
+          <ProjectRadioGroups
+            ref={(ref) => this.projectRadioGroups = ref} 
             selectedProject={this.props.selectedProject}
             onChange={(project) => this.props.onChange(project)}
           />
