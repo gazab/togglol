@@ -30,7 +30,7 @@ class ApiKeyInput extends React.Component {
                     <div className="input-group input-group-lg">
                         <input value={this.state.value} maxlength="32" id="apikeyInput" placeholder="Toggl API key" className="form-control" type="text" onChange={(e) => this.onChange(e)}/>
                         <span className="input-group-btn">
-                            <button className="btn btn-outline-primary" onClick={this.handleLoadPress.bind(this)}>Login</button>
+                            <button className="btn btn-primary" onClick={this.handleLoadPress.bind(this)}>Login</button>
                         </span>
                     </div>
                 </div>
