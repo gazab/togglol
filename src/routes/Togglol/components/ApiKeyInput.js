@@ -25,13 +25,20 @@ class ApiKeyInput extends React.Component {
 
     render() {
         return(
-            <div className="row">
-                <div className="col-lg-8">
-                    <div className="input-group input-group-lg">
-                        <input value={this.state.value} maxlength="32" id="apikeyInput" placeholder="Toggl API key" className="form-control" type="text" onChange={(e) => this.onChange(e)}/>
-                        <span className="input-group-btn">
-                            <button className="btn btn-primary" onClick={this.handleLoadPress.bind(this)}>Login</button>
-                        </span>
+            <div>
+                <div className="row">
+                    <div className="col-lg-8">
+                        <div className="input-group input-group-lg">
+                            <input value={this.state.value} maxlength="32" id="apikeyInput" placeholder="Your Toggl API token" className="form-control" type="text" onChange={(e) => this.onChange(e)}/>
+                            <span className="input-group-btn">
+                                <button className="btn btn-primary" onClick={this.handleLoadPress.bind(this)}>Login</button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col-lg-8">
+                    <a target="_blank" href="https://toggl.com/app/profile">Find your API token here</a>
                     </div>
                 </div>
             </div>
