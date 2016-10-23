@@ -26,7 +26,7 @@ class ApiKeyInput extends React.Component {
     render() {
         return(
             <div className="row">
-                <div className="col-md-6 offset-md-3">
+                <div className="col-lg-6 offset-lg-3">
                     <div className="input-group input-group-lg">
                         <input value={this.state.value} maxlength="32" id="apikeyInput" placeholder="Your Toggl API token" className="form-control" type="text" onChange={(e) => this.onChange(e)}/>
                         <span className="input-group-btn">
