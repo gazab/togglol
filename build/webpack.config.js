@@ -25,6 +25,7 @@ const webpackConfig = {
 // ------------------------------------
 const APP_ENTRY_PATHS = [
   'babel-polyfill',
+  'whatwg-fetch',
   paths.client('main.js')
 ]
 
