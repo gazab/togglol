@@ -118,7 +118,7 @@ class CreateTimeEntryModal extends React.Component {
                 >
                 <div className="modal-content">
                     <div className="modal-header">
-                        <button type="button" className="close" onClick={this.handleModalCloseRequest}>
+                        <button type="button" className="close" onClick={() => this.hideModal()}>
                             <span aria-hidden="true">&times;</span>
                             <span className="sr-only">Close</span>
                         </button>
