@@ -76,7 +76,6 @@ class CreateTimeEntryModal extends React.Component {
 
     changeSelectedProject(projectId) {
         this.setState({projectId: projectId});
-        localStorage.setItem(LAST_PROJECT_KEY, projectId);
         this.submitButton.focus();
     }
 
@@ -88,6 +87,7 @@ class CreateTimeEntryModal extends React.Component {
             duration: this.state.endDate.diff(this.state.startDate, 'seconds'),
             created_with: "Togglol"
         };
+        localStorage.setItem(LAST_PROJECT_KEY, this.state.projectId);
         this.hideModal();
         this.props.onCreateTimeEntry(timeEntry);
     }
@@ -153,7 +153,7 @@ class CreateTimeEntryModal extends React.Component {
                     </div>
                     <div className="modal-footer">
                         {deleteButton}
-                        <button className="btn btn-secondary" onClick={() => this.hideModal()}>Close</button>&nbsp;
+                        <button className="btn btn-secondary" onClick={() => this.hideModal()}>Cancel</button>&nbsp;
                         <button type="button" ref={(ref) => this.submitButton = ref} className="btn btn-primary" onClick={(e) => this.createTimeEntry(e)}>{this.isEditMode() ? 'Save entry' : 'Create entry'}</button>
                     </div>
                     </div>
