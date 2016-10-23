@@ -105,9 +105,9 @@ class CreateTimeEntryModal extends React.Component {
 
     render() {
         var duration = (this.state.startDate != undefined && this.state.endDate != undefined) ? moment.duration(this.state.endDate.diff(this.state.startDate)).format("h [hrs], m [min]") : "";
-        let deleteButton = ""
+        let footerExtras = (<p className="float-xs-left" style={{float:'left'}}><small>Tip: Hold <kbd>shift</kbd> when creating a time entry to automatically use the last added project</small></p>)
         if(this.isEditMode()) {
-            deleteButton = (<button type="button" style={{float: 'left'}} className="float-xs-left btn btn-danger" onClick={(e) => this.deleteTimeEntry(e)}>Delete entry</button>);
+            footerExtras = (<button type="button" style={{float: 'left'}} className="float-xs-left btn btn-danger" onClick={(e) => this.deleteTimeEntry(e)}>Delete entry</button>);
         }
 
         return(
@@ -151,9 +151,10 @@ class CreateTimeEntryModal extends React.Component {
                                 </div>
                             </div>
                         </form>
+                        
                     </div>
                     <div className="modal-footer">
-                        {deleteButton}
+                        {footerExtras}
                         <button className="btn btn-secondary" onClick={() => this.hideModal()}>Cancel</button>&nbsp;
                         <button type="button" ref={(ref) => this.submitButton = ref} className="btn btn-primary" onClick={(e) => this.createTimeEntry(e)}>{this.isEditMode() ? 'Save entry' : 'Create entry'}</button>
                     </div>
