@@ -34,7 +34,7 @@ class CreateTimeEntryModal extends React.Component {
         var endDate = moment(slotInfo.end);
 
         var projectId = slotInfo.projectId || this.getLastProjectId();
-
+        
         this.setState({
             startDate: startDate,
             endDate: endDate,
