@@ -25,7 +25,7 @@ class ProjectRadioGroups extends React.Component {
 
   addAndGetProjectList(project) {
       var projectList = this.state.projectList;
-      if(JSON.stringify(projectList).indexOf(JSON.stringify(project)) == -1) {
+      if(project != null && JSON.stringify(projectList).indexOf(JSON.stringify(project)) == -1) {
           projectList = this.state.projectList.concat([project]);
       }
 
@@ -79,7 +79,7 @@ render() {
     var buttonGroups = Object.keys(groupedProjects).map(function(client) {        
         var projectButtons = groupedProjects[client].map(function(project) {
             var cls = "btn btn-secondary";
-            if(project.value == that.props.selectedProjectOptionsValue.value) { 
+            if(that.props.selectedProjectOptionsValue != null && project.value == that.props.selectedProjectOptionsValue.value) { 
                 cls += " active" 
             }
             
