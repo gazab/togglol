@@ -14,17 +14,22 @@ class ProjectRadioGroups extends React.Component {
     else {
             this.state = JSON.parse(localStorage.getItem(state_key));    
     }
-
+    this.state.projectList = this.addAndGetProjectList(this.props.selectedProjectOptionsValue);
   }
 
   addToProjectList(project) {
+      var projectList = this.addAndGetProjectList(project);
+      this.setState({projectList: projectList});
+      this.props.onChange(project.value);
+  }
+
+  addAndGetProjectList(project) {
       var projectList = this.state.projectList;
       if(JSON.stringify(projectList).indexOf(JSON.stringify(project)) == -1) {
           projectList = this.state.projectList.concat([project]);
       }
-    
-      this.setState({projectList: projectList});
-      this.props.onChange(project.value);
+
+      return projectList;
   }
 
   selectProject(project) {
@@ -43,7 +48,6 @@ class ProjectRadioGroups extends React.Component {
   }
 
   createDotStyle(project) {
-
     var dotStyle = {
         width: '13px',
         height: '13px',
@@ -57,7 +61,7 @@ class ProjectRadioGroups extends React.Component {
 
 render() {
     // Store state in localStorage
-    localStorage.setItem(state_key, JSON.stringify(this.state));  
+    localStorage.setItem(state_key, JSON.stringify(this.state));
 
     // Group project after client id
     var groupedProjects = [];
@@ -75,7 +79,7 @@ render() {
     var buttonGroups = Object.keys(groupedProjects).map(function(client) {        
         var projectButtons = groupedProjects[client].map(function(project) {
             var cls = "btn btn-secondary";
-            if(project.value == that.props.selectedProject) { 
+            if(project.value == that.props.selectedProjectOptionsValue.value) { 
                 cls += " active" 
             }
             
@@ -97,7 +101,6 @@ render() {
 
       return(
             <div>
-                <p>Selected project: {that.props.selectedProject}</p>
                 {buttonGroups}
             </div>
       );
@@ -106,7 +109,7 @@ render() {
 
 ProjectRadioGroups.propTypes = {
   onChange: React.PropTypes.func,
-  selectedProject: React.PropTypes.number
+  selectedProjectOptionsValue: React.PropTypes.object
 };
 
 export default ProjectRadioGroups

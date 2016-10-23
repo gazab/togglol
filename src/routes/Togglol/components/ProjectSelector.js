@@ -23,7 +23,8 @@ class ProjectSelector extends React.Component {
           if(groupedProjects[project.cid] == null)
             groupedProjects[project.cid] = [];
 
-          groupedProjects[project.cid].push({label: project.name, value: project.id, color: project.hex_color, client: that.getClient(project.cid).name});
+          // And add it to the options list so Select can render it
+          groupedProjects[project.cid].push(that.createProjectOptionsValue(project));
         }
     });
 
@@ -35,6 +36,21 @@ class ProjectSelector extends React.Component {
     });
 
     return options;
+  }
+
+  createSelectedProjectsOptionsValue() {
+    var that = this;
+    let retVal = null;
+    this.props.projects.forEach(function(project){
+      if(project.id == that.props.selectedProject)
+        retVal = that.createProjectOptionsValue(project);
+        return;
+    });
+    return retVal;
+  }
+
+  createProjectOptionsValue(project) {
+    return {label: project.name, value: project.id, color: project.hex_color, client: this.getClient(project.cid).name};
   }
 
   getClient(id) {
@@ -63,7 +79,7 @@ class ProjectSelector extends React.Component {
           />
           <ProjectRadioGroups
             ref={(ref) => this.projectRadioGroups = ref} 
-            selectedProject={this.props.selectedProject}
+            selectedProjectOptionsValue={this.createSelectedProjectsOptionsValue()}
             onChange={(project) => this.props.onChange(project)}
           />
       </div>
