@@ -90,7 +90,7 @@ render() {
         });
 
         return (
-            <div>
+            <div key={client.id}>
                 <p style={{marginBottom: '3px', marginTop: '10px'}}><strong>{client}</strong></p>
                 <div className="btn-group" role="group">
                     {projectButtons}
