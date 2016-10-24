@@ -143,6 +143,7 @@ var TogglolCalendar = React.createClass({
                     culture="en-GB"
                     events={eventList}
                     defaultView={this.state.view}
+                    views={['week', 'month']}
                     min={minTime}
                     max={maxTime}
                     onNavigate={this.fetchShownEntries}
