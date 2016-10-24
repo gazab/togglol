@@ -17,14 +17,15 @@ class ProjectRadioGroups extends React.Component {
   }
 
   addAndGetProjectList(project) {
-      var projectId = project.value;
-      var projectList = this.state.projectList.filter(function(project){
-        return project.value !== projectId;
-      });
       if(project != null) {
-          projectList = projectList.concat([project]);
+        var projectId = project.value;
+        var projectList = this.state.projectList.filter(function(project){
+            return project.value !== projectId;
+        });
+        projectList = projectList.concat([project]);
+        return projectList;
       }
-      return projectList;
+      return this.state.projectList;
   }
 
   selectProject(project) {
