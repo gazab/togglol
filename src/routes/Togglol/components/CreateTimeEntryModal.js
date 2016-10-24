@@ -43,7 +43,7 @@ class CreateTimeEntryModal extends React.Component {
             description: slotInfo.description
         });
 
-        if(this.props.shiftKeyPressed && this.state.projectId != undefined) {
+        if(this.props.shiftKeyPressed && this.state.projectId > 0) {
             this.createTimeEntry();
         } else {
             this.setState({isModalOpen: true});
