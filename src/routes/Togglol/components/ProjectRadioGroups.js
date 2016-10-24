@@ -6,14 +6,7 @@ const state_key = "togglol-prg-state";
 class ProjectRadioGroups extends React.Component {
   constructor(props) {
     super(props);
-    if(localStorage.getItem(state_key) == null) {
-        this.state = {
-            projectList: []
-        }
-    }
-    else {
-            this.state = JSON.parse(localStorage.getItem(state_key));    
-    }
+    this.state = JSON.parse(localStorage.getItem(state_key) || '{ "projectList": [] }');
     this.state.projectList = this.addAndGetProjectList(this.props.selectedProjectOptionsValue);
   }
 
@@ -24,11 +17,13 @@ class ProjectRadioGroups extends React.Component {
   }
 
   addAndGetProjectList(project) {
-      var projectList = this.state.projectList;
-      if(project != null && JSON.stringify(projectList).indexOf(JSON.stringify(project)) == -1) {
-          projectList = this.state.projectList.concat([project]);
+      var projectId = project.value;
+      var projectList = this.state.projectList.filter(function(project){
+        return project.value !== projectId;
+      });
+      if(project != null) {
+          projectList = projectList.concat([project]);
       }
-
       return projectList;
   }
 
@@ -74,9 +69,7 @@ render() {
     });
 
     //TODO: Fix sort
-    groupedProjects.sort();
-
-    var buttonGroups = Object.keys(groupedProjects).map(function(client) {        
+    var buttonGroups = Object.keys(groupedProjects).map(function(client, index) {
         var projectButtons = groupedProjects[client].map(function(project) {
             var cls = "btn btn-secondary";
             if(that.props.selectedProjectOptionsValue != null && project.value == that.props.selectedProjectOptionsValue.value) { 
@@ -90,7 +83,7 @@ render() {
         });
 
         return (
-            <div key={client.id}>
+            <div key={index}>
                 <p style={{marginBottom: '3px', marginTop: '10px'}}><strong>{client}</strong></p>
                 <div className="btn-group" role="group">
                     {projectButtons}
