@@ -35,6 +35,7 @@ class ApiKeyInput extends React.Component {
                     </div>
                     <div className="text-xs-center">
                         <a target="_blank" href="https://toggl.com/app/profile">Find your API token here</a>
+                        <p><small>Disclaimer: We are NOT affiliated with Toggl in ANY way</small></p>
                     </div>
                 </div>
             </div>
