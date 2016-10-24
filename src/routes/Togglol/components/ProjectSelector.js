@@ -75,7 +75,7 @@ class ProjectSelector extends React.Component {
             value={this.state.value}
             options={this.state.options}
             clearable={false}
-            onChange={(project) => this.projectRadioGroups.addToProjectList(project)}
+            onChange={(project) => this.projectRadioGroups.addToProjectList({label: project.label, value: project.value, color: project.color, client: project.client})}
           />
           <ProjectRadioGroups
             ref={(ref) => this.projectRadioGroups = ref} 
