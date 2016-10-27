@@ -133,8 +133,9 @@ var TogglolCalendar = React.createClass({
                 moment(start).format('HH:mm') + ' — ' + moment(end).format('HH:mm') + ' (' + moment.duration(moment(end).diff(moment(start))).format("h [hrs], m [min]") + ')',
             eventTimeRangeFormat:
                 ({ start, end }, culture, localizer) =>
-                moment(start).format('HH:mm') + '—' + moment(end).format('HH:mm')
-
+                moment(start).format('HH:mm') + '—' + moment(end).format('HH:mm'),
+            dayRangeHeaderFormat: ({ start, end }, culture, local) => 'Week ' + local.format(start, 'w') + ': ' +
+                local.format(start, 'MMM DD', culture) + ' - ' + local.format(end, moment(start).isSame(moment(end), 'month') ? 'DD' : 'MMM DD', culture)
         }
         
         return (
