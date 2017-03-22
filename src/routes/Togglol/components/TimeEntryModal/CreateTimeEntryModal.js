@@ -11,6 +11,9 @@ import TimePicker from 'rc-time-picker';
 
 import ProjectSelector from './ProjectSelector'
 
+import 'rc-switch/assets/index.css';
+const Switch = require('rc-switch');
+
 var LocalStorageMixin = require('react-localstorage'); 
 
 var timeFormat = 'HH:ss';
@@ -24,23 +27,31 @@ class CreateTimeEntryModal extends React.Component {
          startDate: undefined,
          endDate: undefined,
          projectId: this.getLastProjectId(),
+         billable: true,
          description: undefined,
          isModalOpen: false
     }
   }
 
     showModal(slotInfo) {
-        var startDate = moment(slotInfo.start);
-        var endDate = moment(slotInfo.end);
+        const startDate = moment(slotInfo.start);
+        const endDate = moment(slotInfo.end);
 
-        var projectId = slotInfo.projectId || this.getLastProjectId();
+        const projectId = slotInfo.projectId || this.getLastProjectId();
+
+        let billable = slotInfo.billable
+        if(typeof billable == 'undefined')
+        {
+           billable = this.isProjectBillable(projectId);
+        }
         
         this.setState({
             startDate: startDate,
             endDate: endDate,
             entryId: slotInfo.entryId,
             projectId: projectId,
-            description: slotInfo.description
+            description: slotInfo.description,
+            billable: billable
         });
 
         if(this.props.shiftKeyPressed && this.state.projectId > 0) {
@@ -49,6 +60,13 @@ class CreateTimeEntryModal extends React.Component {
             this.setState({isModalOpen: true});
         }
         
+    }
+
+    isProjectBillable(projectId)
+    {
+        const project = this.getProject(projectId);
+        console.log(project);
+        return project.billable;
     }
 
     getLastProjectId() {
@@ -75,7 +93,7 @@ class CreateTimeEntryModal extends React.Component {
     }
 
     changeSelectedProject(projectId) {
-        this.setState({projectId: projectId});
+        this.setState({projectId: projectId, billable: this.isProjectBillable(projectId)});
         this.submitButton.focus();
     }
 
@@ -86,6 +104,7 @@ class CreateTimeEntryModal extends React.Component {
             pid: this.state.projectId,
             start: this.state.startDate.toISOString(),
             duration: this.state.endDate.diff(this.state.startDate, 'seconds'),
+            billable: this.state.billable,
             created_with: "Togglol"
         };
         localStorage.setItem(LAST_PROJECT_KEY, this.state.projectId);
@@ -99,8 +118,26 @@ class CreateTimeEntryModal extends React.Component {
         this.props.onDeleteTimeEntry(entryId);
     }
 
+    onBillableChange() {
+        this.setState({
+        billable: !this.state.billable,
+        });
+    }
+
     isEditMode() {
         return this.state.entryId != undefined;
+    }
+
+    getProject(id) {
+        let retVal = null;
+        this.props.projects.forEach(function(project) {
+            if(project.id == id)
+            {
+                retVal = project;
+                return;
+            }
+        });
+        return retVal;
     }
 
     render() {
@@ -128,12 +165,16 @@ class CreateTimeEntryModal extends React.Component {
                         <form>
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Time </label>
-                                <div className="col-sm-10">
+                                <div className="col-sm-6">
                                     <p className="form-control-static">
                                         <TimePicker style={timepickerStyle} value={this.state.startDate} onChange={(value) => this.changeStartTime(value)} showSecond={false} />&nbsp;-&nbsp;
                                         <TimePicker style={timepickerStyle} value={this.state.endDate} onChange={(value) => this.changeEndTime(value)} showSecond={false} />
                                         &nbsp;({duration})
                                     </p>
+                                </div>
+                                <label className="col-sm-2 col-form-label">Billable </label>
+                                <div className="col-sm-2" style={switchStyle}>
+                                    <Switch onChange={(e) => this.onBillableChange(e)} checked={this.state.billable} checkedChildren={'$'} unCheckedChildren={'-'} />
                                 </div>
                             </div>
                             <div className="form-group row">
@@ -171,12 +212,18 @@ CreateTimeEntryModal.propTypes = {
 };
 
 // Style
-var contentStyle = {
+const contentStyle = {
     padding: '10px'
 }
 
-var timepickerStyle = {
-    borderRadius: '.25rem'
+const timepickerStyle = {
+    borderRadius: '.25rem',
+    width: '50px'
+}
+
+const switchStyle = {
+    marginTop: '7px',
+    paddingLeft: '0'
 }
 
 export default CreateTimeEntryModal

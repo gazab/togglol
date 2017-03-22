@@ -35,9 +35,8 @@ const divStyle = {
     class TimeEntryEvent extends React.Component {
         render() {
 
-            console.log(this.props.event.project.billable);
             let billable = null;
-            if(this.props.event.project.billable)
+            if(this.props.event.billable)
             {
                 billable = <span style={billableStyle}>$</span>
             }
