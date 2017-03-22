@@ -10,7 +10,8 @@ BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(moment)
 );
 
-import CreateTimeEntryModal from './CreateTimeEntryModal';
+import CreateTimeEntryModal from '../TimeEntryModal/CreateTimeEntryModal';
+import TimeEntryEvent from './TimeEntryEvent';
 
 import type { TimeEntriesObject } from '../interfaces/togglol';
 import type { ProjectObject } from '../interfaces/togglol';
@@ -92,6 +93,7 @@ var TogglolCalendar = React.createClass({
         return retVal;
     },
     showModal: function(slotInfo){
+        console.log(slotInfo);
         this.createTimeEntryModal.showModal(slotInfo);
     },
     createTimeEntry: function(timeEntry) {
@@ -110,7 +112,6 @@ var TogglolCalendar = React.createClass({
         var eventList = this.props.time_entries.map(function(entry) {
             var event = {};
             var project = that.getProject(entry.pid);
-            var description = entry.description == null ? '' : ' - ' + entry.description;
             event["entryId"] = entry.id;
             event["projectId"] = entry.pid;
             event["description"] = entry.description; 
@@ -118,7 +119,8 @@ var TogglolCalendar = React.createClass({
             event["start"] = new Date(entry.start);
             event["end"] = new Date(entry.stop);
             event["allDay"] = false;
-            event["title"] = project.name + description
+            event["title"] = project.name;
+            event["billable"] = entry.billable;
             return event;
         });
         
@@ -136,6 +138,11 @@ var TogglolCalendar = React.createClass({
                 moment(start).format('HH:mm') + '—' + moment(end).format('HH:mm'),
             dayRangeHeaderFormat: ({ start, end }, culture, local) => 'Week ' + local.format(start, 'w') + ': ' +
                 local.format(start, 'MMM DD', culture) + ' - ' + local.format(end, moment(start).isSame(moment(end), 'month') ? 'DD' : 'MMM DD', culture)
+        }
+
+        // Components
+        let components = {
+            event: TimeEntryEvent, // used by each view (Month, Day, Week)
         }
         
         return (
@@ -155,6 +162,7 @@ var TogglolCalendar = React.createClass({
                     eventPropGetter={(this.eventStyleGetter)}
                     formats={formats}
                     onMouseUp={(e) => this.onMouseUp(e)}
+                    components={components}
                  />
                  <CreateTimeEntryModal 
                     shiftKeyPressed={this.state.shift}

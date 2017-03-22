@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react'  
-import TogglolCalendar from './TogglolCalendar'
+import TogglolCalendar from './Calendar/TogglolCalendar'
 import ApiKeyInput from './ApiKeyInput'
 
 import type { TimeEntryObject } from '../interfaces/togglol'

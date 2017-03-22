@@ -1,6 +1,6 @@
-import CounterRoute from 'routes/Counter'
+import CounterRoute from 'routes/Togglol'
 
-describe('(Route) Counter', () => {
+describe('(Route) Togglol', () => {
   let _route
 
   beforeEach(() => {
@@ -11,8 +11,8 @@ describe('(Route) Counter', () => {
     expect(typeof(_route)).to.equal('object')
   })
 
-  it('Configuration should contain path `counter`', () => {
-    expect(_route.path).to.equal('counter')
+  it('Configuration should contain path ``', () => {
+    expect(_route.path).to.equal('')
   })
 
 })
