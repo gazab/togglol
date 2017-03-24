@@ -29,7 +29,8 @@ class CreateTimeEntryModal extends React.Component {
          projectId: this.getLastProjectId(),
          billable: true,
          description: undefined,
-         isModalOpen: false
+         isModalOpen: false,
+         projectName: undefined
     }
   }
 
@@ -51,7 +52,8 @@ class CreateTimeEntryModal extends React.Component {
             entryId: slotInfo.entryId,
             projectId: projectId,
             description: slotInfo.description,
-            billable: billable
+            billable: billable,
+            projectName: this.getProjectName(projectId)
         });
 
         if(this.props.shiftKeyPressed && this.state.projectId > 0) {
@@ -72,6 +74,18 @@ class CreateTimeEntryModal extends React.Component {
     {
         const project = this.getProject(projectId);
         return project.billable;
+    }
+
+    getProjectName(projectId)
+    {
+        const project = this.getProject(projectId)
+        if(project != null)
+        {
+            return project.name;
+        }
+        else {
+            return undefined;
+        }
     }
 
     getLastProjectId() {
@@ -98,7 +112,7 @@ class CreateTimeEntryModal extends React.Component {
     }
 
     changeSelectedProject(projectId) {
-        this.setState({projectId: projectId, billable: this.isProjectBillable(projectId)});
+        this.setState({projectId: projectId, billable: this.isProjectBillable(projectId), projectName: this.getProjectName(projectId)});
         this.submitButton.focus();
     }
 
@@ -152,6 +166,12 @@ class CreateTimeEntryModal extends React.Component {
             footerExtras = (<button type="button" style={{float: 'left'}} className="float-xs-left btn btn-danger" onClick={(e) => this.deleteTimeEntry(e)}>Delete entry</button>);
         }
 
+        let modalTitle = "Add time entry"
+        if(this.state.projectName != undefined)
+        {
+            modalTitle = "Add entry for '" + this.state.projectName + '"';
+        }
+        
         return(
             <Modal 
                 className="Modal__Bootstrap modal-dialog"
@@ -164,7 +184,7 @@ class CreateTimeEntryModal extends React.Component {
                             <span aria-hidden="true">&times;</span>
                             <span className="sr-only">Close</span>
                         </button>
-                        <h4 className="modal-title">{this.isEditMode() ? 'Edit time entry' : 'Add time entry'}</h4>
+                        <h4 className="modal-title">{this.isEditMode() ? 'Edit time entry' : modalTitle}</h4>
                     </div>
                     <div className="modal-body">
                         <form>
@@ -177,7 +197,7 @@ class CreateTimeEntryModal extends React.Component {
                                         &nbsp;({duration})
                                     </p>
                                 </div>
-                                <label className="col-sm-2 col-form-label">Billable </label>
+                                <label className="col-sm-2 col-form-label">Billable</label>
                                 <div className="col-sm-2" style={switchStyle}>
                                     <Switch onChange={(e) => this.onBillableChange(e)} checked={this.state.billable} checkedChildren={'$'} unCheckedChildren={'-'} />
                                 </div>
@@ -193,7 +213,7 @@ class CreateTimeEntryModal extends React.Component {
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Project</label>
                                 <div className="col-sm-10">
-                                    <ProjectSelector selectedProject={this.state.projectId} onChange={(project) => this.changeSelectedProject(project)} clients={this.props.clients} projects={this.props.projects} />
+                                    <ProjectSelector selectedProject={this.state.projectId} onChange={(project) => this.changeSelectedProject(project)} onKeyPress={(e) => this.onKeyPress(e)} clients={this.props.clients} projects={this.props.projects} />
                                 </div>
                             </div>
                         </form>
