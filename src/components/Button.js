@@ -6,13 +6,13 @@ const buttonStyle = {
 
 
 const buttonHoverStyle = {
-    backgroundColor: '#FF0'
+    backgroundColor: '#990099'
 }
 
 const baseButtonStyle = {
     padding: '10px',
     margin: '10px',
-    border: '1px solid #000'
+    border: '1px solid #000',
 }
 
 
@@ -32,6 +32,11 @@ const baseButtonStyle = {
             this.setState({hover: false});
         }
 
+        click(e) {
+            console.log("Click!")
+            e.preventDefault();
+        }
+
         render() {
 
             let style = buttonStyle
@@ -40,8 +45,10 @@ const baseButtonStyle = {
                 style = buttonHoverStyle
             }
             
+// onClick={(e) => this.props.onButtonClick(e)}
+
             return (
-                <div style={{...baseButtonStyle,...style}} onClick={(e) => this.props.onClick(e)} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)}>
+                <div style={{...baseButtonStyle,...style}} onClick={(e) => this.click(e)} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)}>
                     {this.props.label}
                 </div>
             )}

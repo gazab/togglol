@@ -66,7 +66,7 @@ const divStyle = {
             let quickButtons = null
             if(this.state.hover)
             {
-                quickButtons = <div style={quickButtonsStyle}><Button label="Knapp" onClick={(e) => this.props.onQuickButtonClick(e)} /></div>
+                quickButtons = <div style={quickButtonsStyle}><Button label="+" onButtonClick={(e) => this.props.onQuickButtonClick(e)} /></div>
             }
 
             
