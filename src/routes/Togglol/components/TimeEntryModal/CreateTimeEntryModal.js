@@ -63,8 +63,8 @@ class CreateTimeEntryModal extends React.Component {
     }
 
     onKeyPress(event)  {
-        if(event.key == 'Enter') { 
-            console.log("Enter pressed!")
+        if(event.key == 'Enter') {
+            this.createTimeEntry();
         } 
     }
 
@@ -186,7 +186,7 @@ class CreateTimeEntryModal extends React.Component {
                                 <label className="col-sm-2 col-form-label">Description </label>
                                 <div className="col-sm-10">
                                     <p className="form-control-static">
-                                        <input type="text" value={this.state.description} className="form-control" onChange={(event) => this.changeDescription(event.target.value)} onKeyPress={this.onKeyPress} />    
+                                        <input type="text" value={this.state.description} className="form-control" onChange={(event) => this.changeDescription(event.target.value)} onKeyPress={(e) => this.onKeyPress(e)} ref={input => input && input.focus()}/>    
                                     </p>
                                 </div>
                             </div>
