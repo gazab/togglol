@@ -173,7 +173,8 @@ class CreateTimeEntryModal extends React.Component {
         }
         
         return(
-            <Modal 
+            <Modal
+                contentLabel="Test" 
                 className="Modal__Bootstrap modal-dialog"
                 isOpen={this.state.isModalOpen} 
                 onRequestClose={(e) => this.hideModal(e)}

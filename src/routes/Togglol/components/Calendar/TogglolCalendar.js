@@ -98,6 +98,9 @@ var TogglolCalendar = React.createClass({
     createTimeEntry: function(timeEntry) {
         this.props.onSaveTimeEntry(timeEntry);
     },
+    onQuickButtonClick: function(event) {
+        console.log("Quick button click!");
+    },
     onMouseUp: function (e) {
         if (e.shiftKey) {
             this.setState({shift: true});
@@ -141,7 +144,9 @@ var TogglolCalendar = React.createClass({
 
         // Components
         let components = {
-            event: TimeEntryEvent, // used by each view (Month, Day, Week)
+            week: {
+                event: eventProps => <TimeEntryEvent event={eventProps} onQuickButtonClick={(e) => this.onQuickButtonClick(e)} />
+            }
         }
         
         return (

@@ -116,6 +116,7 @@
     "rc-time-picker": "^2.0.2",
     "react": "^15.0.0",
     "react-big-calendar": "^0.10.3",
+    "react-buttons": "^0.0.11",
     "react-dom": "^15.0.0",
     "react-localstorage": "^0.3.0",
     "react-modal": "^1.5.2",

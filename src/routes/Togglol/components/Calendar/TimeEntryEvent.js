@@ -1,8 +1,9 @@
 import React from 'react';
+import Button from '../../../../components/Button'
 
 const divStyle = {
         height: '100%',
-        width: '100%'
+        width: '100%',
     }
 
     const titleStyle = {
@@ -31,8 +32,29 @@ const divStyle = {
         borderBottom: '1px solid #FFF',
         padding: '3px 5px 0px 6px',
     }
+    
+    const quickButtonsStyle = {
+        position: 'absolute',
+        bottom: 0,
+        right: 0
+    }
 
     class TimeEntryEvent extends React.Component {
+        constructor(props) {
+            super(props);
+            this.state = {
+                hover: false
+            }
+        }
+
+        mouseEnter() {
+            this.setState({hover: true});
+        }
+
+        mouseLeave() {
+            this.setState({hover: false});
+        }
+
         render() {
 
             let billable = null;
@@ -41,10 +63,17 @@ const divStyle = {
                 billable = <span style={billableStyle}>$</span>
             }
 
+            let quickButtons = null
+            if(this.state.hover)
+            {
+                quickButtons = <div style={quickButtonsStyle}><Button label="Knapp" onClick={(e) => this.props.onQuickButtonClick(e)} /></div>
+            }
+
             
             return (
-                <div style={divStyle}>
+                <div style={divStyle} onMouseEnter={(e) => this.mouseEnter(e)} onMouseLeave={(e) => this.mouseLeave(e)}>
                     {billable}
+                    {quickButtons}
                     <div style={titleStyle}>
                         {this.props.event.title}
                     </div>
