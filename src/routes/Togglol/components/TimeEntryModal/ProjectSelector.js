@@ -65,16 +65,32 @@ class ProjectSelector extends React.Component {
         return retVal;
   }
 
+  onInputKeyDown(event) {
+	switch (event.keyCode) {
+		case 13: // ENTER
+      // If user presses enter when no value is selected. Pass enter press along to parent modal
+			if(this.Select.state.inputValue == "")
+      {
+        this.props.onKeyPress(event);
+        event.preventDefault();
+      }
+      break;
+	}
+}
+
   render() {
     return (
       <div>
           <Select
+            ref={(ref) => this.Select = ref}
             style={{zIndex: 999}}
             autofocus={true}
             name="form-field-name"
             value={this.state.value}
             options={this.state.options}
             clearable={false}
+            onInputKeyDown={(e) => this.onInputKeyDown(e)}
+            placeholder="Find project ..."
             onChange={(project) => this.projectRadioGroups.addToProjectList({label: project.label, value: project.value, color: project.color, client: project.client})}
           />
           <ProjectRadioGroups

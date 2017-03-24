@@ -74,7 +74,7 @@ render() {
         var projectButtons = groupedProjects[client].map(function(project) {
             var cls = "btn btn-secondary";
             if(that.props.selectedProjectOptionsValue != null && project.value == that.props.selectedProjectOptionsValue.value) { 
-                cls += " active" 
+                cls = "btn btn-primary" 
             }
             
             return (<button style={{paddingRight: '30px'}} key={project.value} onClick={() => that.selectProject(project)} type="button" className={cls}><span style={that.createDotStyle(project)}/>

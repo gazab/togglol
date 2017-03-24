@@ -93,7 +93,6 @@ var TogglolCalendar = React.createClass({
         return retVal;
     },
     showModal: function(slotInfo){
-        console.log(slotInfo);
         this.createTimeEntryModal.showModal(slotInfo);
     },
     createTimeEntry: function(timeEntry) {
@@ -163,6 +162,7 @@ var TogglolCalendar = React.createClass({
                     formats={formats}
                     onMouseUp={(e) => this.onMouseUp(e)}
                     components={components}
+                    style={{marginBottom: '80px'}}
                  />
                  <CreateTimeEntryModal 
                     shiftKeyPressed={this.state.shift}
