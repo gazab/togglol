@@ -93,7 +93,6 @@ var TogglolCalendar = React.createClass({
         return retVal;
     },
     showModal: function(slotInfo){
-        console.log(slotInfo);
         this.createTimeEntryModal.showModal(slotInfo);
     },
     createTimeEntry: function(timeEntry) {
