@@ -163,6 +163,7 @@ var TogglolCalendar = React.createClass({
                     formats={formats}
                     onMouseUp={(e) => this.onMouseUp(e)}
                     components={components}
+                    style={{marginBottom: '80px'}}
                  />
                  <CreateTimeEntryModal 
                     shiftKeyPressed={this.state.shift}
