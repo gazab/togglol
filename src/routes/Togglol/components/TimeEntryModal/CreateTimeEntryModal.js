@@ -169,7 +169,7 @@ class CreateTimeEntryModal extends React.Component {
         let modalTitle = "Add time entry"
         if(this.state.projectName != undefined)
         {
-            modalTitle = "Add entry for '" + this.state.projectName + '"';
+            modalTitle = "Add entry for '" + this.state.projectName + "'";
         }
         
         return(
