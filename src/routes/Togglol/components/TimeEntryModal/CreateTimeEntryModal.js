@@ -73,7 +73,7 @@ class CreateTimeEntryModal extends React.Component {
     isProjectBillable(projectId)
     {
         const project = this.getProject(projectId);
-        return project.billable;
+        return project ? project.billable : false;
     }
 
     getProjectName(projectId)
