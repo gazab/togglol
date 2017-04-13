@@ -183,11 +183,12 @@ class TogglolCalendar extends React.Component {
                     onNavigate={this.fetchShownEntries}
                     onView={this.changeView}
                     selectable={true}
-                    onEventDrop={this.moveTimeEntry}
+                    onEventDrop={(e) => this.moveTimeEntry(e)}
                     onSelectSlot={(slotInfo) => this.showModal(slotInfo)}
                     onSelectEvent={(slotInfo) => this.showModal(slotInfo)}
                     eventPropGetter={(this.eventStyleGetter)}
                     formats={formats}
+                    onClick={(e) => console.log(e)}
                     components={components}
                     style={{marginBottom: '80px'}}
                  />
