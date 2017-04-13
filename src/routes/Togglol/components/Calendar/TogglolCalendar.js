@@ -50,29 +50,38 @@ class TogglolCalendar extends React.Component {
         };
     }
 
-    handleKeypress() {
-        if ( keydown.event ) {
-            // inspect the keydown event and decide what to do
-            // if (keydown.event.shiftKey) {
-            //     this.setState({shift: true});
-            // }
-            // else {
-            //     this.setState({shift: false});
-            // }
+    checkKeypress(event) {
+        if ( event ) {
+            if (event.shiftKey) {
+                if(!this.state.shift)
+                {
+                    this.setState({shift: true});
+                }
+            }
+            else {
+                if(this.state.shift)
+                {
+                    this.setState({shift: false});
+                }
+            }
 
-            // if (keydown.event.ctrlKey) {
-            //     this.setState({control: true});
-            // }
-            // else {
-            //     this.setState({control: false});
-            // }
-            console.log(keydown.event);
+            if (event.ctrlKey) {
+                if(!this.state.control)
+                {
+                    this.setState({control: true});
+                }
+            }
+            else {
+                if(this.state.control)
+                {
+                    this.setState({control: false});
+                }
+            }
         }
-        
     }
 
     componentDidMount() {
-      this.changeView(this.state.view);  
+        this.changeView(this.state.view);  
     }
     changeView(view) {
         this.setState({view: view});
@@ -129,7 +138,9 @@ class TogglolCalendar extends React.Component {
     }
 
     moveTimeEntry({event, start, end}) {
-        var timeEntry = createTogglEntry(event.entryId, event.description, event.projectId, start, end, event.billable);
+        let entryId = this.state.control ? null: event.entryId;
+        console.log(entryId);
+        var timeEntry = createTogglEntry(entryId, event.description, event.projectId, start, end, event.billable);
         this.props.onSaveTimeEntry(timeEntry);
     }
 
@@ -172,7 +183,7 @@ class TogglolCalendar extends React.Component {
         }
         
         return (
-            <div>
+            <div onDrag={(e) => this.checkKeypress(e)} onMouseUp={(e) => this.checkKeypress(e)}>
                 <DragAndDropCalendar 
                     culture="en-GB"
                     events={eventList}
@@ -180,7 +191,7 @@ class TogglolCalendar extends React.Component {
                     views={['week', 'month']}
                     min={minTime}
                     max={maxTime}
-                    onNavigate={this.fetchShownEntries}
+                    onNavigate={(start, view) => this.fetchShownEntries(start, view)}
                     onView={this.changeView}
                     selectable={true}
                     onEventDrop={(e) => this.moveTimeEntry(e)}
@@ -188,7 +199,6 @@ class TogglolCalendar extends React.Component {
                     onSelectEvent={(slotInfo) => this.showModal(slotInfo)}
                     eventPropGetter={(this.eventStyleGetter)}
                     formats={formats}
-                    onClick={(e) => console.log(e)}
                     components={components}
                     style={{marginBottom: '80px'}}
                  />
