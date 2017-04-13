@@ -33,35 +33,52 @@ type Props = {
     requestDeleteTimeEntry: Function
 }
 
-// TODO: Refactor to use ES6 classes instead like Togglol.js
-var TogglolCalendar = React.createClass({
-    getInitialState: function() {
-        
+class TogglolCalendar extends React.Component {
+    constructor(props) {
+        super(props);
+
         let date = new Date();
         date.setHours(0);
         date.setMinutes(0);
         date.setSeconds(0);
                 
-        return {
+        this.state = {
             date: date,
             view: 'week',
-            shift: false
+            shift: false,
+            control: false
         };
-    },
-    propTypes: {
-        time_entries: React.PropTypes.array.isRequired,
-        //projects: React.PropTypes.array.isRequired,
-        fetchTimeEntries: React.PropTypes.func.isRequired
-        //createTimeEntry: React.PropTypes.func.isRequired
-    },
-    componentDidMount: function() {
+    }
+
+    handleKeypress() {
+        if ( keydown.event ) {
+            // inspect the keydown event and decide what to do
+            // if (keydown.event.shiftKey) {
+            //     this.setState({shift: true});
+            // }
+            // else {
+            //     this.setState({shift: false});
+            // }
+
+            // if (keydown.event.ctrlKey) {
+            //     this.setState({control: true});
+            // }
+            // else {
+            //     this.setState({control: false});
+            // }
+            console.log(keydown.event);
+        }
+        
+    }
+
+    componentDidMount() {
       this.changeView(this.state.view);  
-    },
-    changeView: function(view) {
+    }
+    changeView(view) {
         this.setState({view: view});
         this.fetchShownEntries(this.state.date, view);
-    },
-    fetchShownEntries: function(start, view) {
+    }
+    fetchShownEntries(start, view) {
         // To make moment start weeks on monday
         if(view == 'week')
             view = 'isoweek';
@@ -71,8 +88,8 @@ var TogglolCalendar = React.createClass({
         let startDate = moment(start).startOf(view).startOf('day');
         let endDate = moment(startDate).endOf(view).endOf('day');
         this.props.fetchTimeEntries(startDate.toISOString(), endDate.toISOString());  
-    },
-    eventStyleGetter: function(event, start, end, isSelected) {
+    }
+    eventStyleGetter(event, start, end, isSelected) {
         var backgroundColor = event.project['hex_color'];
         var style = {
             backgroundColor: backgroundColor,
@@ -85,8 +102,8 @@ var TogglolCalendar = React.createClass({
         return {
             style: style
         };
-    },
-    getProject: function(id) {
+    }
+    getProject(id) {
         if(id == null) {
             return {name: '', hex_color: '#b7b7b7'}
         }
@@ -102,34 +119,21 @@ var TogglolCalendar = React.createClass({
             
         });
         return retVal;
-    },
-    showModal: function(slotInfo){
+    }
+    showModal(slotInfo){
         this.createTimeEntryModal.showModal(slotInfo);
-    },
-    createTimeEntry: function(timeEntry) {
+    }
+
+    createTimeEntry(timeEntry) {
         this.props.onSaveTimeEntry(timeEntry);
-    },
-    moveTimeEntry: function({event, start, end}) {
+    }
+
+    moveTimeEntry({event, start, end}) {
         var timeEntry = createTogglEntry(event.entryId, event.description, event.projectId, start, end, event.billable);
         this.props.onSaveTimeEntry(timeEntry);
-    },
-    onMouseUp: function (e) {
-        console.log(e);
-        if (e.shiftKey) {
-            this.setState({shift: true});
-        }
-        else {
-            this.setState({shift: false});
-        }
+    }
 
-        if (e.ctrlKey) {
-            this.setState({control: true});
-        }
-        else {
-            this.setState({control: false});
-        }
-    },
-    render: function() {
+    render() {
         var that = this;        
         var eventList = this.props.time_entries.map(function(entry) {
             var event = {};
@@ -184,7 +188,6 @@ var TogglolCalendar = React.createClass({
                     onSelectEvent={(slotInfo) => this.showModal(slotInfo)}
                     eventPropGetter={(this.eventStyleGetter)}
                     formats={formats}
-                    onMouseUp={(e) => this.onMouseUp(e)}
                     components={components}
                     style={{marginBottom: '80px'}}
                  />
@@ -199,6 +202,13 @@ var TogglolCalendar = React.createClass({
             </div>
              );
     }
-});
+}
+
+TogglolCalendar.propTypes = {
+        time_entries: React.PropTypes.array.isRequired,
+        //projects: React.PropTypes.array.isRequired,
+        fetchTimeEntries: React.PropTypes.func.isRequired
+        //createTimeEntry: React.PropTypes.func.isRequired
+}
 
 export default TogglolCalendar  
