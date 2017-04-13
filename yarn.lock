@@ -1865,11 +1865,7 @@ dom-converter@~0.1:
   dependencies:
     utila "~0.3"
 
-dom-helpers@^2.3.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-2.4.0.tgz#9bb4b245f637367b1fa670274272aa28fe06c367"
-
-dom-helpers@^3.2.0:
+"dom-helpers@^2.3.0 || ^3.0.0", dom-helpers@^3.2.0:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/dom-helpers/-/dom-helpers-3.2.1.tgz#3203e07fed217bd1f424b019735582fc37b2825a"
 
@@ -3826,11 +3822,11 @@ lodash.words@^3.0.0:
   dependencies:
     lodash._root "^3.0.0"
 
-lodash@^3.10.1, lodash@^3.8.0:
+lodash@^3.8.0:
   version "3.10.1"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
 
-lodash@^4.0.0, lodash@^4.0.1, lodash@^4.1.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0:
+lodash@^4.0.0, lodash@^4.0.1, lodash@^4.1.0, lodash@^4.17.2, lodash@^4.17.3, lodash@^4.17.4, lodash@^4.2.0, lodash@^4.2.1, lodash@^4.3.0:
   version "4.17.4"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.4.tgz#78203a4d1c328ae1d86dca6460e369b57f4055ae"
 
@@ -3874,11 +3870,7 @@ lowercase-keys@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.0.tgz#4e3366b39e7f5457e35f1324bdf6f88d0bfc7306"
 
-lru-cache@2:
-  version "2.7.3"
-  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-2.7.3.tgz#6d4524e8b955f95d4f5b58851ce21dd72fb4e952"
-
-lru-cache@2.2.x:
+lru-cache@2, lru-cache@2.2.x:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-2.2.4.tgz#6c658619becf14031d0d0b594b16042ce4dc063d"
 
@@ -4968,18 +4960,18 @@ react-addons-test-utils@^15.0.0:
     fbjs "^0.8.4"
     object-assign "^4.1.0"
 
-react-big-calendar@^0.10.3:
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/react-big-calendar/-/react-big-calendar-0.10.3.tgz#30f0d37d4fd2a6df7ec15f7cda3a132aace3b487"
+react-big-calendar@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/react-big-calendar/-/react-big-calendar-0.13.0.tgz#33bf550fdd2fa31414bd3d33f8ae34d0307521d5"
   dependencies:
     classnames "^2.1.3"
     date-arithmetic "^3.0.0"
-    dom-helpers "^2.3.0"
+    dom-helpers "^2.3.0 || ^3.0.0"
     invariant "^2.1.0"
-    lodash "^3.10.1"
+    lodash "^4.17.4"
     react-overlays "^0.6.0"
-    react-prop-types "^0.2.1"
-    uncontrollable "^3.1.0"
+    react-prop-types "^0.4.0"
+    uncontrollable "^3.3.1 || ^4.0.0"
     warning "^2.0.0"
 
 react-dom@^15.0.0:
@@ -5018,12 +5010,6 @@ react-overlays@^0.6.0:
 react-partial@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-partial/-/react-partial-1.2.0.tgz#1cd032b2d2f721adf6d6b7192cda82578e18321c"
-
-react-prop-types@^0.2.1:
-  version "0.2.2"
-  resolved "https://registry.yarnpkg.com/react-prop-types/-/react-prop-types-0.2.2.tgz#ae49914d4952382113d0e210b2e51016f0bd7f19"
-  dependencies:
-    warning "^2.0.0"
 
 react-prop-types@^0.4.0:
   version "0.4.0"
@@ -6006,9 +5992,9 @@ ultron@1.0.x:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ultron/-/ultron-1.0.2.tgz#ace116ab557cd197386a4e88f4685378c8b2e4fa"
 
-uncontrollable@^3.1.0:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/uncontrollable/-/uncontrollable-3.3.1.tgz#e23b402e7a4c69b1853fb4b43ce34b6480c65b6f"
+"uncontrollable@^3.3.1 || ^4.0.0":
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/uncontrollable/-/uncontrollable-4.0.3.tgz#06ec76cb9e02914756085d9cea0354fc746b09b4"
   dependencies:
     invariant "^2.1.0"
 

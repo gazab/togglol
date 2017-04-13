@@ -69,7 +69,9 @@ var TogglolCalendar = React.createClass({
             backgroundColor: backgroundColor,
             opacity: 0.8,
             border: '0px',
-            display: 'block'
+            display: 'block',
+            zIndex: '0',
+            maxWidth: '85%'
         };
         return {
             style: style
