@@ -139,7 +139,6 @@ class TogglolCalendar extends React.Component {
 
     moveTimeEntry({event, start, end}) {
         let entryId = this.state.control ? null: event.entryId;
-        console.log(entryId);
         var timeEntry = createTogglEntry(entryId, event.description, event.projectId, start, end, event.billable);
         this.props.onSaveTimeEntry(timeEntry);
     }
