@@ -191,7 +191,7 @@ class TogglolCalendar extends React.Component {
                     min={minTime}
                     max={maxTime}
                     onNavigate={(start, view) => this.fetchShownEntries(start, view)}
-                    onView={this.changeView}
+                    onView={(view) => this.changeView(view)}
                     selectable={true}
                     onEventDrop={(e) => this.moveTimeEntry(e)}
                     onSelectSlot={(slotInfo) => this.showModal(slotInfo)}
