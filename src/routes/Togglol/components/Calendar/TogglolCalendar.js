@@ -182,7 +182,7 @@ class TogglolCalendar extends React.Component {
         }
         
         return (
-            <div onDrag={(e) => this.checkKeypress(e)} onMouseUp={(e) => this.checkKeypress(e)}>
+            <div style={{height: '720px'}} onDrag={(e) => this.checkKeypress(e)} onMouseUp={(e) => this.checkKeypress(e)}>
                 <DragAndDropCalendar 
                     culture="en-GB"
                     events={eventList}
@@ -191,7 +191,7 @@ class TogglolCalendar extends React.Component {
                     min={minTime}
                     max={maxTime}
                     onNavigate={(start, view) => this.fetchShownEntries(start, view)}
-                    onView={this.changeView}
+                    onView={(view) => this.changeView(view)}
                     selectable={true}
                     onEventDrop={(e) => this.moveTimeEntry(e)}
                     onSelectSlot={(slotInfo) => this.showModal(slotInfo)}
@@ -199,7 +199,7 @@ class TogglolCalendar extends React.Component {
                     eventPropGetter={(this.eventStyleGetter)}
                     formats={formats}
                     components={components}
-                    style={{marginBottom: '80px'}}
+                    style={{ marginBottom: '80px'}}
                  />
                  <CreateTimeEntryModal 
                     shiftKeyPressed={this.state.shift}
