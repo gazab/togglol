@@ -170,7 +170,7 @@ arrify@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/arrify/-/arrify-1.0.1.tgz#898508da2226f380df904728456849c1501a4b0d"
 
-asap@~2.0.3:
+asap@^2.0.3, asap@~2.0.3:
   version "2.0.5"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.5.tgz#522765b50c3510490e52d7dcfe085ef9ba96958f"
 
@@ -1847,6 +1847,19 @@ di@^0.0.1:
 diff@1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/diff/-/diff-1.4.0.tgz#7f28d2eb9ee7b15a97efd89ce63dcfdaa3ccbabf"
+
+disposables@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/disposables/-/disposables-1.0.1.tgz#064727a25b54f502bd82b89aa2dfb8df9f1b39e3"
+
+dnd-core@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/dnd-core/-/dnd-core-2.3.0.tgz#f7b29ac37e2c78efe89e911ca5a534f280390450"
+  dependencies:
+    asap "^2.0.3"
+    invariant "^2.0.0"
+    lodash "^4.2.0"
+    redux "^3.2.0"
 
 doctrine@^1.2.2:
   version "1.5.0"
@@ -4974,6 +4987,22 @@ react-big-calendar@^0.13.0:
     uncontrollable "^3.3.1 || ^4.0.0"
     warning "^2.0.0"
 
+react-dnd-html5-backend@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-dnd-html5-backend/-/react-dnd-html5-backend-2.3.0.tgz#a45ce593f5c6944aa01114b368117c56c954804e"
+  dependencies:
+    lodash "^4.2.0"
+
+react-dnd@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-dnd/-/react-dnd-2.3.0.tgz#aede61c06b968554dcf2a2445657cdbb3100be49"
+  dependencies:
+    disposables "^1.0.1"
+    dnd-core "^2.3.0"
+    hoist-non-react-statics "^1.2.0"
+    invariant "^2.1.0"
+    lodash "^4.2.0"
+
 react-dom@^15.0.0:
   version "15.4.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.4.2.tgz#015363f05b0a1fd52ae9efdd3a0060d90695208f"
@@ -5179,7 +5208,7 @@ redux-thunk@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
 
-redux@^3.0.0:
+redux@^3.0.0, redux@^3.2.0:
   version "3.6.0"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.6.0.tgz#887c2b3d0b9bd86eca2be70571c27654c19e188d"
   dependencies:

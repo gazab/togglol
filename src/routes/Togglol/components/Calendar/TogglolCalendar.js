@@ -4,14 +4,23 @@ import React from 'react'
 import moment from 'moment';
 require("moment-duration-format");
 
+import HTML5Backend from 'react-dnd-html5-backend'
+import { DragDropContext } from 'react-dnd'
+
 import BigCalendar from 'react-big-calendar';
+import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css';
+
 BigCalendar.setLocalizer(
   BigCalendar.momentLocalizer(moment)
 );
 
+const DragAndDropCalendar = withDragAndDrop(BigCalendar);
+
 import CreateTimeEntryModal from '../TimeEntryModal/CreateTimeEntryModal';
 import TimeEntryEvent from './TimeEntryEvent';
+import { createTogglEntry } from '../../../../toggl/toggl.js'
 
 import type { TimeEntriesObject } from '../interfaces/togglol';
 import type { ProjectObject } from '../interfaces/togglol';
@@ -100,12 +109,24 @@ var TogglolCalendar = React.createClass({
     createTimeEntry: function(timeEntry) {
         this.props.onSaveTimeEntry(timeEntry);
     },
+    moveTimeEntry: function({event, start, end}) {
+        var timeEntry = createTogglEntry(event.entryId, event.description, event.projectId, start, end, event.billable);
+        this.props.onSaveTimeEntry(timeEntry);
+    },
     onMouseUp: function (e) {
+        console.log(e);
         if (e.shiftKey) {
             this.setState({shift: true});
         }
         else {
             this.setState({shift: false});
+        }
+
+        if (e.ctrlKey) {
+            this.setState({control: true});
+        }
+        else {
+            this.setState({control: false});
         }
     },
     render: function() {
@@ -148,7 +169,7 @@ var TogglolCalendar = React.createClass({
         
         return (
             <div>
-                <BigCalendar 
+                <DragAndDropCalendar 
                     culture="en-GB"
                     events={eventList}
                     defaultView={this.state.view}
@@ -158,6 +179,7 @@ var TogglolCalendar = React.createClass({
                     onNavigate={this.fetchShownEntries}
                     onView={this.changeView}
                     selectable={true}
+                    onEventDrop={this.moveTimeEntry}
                     onSelectSlot={(slotInfo) => this.showModal(slotInfo)}
                     onSelectEvent={(slotInfo) => this.showModal(slotInfo)}
                     eventPropGetter={(this.eventStyleGetter)}

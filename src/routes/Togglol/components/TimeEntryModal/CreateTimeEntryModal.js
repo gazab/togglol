@@ -14,6 +14,8 @@ import ProjectSelector from './ProjectSelector'
 import 'rc-switch/assets/index.css';
 const Switch = require('rc-switch');
 
+import { createTogglEntry } from '../../../../toggl/toggl.js'
+
 var LocalStorageMixin = require('react-localstorage'); 
 
 var timeFormat = 'HH:ss';
@@ -117,15 +119,7 @@ class CreateTimeEntryModal extends React.Component {
     }
 
     createTimeEntry() {
-        var timeEntry = {
-            id: this.state.entryId,
-            description: this.state.description,
-            pid: this.state.projectId,
-            start: this.state.startDate.toISOString(),
-            duration: this.state.endDate.diff(this.state.startDate, 'seconds'),
-            billable: this.state.billable,
-            created_with: "Togglol"
-        };
+        var timeEntry = createTogglEntry(this.state.entryId, this.state.description, this.state.projectId, this.state.startDate, this.state.endDate, this.state.billable);
         localStorage.setItem(LAST_PROJECT_KEY, this.state.projectId);
         this.hideModal();
         this.props.onCreateTimeEntry(timeEntry);
