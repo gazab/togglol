@@ -171,6 +171,7 @@ class CreateTimeEntryModal extends React.Component {
                 className="Modal__Bootstrap modal-dialog"
                 isOpen={this.state.isModalOpen} 
                 onRequestClose={(e) => this.hideModal(e)}
+                contentLabel="Content Label"
                 >
                 <div className="modal-content">
                     <div className="modal-header">
