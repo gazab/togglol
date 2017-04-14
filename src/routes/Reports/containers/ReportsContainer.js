@@ -17,8 +17,9 @@ const mapDispatchToProps = {
   doubleAsync
 }
 
-const mapStateToProps = (state) => ({
-  counter : state.counter
+const mapStateToProps = (state): { data: Object } => ({  
+  //user_loaded: state.togglol.user_loaded,
+  //data: state.togglol.data
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

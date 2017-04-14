@@ -8,7 +8,7 @@ export const Header = () => (
         <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#containerNavbar" aria-controls="containerNavbar" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
-        <span class="navbar-brand" >Togglol</span>
+        <span className="navbar-brand" >Togglol</span>
         <div className="collapse navbar-collapse" id="containerNavbar">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
