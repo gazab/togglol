@@ -1,5 +1,7 @@
 /* @flow */
-import React from 'react' 
+import React from 'react'
+import PropTypes from 'prop-types';
+ 
 var LocalStorageMixin = require('react-localstorage'); 
 
 const state_key = "togglol-api-state";
