@@ -3,13 +3,30 @@ import { IndexLink, Link } from 'react-router'
 import classes from './Header.scss'
 
 export const Header = () => (
-  <div className="row">
-    <div className="col-sm-12 text-xs-center">
-      <h1 className="display-4">Togglol</h1>
-      <p className="lead">When you need to use Toggl a bit differently</p>
-      <a href="https://github.com/gazab/togglol" target="_blank">Visit Togglol on Github</a>&nbsp;-&nbsp; 
-      <iframe style={{border: '0px', position: 'relative', top: '4px'}} src="https://ghbtns.com/github-btn.html?user=gazab&repo=togglol&type=star&count=true" frameBorder="0" scrolling="0" width="90px" height="20px"></iframe>
-    </div>
+  <div style={{marginTop: '20px'}}>
+    <nav className="navbar navbar-light bg-faded rounded navbar-toggleable-md">
+        <button className="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#containerNavbar" aria-controls="containerNavbar" aria-expanded="false" aria-label="Toggle navigation">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <span class="navbar-brand" >Togglol</span>
+        <div className="collapse navbar-collapse" id="containerNavbar">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item active">
+              <IndexLink className="nav-link" to='/' activeClassName='route--active'>
+                  Home
+              </IndexLink>
+            </li>
+            <li className="nav-item">
+              <IndexLink className="nav-link" to='/reports' activeClassName='route--active'>
+                  Reports
+              </IndexLink>
+            </li>
+          </ul>
+        </div>
+        <div className="my-2 my-lg-0">
+          
+        </div>
+      </nav>
   </div>
 )
 
