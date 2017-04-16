@@ -18,8 +18,7 @@ const mapDispatchToProps = {
 }
 
 const mapStateToProps = (state): { data: Object } => ({  
-  //user_loaded: state.togglol.user_loaded,
-  //data: state.togglol.data
+  data: state.togglol.data
 })
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:

@@ -63,18 +63,18 @@ class MonthPicker extends React.Component {
         return(
             
 
-            <div>
+            <div className={this.props.className}>
+                <div className="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" onClick={() => this.changeMonth(-1)} className="btn btn-secondary" {...opts}>-</button>
+                    <button type="button" onClick={(e) => this.handleClickMonthBox(e)} className="btn btn-secondary" {...opts}>{makeText(this.state.value)}</button>
+                    <button type="button" onClick={() => this.changeMonth(1)} className="btn btn-secondary" {...opts}>+</button>
+                </div>
                 <Picker
                     ref="pickMonth"
                     value={this.state.value}
                     lang={pickerLang.months}
                     onChange={(year, month) => this.handleMonthChange(year, month)}
                     />
-                <div className="btn-group" role="group" aria-label="Basic example">
-                    <button type="button" onClick={() => this.changeMonth(-1)} className="btn btn-secondary" {...opts}>-</button>
-                    <button type="button" onClick={(e) => this.handleClickMonthBox(e)} className="btn btn-secondary" {...opts}>{makeText(this.state.value)}</button>
-                    <button type="button" onClick={() => this.changeMonth(1)} className="btn btn-secondary" {...opts}>+</button>
-                </div>
             </div>
         )
     }
