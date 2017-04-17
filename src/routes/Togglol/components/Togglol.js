@@ -1,5 +1,7 @@
 /* @flow */
-import React from 'react'  
+import React from 'react'
+import PropTypes from 'prop-types';
+ 
 import TogglolCalendar from './Calendar/TogglolCalendar'
 import ApiKeyInput from './ApiKeyInput'
 

@@ -21,10 +21,6 @@
     box-sizing: inherit;
   }
 
-  .rbc-time-content {
-    flex-basis: 0% !important; /* react-big-calendar 0.9.12 workaround */
-  }
-
   .rbc-time-header>.rbc-row:first-child {
     border-bottom: none !important;
   }
