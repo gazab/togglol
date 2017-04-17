@@ -35,7 +35,7 @@ class ApiKeyInput extends React.Component {
                             <button className="btn btn-primary" onClick={this.handleLoadPress.bind(this)}>Login</button>
                         </span>
                     </div>
-                    <div className="text-xs-center">
+                    <div className="text-center">
                         <a target="_blank" href="https://toggl.com/app/profile">Find your API token here</a>
                         <p><small>Disclaimer: We are NOT affiliated with Toggl in ANY way</small></p>
                     </div>
