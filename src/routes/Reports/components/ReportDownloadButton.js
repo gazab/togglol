@@ -31,6 +31,7 @@ class ReportDownloadButton extends React.Component {
     getReport(extension)
     {
         const url = this.getReportUrl(extension);
+        console.log(url);
         const that = this;
         fetch(url, { headers: that.buildRequestHeader(),})
             .then(function(response) { 
@@ -59,7 +60,7 @@ class ReportDownloadButton extends React.Component {
                         <span className="sr-only">Toggle Dropdown</span>
                     </button>
                     <div className="dropdown-menu">
-                        <button type="button" className="dropdown-item" onClick={() => this.getReport("pdf")}>Get report as PDF</button>
+                        <button disabled type="button" className="dropdown-item" onClick={() => this.getReport("pdf")}>Get report as PDF</button>
                         <button type="button" className="dropdown-item" onClick={() => this.getReport("csv")}>Get report as CSV</button>
                     </div>
                 </div>

@@ -14,7 +14,7 @@ class MonthPicker extends React.Component {
         super(props);
 
         this.state = {
-            value: {year: new Date().getFullYear(), month: new Date().getMonth()+1},
+            value: this.props.value,
             disabled: false,
             intervalId: undefined
         };
@@ -45,8 +45,6 @@ class MonthPicker extends React.Component {
     componentWillUnmount() {
         clearInterval(this.state.intervalId);
     }
-
-    
 
     render() {
 
