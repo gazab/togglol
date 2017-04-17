@@ -22,12 +22,19 @@ class Reports extends React.Component {
     console.log(this.props.data);
 
     return(
-      <div className="row justify-content-md-center" style={{ margin: '0 auto' }} >
-        <div className="col col-lg-8">
-          <h2>Reports</h2>
-          <div>
-            <MonthPicker className="float-left" onMonthChange={(value) => this.handleMonthChange(value)}/>
-            <ReportDownloadButton userId={this.props.data.id} apiToken={this.props.data.api_token} workspaceId={this.props.data.default_wid} className="float-right" />
+      <div>
+        <div className="row justify-content-md-center" style={{ margin: '0 auto' }} >
+          <div className="col col-lg-8">
+            <h2>Reports</h2>
+            <div>
+              <MonthPicker className="float-left" onMonthChange={(value) => this.handleMonthChange(value)}/>
+              <ReportDownloadButton name={this.props.data.fullname} startDate="2017-03-01" endDate="2017-03-31" userId={this.props.data.id} apiToken={this.props.data.api_token} workspaceId={this.props.data.default_wid} className="float-right" />
+            </div>
+          </div>
+        </div>
+        <div className="row justify-content-md-center" style={{ margin: '0 auto' }} >
+          <div className="col col-lg-8">
+            <strong>More features coming soon!</strong>
           </div>
         </div>
       </div>
