@@ -169,20 +169,21 @@ class CreateTimeEntryModal extends React.Component {
         
         return(
             <Modal 
-                className="Modal__Bootstrap modal-dialog"
+                className="Modal__Bootstrap modal-dialog modal-lg"
                 isOpen={this.state.isModalOpen} 
                 onRequestClose={(e) => this.hideModal(e)}
                 contentLabel="Content Label"
                 >
                 <div className="modal-content">
                     <div className="modal-header">
+                        <h5 className="modal-title">{this.isEditMode() ? 'Edit time entry' : modalTitle}</h5>
                         <button type="button" className="close" onClick={() => this.hideModal()}>
                             <span aria-hidden="true">&times;</span>
                             <span className="sr-only">Close</span>
                         </button>
-                        <h4 className="modal-title">{this.isEditMode() ? 'Edit time entry' : modalTitle}</h4>
                     </div>
                     <div className="modal-body">
+                        <div className="container-fluid">
                         <form>
                             <div className="form-group row">
                                 <label className="col-sm-2 col-form-label">Time </label>
@@ -213,7 +214,7 @@ class CreateTimeEntryModal extends React.Component {
                                 </div>
                             </div>
                         </form>
-                        
+                        </div>
                     </div>
                     <div className="modal-footer">
                         {footerExtras}

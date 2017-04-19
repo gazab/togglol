@@ -87,7 +87,7 @@ render() {
         return (
             <div key={index}>
                 <p style={{marginBottom: '3px', marginTop: '10px'}}><strong>{client}</strong></p>
-                <div className="btn-group" role="group">
+                <div className="btn-group" role="group" style={{flexWrap: "wrap"}}>
                     {projectButtons}
                 </div>
             </div>
