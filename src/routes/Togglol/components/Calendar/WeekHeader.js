@@ -4,26 +4,24 @@ import { getEventsForDay, getTotalDurationForEvents } from '../../../../helpers/
 
 export default class WeekHeader extends React.Component {
 
-    constructor (props) {
-        super(props);
-        console.log(props);
-    }
-
     getBackgroundColor (totalHours, isItWeekday) {
         console.log(totalHours);
-        let backgroundColor = isItWeekday ? red : green;
-        if (this.totalHours === 8) {
-            backgroundColor = isItWeekday ? green : red;
-        } else if (this.totalHours < 8 || this.totalHours > 4) {
-            backgroundColor = isItWeekday ? yellow : red;
+        if (totalHours === 0) {
+            return neutral;
+        } else if (isItWeekday && totalHours === 8) {
+            return good;
+        } else if (isItWeekday && totalHours < 8) {
+            return ok;
         }
-        return backgroundColor;
+
+        return bad;
     }
 
     render () {
-        const filteredEvents = getEventsForDay(this.props.events, this.props.date);
+        const date = this.props.date;
+        const filteredEvents = getEventsForDay(this.props.events, date);
         const totalHours = getTotalDurationForEvents(filteredEvents);
-        const isItWeekday = true;
+        const isItWeekday = !(date.getDay() === 6 || date.getDay() === 0);
 
         let dynamicCellStyle = cellStyle(this.getBackgroundColor(totalHours, isItWeekday));
 
@@ -40,9 +38,10 @@ const hourStyle = {
     fontSize: '200%'
 };
 
-const green = '#e6ffe6';
-const yellow = '#ffffcc';
-const red = '#ffcccc';
+const neutral = '';
+const good = '#e6ffe6';
+const ok = '#ffffcc';
+const bad = '#ffcccc';
 
 function cellStyle (backgroundColor) {
     return {
