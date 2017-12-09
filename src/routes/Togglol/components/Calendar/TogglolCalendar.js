@@ -21,6 +21,7 @@ const DragAndDropCalendar = withDragAndDrop(BigCalendar);
 
 import CreateTimeEntryModal from '../TimeEntryModal/CreateTimeEntryModal';
 import TimeEntryEvent from './TimeEntryEvent';
+import WeekHeader from './WeekHeader';
 import { createTogglEntry } from '../../../../toggl/toggl.js'
 
 import type { TimeEntriesObject } from '../interfaces/togglol';
@@ -33,6 +34,10 @@ type Props = {
     requestCreateOrUpdateTimeEntry: Function,
     requestDeleteTimeEntry: Function
 }
+
+const DynamicWeekHeader = ({events}) => props => (
+    <WeekHeader events={events} {...props} />
+)
 
 class TogglolCalendar extends React.Component {
     constructor(props) {
@@ -180,6 +185,7 @@ class TogglolCalendar extends React.Component {
         // Components
         let components = {
             event: TimeEntryEvent, // used by each view (Month, Day, Week)
+            header: DynamicWeekHeader({events: eventList})
         }
         
         return (
