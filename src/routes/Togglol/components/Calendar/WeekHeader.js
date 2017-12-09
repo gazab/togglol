@@ -1,6 +1,6 @@
 import React from 'react';
 
-import * as EventHelper from '../../../../helpers/EventHelper';
+import { getEventsForDay, getTotalDurationForEvents } from '../../../../helpers/EventHelper';
 
 export default class WeekHeader extends React.Component {
 
@@ -14,15 +14,15 @@ export default class WeekHeader extends React.Component {
         let backgroundColor = isItWeekday ? red : green;
         if (this.totalHours === 8) {
             backgroundColor = isItWeekday ? green : red;
-        } else if (this.totaltHours < 8 && this.totalHours > 4) {
+        } else if (this.totalHours < 8 || this.totalHours > 4) {
             backgroundColor = isItWeekday ? yellow : red;
         }
         return backgroundColor;
     }
 
     render () {
-        const filteredEvents = EventHelper.getEventsForDay(this.props.events, this.props.date);
-        const totalHours = EventHelper.getTotalDurationForEvents(filteredEvents);
+        const filteredEvents = getEventsForDay(this.props.events, this.props.date);
+        const totalHours = getTotalDurationForEvents(filteredEvents);
         const isItWeekday = true;
 
         let dynamicCellStyle = cellStyle(this.getBackgroundColor(totalHours, isItWeekday));

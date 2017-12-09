@@ -1,12 +1,12 @@
 /* @flow */
-import React from 'react'
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import moment from 'moment';
-require("moment-duration-format");
+require('moment-duration-format');
 
-import HTML5Backend from 'react-dnd-html5-backend'
-import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
 
 import BigCalendar from 'react-big-calendar';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
@@ -22,10 +22,10 @@ const DragAndDropCalendar = withDragAndDrop(BigCalendar);
 import CreateTimeEntryModal from '../TimeEntryModal/CreateTimeEntryModal';
 import TimeEntryEvent from './TimeEntryEvent';
 import WeekHeader from './WeekHeader';
-import { createTogglEntry } from '../../../../toggl/toggl.js'
+import { createTogglEntry } from '../../../../toggl/toggl.js';
 
-import type { TimeEntriesObject } from '../interfaces/togglol';
-import type { ProjectObject } from '../interfaces/togglol';
+//import type { TimeEntriesObject } from '../interfaces/togglol';
+//import type { ProjectObject } from '../interfaces/togglol';
 
 type Props = {
     time_entries: Array<TimeEntriesObject>,
@@ -37,17 +37,16 @@ type Props = {
 
 const DynamicWeekHeader = ({events}) => props => (
     <WeekHeader events={events} {...props} />
-)
+);
 
 class TogglolCalendar extends React.Component {
-    constructor(props) {
+    constructor (props) {
         super(props);
 
         let date = new Date();
         date.setHours(0);
         date.setMinutes(0);
         date.setSeconds(0);
-                
         this.state = {
             date: date,
             view: 'week',
@@ -56,8 +55,8 @@ class TogglolCalendar extends React.Component {
         };
     }
 
-    checkKeypress(event) {
-        if ( event ) {
+    checkKeypress (event) {
+        if (event) {
             if (event.shiftKey) {
                 if(!this.state.shift)
                 {
