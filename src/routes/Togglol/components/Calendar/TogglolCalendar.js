@@ -24,16 +24,16 @@ import TimeEntryEvent from './TimeEntryEvent';
 import WeekHeader from './WeekHeader';
 import { createTogglEntry } from '../../../../toggl/toggl.js';
 
-//import type { TimeEntriesObject } from '../interfaces/togglol';
-//import type { ProjectObject } from '../interfaces/togglol';
+// import type { TimeEntriesObject } from '../interfaces/togglol';
+// import type { ProjectObject } from '../interfaces/togglol';
 
-type Props = {
-    time_entries: Array<TimeEntriesObject>,
-    data: Object,
-    fetchTimeEntries: Function,
-    requestCreateOrUpdateTimeEntry: Function,
-    requestDeleteTimeEntry: Function
-}
+// type Props = {
+//     time_entries: Array<TimeEntriesObject>,
+//     data: Object,
+//     fetchTimeEntries: Function,
+//     requestCreateOrUpdateTimeEntry: Function,
+//     requestDeleteTimeEntry: Function
+// }
 
 const DynamicWeekHeader = ({events}) => props => (
     <WeekHeader events={events} {...props} />
@@ -58,52 +58,46 @@ class TogglolCalendar extends React.Component {
     checkKeypress (event) {
         if (event) {
             if (event.shiftKey) {
-                if(!this.state.shift)
-                {
+                if (!this.state.shift) {
                     this.setState({shift: true});
                 }
-            }
-            else {
-                if(this.state.shift)
-                {
+            } else {
+                if (this.state.shift) {
                     this.setState({shift: false});
                 }
             }
 
             if (event.ctrlKey) {
-                if(!this.state.control)
-                {
+                if (!this.state.control) {
                     this.setState({control: true});
                 }
-            }
-            else {
-                if(this.state.control)
-                {
+            } else {
+                if (this.state.control) {
                     this.setState({control: false});
                 }
             }
         }
     }
 
-    componentDidMount() {
-        this.changeView(this.state.view);  
+    componentDidMount () {
+        this.changeView(this.state.view);
     }
-    changeView(view) {
+    changeView (view) {
         this.setState({view: view});
         this.fetchShownEntries(this.state.date, view);
     }
-    fetchShownEntries(start, view) {
+    fetchShownEntries (start, view) {
         // To make moment start weeks on monday
-        if(view == 'week')
+        if (view === 'week') {
             view = 'isoweek';
-
+        }
         // Calculate correct start and end date for view
         this.setState({date: start});
         let startDate = moment(start).startOf(view).startOf('day');
         let endDate = moment(startDate).endOf(view).endOf('day');
-        this.props.fetchTimeEntries(startDate.toISOString(), endDate.toISOString());  
+        this.props.fetchTimeEntries(startDate.toISOString(), endDate.toISOString());
     }
-    eventStyleGetter(event, start, end, isSelected) {
+    eventStyleGetter (event, start, end, isSelected) {
         var backgroundColor = event.project['hex_color'];
         var style = {
             backgroundColor: backgroundColor,
@@ -117,80 +111,76 @@ class TogglolCalendar extends React.Component {
             style: style
         };
     }
-    getProject(id) {
-        if(id == null) {
-            return {name: '', hex_color: '#b7b7b7'}
+    getProject (id) {
+        if (id == null) {
+            return {name: '', hex_color: '#b7b7b7'};
         }
 
         let retVal = null;
 
-        this.props.data.projects.forEach(function(project) {
-            if(project.id == id)
-            {
+        this.props.data.projects.forEach(function (project) {
+            if (project.id === id) {
                 retVal = project;
                 return;
             }
-            
         });
         return retVal;
     }
-    showModal(slotInfo){
+    showModal (slotInfo) {
         this.createTimeEntryModal.showModal(slotInfo);
     }
 
-    createTimeEntry(timeEntry) {
+    createTimeEntry (timeEntry) {
         this.props.onSaveTimeEntry(timeEntry);
     }
 
-    moveTimeEntry({event, start, end}) {
-        let entryId = this.state.control ? null: event.entryId;
+    moveTimeEntry ({event, start, end}) {
+        let entryId = this.state.control ? null : event.entryId;
         var timeEntry = createTogglEntry(entryId, event.description, event.projectId, start, end, event.billable);
         this.props.onSaveTimeEntry(timeEntry);
     }
 
-    render() {
-        var that = this;        
-        var eventList = this.props.time_entries.map(function(entry) {
+    render () {
+        var that = this;
+        var eventList = this.props.time_entries.map(function (entry) {
             var event = {};
             var project = that.getProject(entry.pid);
-            event["entryId"] = entry.id;
-            event["projectId"] = entry.pid;
-            event["description"] = entry.description; 
-            event["project"] = project;
-            event["start"] = new Date(entry.start);
-            event["end"] = new Date(entry.stop);
-            event["allDay"] = false;
-            event["title"] = project.name;
-            event["billable"] = entry.billable;
+            event['entryId'] = entry.id;
+            event['projectId'] = entry.pid;
+            event['description'] = entry.description;
+            event['project'] = project;
+            event['start'] = new Date(entry.start);
+            event['end'] = new Date(entry.stop);
+            event['allDay'] = false;
+            event['title'] = project.name;
+            event['billable'] = entry.billable;
             return event;
         });
-        
         // Create shown time span
-        var minTime = new Date(2000,1,1, 6, 0, 0, 0);
-        var maxTime = new Date(2000,1,1, 22, 0, 0, 0); 
+        var minTime = new Date(2000, 1, 1, 6, 0, 0, 0);
+        var maxTime = new Date(2000, 1, 1, 22, 0, 0, 0);
 
         // Time formats
         var formats = {
-             timeGutterFormat: 'HH:mm',
-             selectRangeFormat: ({ start, end }, culture, localizer) =>
-                moment(start).format('HH:mm') + ' — ' + moment(end).format('HH:mm') + ' (' + moment.duration(moment(end).diff(moment(start))).format("h [hrs], m [min]") + ')',
+            timeGutterFormat: 'HH:mm',
+            selectRangeFormat: ({ start, end }, culture, localizer) =>
+            moment(start).format('HH:mm') + ' — ' + moment(end).format('HH:mm') + ' (' + moment.duration(moment(end).diff(moment(start))).format('h [hrs], m [min]') + ')',
             eventTimeRangeFormat:
                 ({ start, end }, culture, localizer) =>
                 moment(start).format('HH:mm') + '—' + moment(end).format('HH:mm'),
             dayRangeHeaderFormat: ({ start, end }, culture, local) => 'Week ' + local.format(start, 'w') + ': ' +
                 local.format(start, 'MMM DD', culture) + ' - ' + local.format(end, moment(start).isSame(moment(end), 'month') ? 'DD' : 'MMM DD', culture)
-        }
+        };
 
         // Components
         let components = {
             event: TimeEntryEvent, // used by each view (Month, Day, Week)
             header: DynamicWeekHeader({events: eventList})
-        }
-        
+        };
         return (
             <div style={{height: '720px'}} onDrag={(e) => this.checkKeypress(e)} onMouseUp={(e) => this.checkKeypress(e)}>
-                <DragAndDropCalendar 
-                    culture="en-GB"
+                <DragAndDropCalendar
+                    culture='en-GB'
                     events={eventList}
                     defaultView={this.state.view}
                     views={['week', 'month']}
@@ -207,7 +197,7 @@ class TogglolCalendar extends React.Component {
                     components={components}
                     style={{ marginBottom: '80px'}}
                  />
-                 <CreateTimeEntryModal 
+                 <CreateTimeEntryModal
                     shiftKeyPressed={this.state.shift}
                     onDeleteTimeEntry={(entry) => this.props.onDeleteTimeEntry(entry)}
                     onCreateTimeEntry={(e) => this.createTimeEntry(e)}
@@ -221,10 +211,10 @@ class TogglolCalendar extends React.Component {
 }
 
 TogglolCalendar.propTypes = {
-        time_entries: React.PropTypes.array.isRequired,
-        //projects: React.PropTypes.array.isRequired,
-        fetchTimeEntries: React.PropTypes.func.isRequired
-        //createTimeEntry: React.PropTypes.func.isRequired
-}
+    time_entries: React.PropTypes.array.isRequired,
+    projects: React.PropTypes.array.isRequired,
+    fetchTimeEntries: React.PropTypes.func.isRequired,
+    createTimeEntry: React.PropTypes.func.isRequired
+};
 
-export default TogglolCalendar  
+export default TogglolCalendar;
