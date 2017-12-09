@@ -175,7 +175,7 @@ class TogglolCalendar extends React.Component {
         // Components
         let components = {
             event: TimeEntryEvent, // used by each view (Month, Day, Week)
-            header: DynamicWeekHeader({events: eventList})
+            week: {header: DynamicWeekHeader({events: eventList})}
         };
         return (
             <div style={{height: '720px'}} onDrag={(e) => this.checkKeypress(e)} onMouseUp={(e) => this.checkKeypress(e)}>
