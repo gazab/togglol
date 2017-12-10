@@ -29,6 +29,10 @@
     display: none !important;
   }
 
+  .rbc-header {
+    padding: 0 !important;
+  }
+
   // Fix react-select-plus z-index problem
   .Select-menu-outer {
     z-index: 999 !important;  
