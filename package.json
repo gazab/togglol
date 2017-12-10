@@ -50,7 +50,7 @@
       }
     },
     "deploy:prod": {
-      "command": "npm rebuild node-sass && npm run deploy",
+      "command": "npm run deploy",
       "env": {
         "NODE_ENV": "production",
         "DEBUG": "app:*"
