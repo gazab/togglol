@@ -19,7 +19,7 @@
     "test:dev": "better-npm-run -- --watch",
     "deploy": "npm run clean && npm run compile",
     "deploy:dev": "cross-env NODE_ENV=development npm run deploy",
-    "deploy:prod": "node cross-env NODE_ENV=production npm run deploy",
+    "deploy:prod": "cross-env NODE_ENV=production npm run deploy",
     "codecov": "cat coverage/*/lcov.info | codecov"
   },
   "repository": {
