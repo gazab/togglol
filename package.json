@@ -9,66 +9,18 @@
   },
   "scripts": {
     "clean": "rimraf dist",
-    "compile": "better-npm-run compile",
+    "compile": "DEBUG=app:*&& babel-node bin/compile",
     "lint": "eslint src tests server",
     "lint:fix": "npm run lint -- --fix",
-    "start": "better-npm-run start",
-    "dev": "better-npm-run dev",
+    "start": "DEBUG=app:*&& nodemon --exec babel-node bin/server",
+    "dev": "NODE_ENV=development DEBUG=app:*&& nodemon --exec babel-node bin/server",
     "dev:no-debug": "better-npm-run run dev -- --no_debug",
-    "test": "better-npm-run test",
-    "test:dev": "better-npm-run -- --watch",
-    "deploy": "better-npm-run deploy",
-    "deploy:dev": "better-npm-run deploy:dev",
-    "deploy:prod": "better-npm-run deploy:prod",
-    "codecov": "cat coverage/*/lcov.info | codecov"
-  },
-  "betterScripts": {
-    "compile": {
-      "command": "babel-node bin/compile",
-      "env": {
-        "DEBUG": "app:*"
-      }
-    },
-    "dev": {
-      "command": "nodemon --exec babel-node bin/server",
-      "env": {
-        "NODE_ENV": "development",
-        "DEBUG": "app:*"
-      }
-    },
-    "deploy": {
-      "command": "npm run clean && npm run compile",
-      "env": {
-        "DEBUG": "app:*"
-      }
-    },
-    "deploy:dev": {
-      "command": "npm run deploy",
-      "env": {
-        "NODE_ENV": "development",
-        "DEBUG": "app:*"
-      }
-    },
-    "deploy:prod": {
-      "command": "npm run deploy",
-      "env": {
-        "NODE_ENV": "production",
-        "DEBUG": "app:*"
-      }
-    },
-    "start": {
-      "command": "babel-node bin/server",
-      "env": {
-        "DEBUG": "app:*"
-      }
-    },
-    "test": {
-      "command": "babel-node ./node_modules/karma/bin/karma start build/karma.conf",
-      "env": {
-        "NODE_ENV": "test",
-        "DEBUG": "app:*"
-      }
-    }
+    "test": "better-npm-run test", // Todo: Fix
+    "test:dev": "better-npm-run -- --watch", // Todo: fix
+    "deploy": "npm run clean && npm run compile",
+    "deploy:dev": "NODE_ENV=development&& npm run deploy",
+    "deploy:prod": "NODE_ENV=production&& npm run deploy",
+    "codecov": "cat coverage/*/lcov.info | codecov" // Todo: Fix
   },
   "repository": {
     "type": "git",
@@ -89,7 +41,6 @@
     "babel-register": "^6.3.13",
     "babel-runtime": "^6.3.19",
     "base-64": "^0.1.0",
-    "better-npm-run": "0.0.8",
     "css-loader": "^0.23.0",
     "cssnano": "^3.3.2",
     "debug": "^2.2.0",
