@@ -15,12 +15,12 @@
     "start": "DEBUG=app:*&& nodemon --exec babel-node bin/server",
     "dev": "NODE_ENV=development DEBUG=app:*&& nodemon --exec babel-node bin/server",
     "dev:no-debug": "better-npm-run run dev -- --no_debug",
-    "test": "better-npm-run test", // Todo: Fix
-    "test:dev": "better-npm-run -- --watch", // Todo: fix
+    "test": "better-npm-run test",
+    "test:dev": "better-npm-run -- --watch",
     "deploy": "npm run clean && npm run compile",
     "deploy:dev": "NODE_ENV=development&& npm run deploy",
     "deploy:prod": "NODE_ENV=production&& npm run deploy",
-    "codecov": "cat coverage/*/lcov.info | codecov" // Todo: Fix
+    "codecov": "cat coverage/*/lcov.info | codecov"
   },
   "repository": {
     "type": "git",
