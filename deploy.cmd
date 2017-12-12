@@ -88,6 +88,8 @@ goto :EOF
 :Deployment
 echo Handling node.js deployment.
 
+call :ExecuteCmd !NPM_CMD! install -g cross-env
+
 :: 0. Create empty lib\app.js to make KuduSync happy 
 :: see https://github.com/projectkudu/kudu/issues/1753 
 call :ExecuteCmd mkdir "%DEPLOYMENT_SOURCE%\lib" 
