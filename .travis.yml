@@ -1,3 +1,10 @@
 language: node_js
 node_js:
-  - "6"
+- '6'
+deploy:
+  provider: heroku
+  api_key:
+    secure: YuQXfrjl/t2d5E4XEkFuU1HijBVDlCDav1fTEVCftKXeXLCTf71hKhmcHzc7gwx/7OYcEpvU0lbHu3ShFQv23dHS0+CABa7KCdY5ktyykUJxu0QXuAIRBFTf7VvxVlQdnGSdl5cnCHVm7DH2KIg9hY2Mfz2IZ67M3+8xBFIawBfxfC+pEWCNY55bEh2YtESmWZbGGv9z3aCJ7dbS8+6CdYBCkYU0P1w4l7uwwx4ubuG3ysewQBMrOJRYA7gfU1fjkwfGS+XcliLsrfO5Yv18lGLLJQYtjmGJaqvMBQLK63KIoBV1adNRYi3Ndf0VXOOq7BAuC6A5J8bbv6vHs+cY4HbyWpjKU1UD3rY6p8NI9d0GSxetydZTddx+8nrVICWoPFpAz0q9oFQXwHEkebM8aCHy2gmJJA47PUVbM0WJO7R7xq8K1nVXhUpAreQ+YKhbPCnws/pyXETynEt2ykI/8/YYTH/qg14mnkI5YGKW+idUDExcr9RL5eB3vWs/Ci0iVUqRnD8Wx3OuJ16qEynArtUuBgPcgmzxIwKydSGQB33JDR3rV5rRAioEzaEeb2ZBIZjS06DtTmU7KZdQFahxSSGsSNjbeZwHWgcTvNfX2V5eTmAWHhMNPGZV4cvLr3QCcFScK1mGOwJgawua8byYRecL5DLUWoh2chtX3Nef268=
+  app: togglol
+  on:
+    repo: gazab/togglol
