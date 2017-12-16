@@ -56,8 +56,9 @@
       }
     },
     "start": {
-      "command": "./node_modules/.bin/babel-node bin/server",
+      "command": "npm run deploy:prod && node server.js",
       "env": {
+        "NODE_ENV": "production",
         "DEBUG": "app:*"
       }
     },
@@ -92,6 +93,7 @@
     "css-loader": "^0.23.0",
     "cssnano": "^3.3.2",
     "debug": "^2.2.0",
+    "express": "^4.16.2",
     "extract-text-webpack-plugin": "^1.0.0",
     "file-loader": "^0.8.4",
     "fs-extra": "^0.30.0",
