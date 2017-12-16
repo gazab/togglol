@@ -1,5 +1,5 @@
 {
-  "name": "Togglol",
+  "name": "togglol",
   "version": "1.0.0",
   "description": "Your alternative Toggl client. For us who can't use Toggl the correct way.!",
   "main": "index.js",
