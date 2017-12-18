@@ -2,8 +2,6 @@ import moment from 'moment';
 require('moment-duration-format');
 
 export function getEventsForDay (events, day) {
-    console.log(events);
-    console.log(day);
     return events.filter(event => event.start.toDateString() === day.toDateString());
 }
 
