@@ -31,7 +31,6 @@ class ReportDownloadButton extends React.Component {
     getReport(extension)
     {
         const url = this.getReportUrl(extension);
-        console.log(url);
         const that = this;
         fetch(url, { headers: that.buildRequestHeader(),})
             .then(function(response) { 
