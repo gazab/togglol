@@ -150,10 +150,11 @@ class TogglolCalendar extends React.Component {
             event['description'] = entry.description;
             event['project'] = project;
             event['start'] = new Date(entry.start);
-            event['end'] = new Date(entry.stop);
+            event['end'] = entry.stop ? new Date(entry.stop) : new Date();
             event['allDay'] = false;
             event['title'] = project.name;
             event['billable'] = entry.billable;
+            event['running'] = entry.stop == null;
             return event;
         });
         // Create shown time span
