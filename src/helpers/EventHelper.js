@@ -15,5 +15,5 @@ export function getTotalDurationForEvents (events) {
 
         durationSeconds += endDate.diff(startDate, 'milliseconds');
     });
-    return Math.round(moment.duration(durationSeconds).asHours() * 10) / 10;
+    return Math.round(moment.duration(durationSeconds).asHours() * 100) / 100;
 }
