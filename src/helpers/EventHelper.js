@@ -19,3 +19,24 @@ export function getTotalDurationForEvents (events) {
     });
     return moment.duration(durationSeconds).asHours();
 }
+
+export function groupByProject (events) {
+    return groupBy(events, 'projectId');
+}
+
+function groupBy (collection, property) {
+    var i = 0, val, index,
+        values = [], result = [];
+    for (; i < collection.length; i++) {
+        val = collection[i][property];
+        index = values.indexOf(val);
+        if (index > -1) {
+            result[index].push(collection[i]);
+        }
+        else {
+            values.push(val);
+            result.push([collection[i]]);
+        }
+    }
+    return result;
+}
