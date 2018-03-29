@@ -23,17 +23,11 @@ import CreateTimeEntryModal from '../TimeEntryModal/CreateTimeEntryModal';
 import TimeEntryEvent from './TimeEntryEvent';
 import WeekHeader from './WeekHeader';
 import { createTogglEntry } from '../../../../toggl/toggl.js';
+import Toolbar from './Toolbar';
 
-// import type { TimeEntriesObject } from '../interfaces/togglol';
-// import type { ProjectObject } from '../interfaces/togglol';
-
-// type Props = {
-//     time_entries: Array<TimeEntriesObject>,
-//     data: Object,
-//     fetchTimeEntries: Function,
-//     requestCreateOrUpdateTimeEntry: Function,
-//     requestDeleteTimeEntry: Function
-// }
+const CustomToolbar = ({events}) => props => (
+    <Toolbar events={events} {...props} />
+);
 
 const DynamicWeekHeader = ({events}) => props => (
     <WeekHeader events={events} {...props} />
@@ -176,7 +170,8 @@ class TogglolCalendar extends React.Component {
         // Components
         let components = {
             event: TimeEntryEvent, // used by each view (Month, Day, Week)
-            week: {header: DynamicWeekHeader({events: eventList})}
+            week: {header: DynamicWeekHeader({events: eventList})},
+            toolbar: CustomToolbar({events: eventList})
         };
         return (
             <div style={{height: '720px'}} onDrag={(e) => this.checkKeypress(e)} onMouseUp={(e) => this.checkKeypress(e)}>

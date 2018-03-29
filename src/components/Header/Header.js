@@ -6,7 +6,7 @@ export const Header = () => (
   <div>
       <div className="row">
         <div className="col-sm-12 text-center">
-          <h1 className="display-4">Togglol</h1>
+          <h1 className="display-4 mb-2 mt-2">Togglol</h1>
           <p className="lead">When you need to use Toggl a bit differently</p> 
           <IndexLink to='/' activeClassName='route--active'>Home</IndexLink>&nbsp;-&nbsp;
           <IndexLink to='/reports' activeClassName='route--active'>Reports</IndexLink>&nbsp;-&nbsp;
