@@ -1,11 +1,10 @@
 {
-  "name": "Togglol",
+  "name": "togglol",
   "version": "1.0.0",
   "description": "Your alternative Toggl client. For us who can't use Toggl the correct way.!",
   "main": "index.js",
   "engines": {
-    "node": ">=4.5.0",
-    "npm": "^3.0.0"
+    "node": "8.9.1"
   },
   "scripts": {
     "clean": "rimraf dist",
@@ -57,8 +56,9 @@
       }
     },
     "start": {
-      "command": "babel-node bin/server",
+      "command": "npm run deploy:prod && node server.js",
       "env": {
+        "NODE_ENV": "production",
         "DEBUG": "app:*"
       }
     },
@@ -93,10 +93,12 @@
     "css-loader": "^0.23.0",
     "cssnano": "^3.3.2",
     "debug": "^2.2.0",
+    "express": "^4.16.2",
     "extract-text-webpack-plugin": "^1.0.0",
     "file-loader": "^0.8.4",
     "fs-extra": "^0.30.0",
     "globalize": "^0.1.1",
+    "heroku-ssl-redirect": "0.0.4",
     "history": "^2.0.0",
     "html-webpack-plugin": "^2.7.1",
     "imports-loader": "^0.6.5",

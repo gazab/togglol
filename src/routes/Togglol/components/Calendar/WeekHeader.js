@@ -5,7 +5,6 @@ import { getEventsForDay, getTotalDurationForEvents } from '../../../../helpers/
 export default class WeekHeader extends React.Component {
 
     getBackgroundColor (totalHours, isItWeekday) {
-        console.log(totalHours);
         if (totalHours === 0) {
             return neutral;
         } else if (isItWeekday && totalHours === 8) {

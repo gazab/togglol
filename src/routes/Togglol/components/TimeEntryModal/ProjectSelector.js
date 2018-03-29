@@ -85,7 +85,6 @@ class ProjectSelector extends React.Component {
           <Select
             ref={(ref) => this.Select = ref}
             style={{zIndex: 999}}
-            autofocus={true}
             name="form-field-name"
             value={this.state.value}
             options={this.state.options}

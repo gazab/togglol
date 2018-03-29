@@ -2,8 +2,6 @@ import moment from 'moment';
 require('moment-duration-format');
 
 export function getEventsForDay (events, day) {
-    console.log(events);
-    console.log(day);
     return events.filter(event => event.start.toDateString() === day.toDateString());
 }
 
@@ -17,7 +15,7 @@ export function getTotalDurationForEvents (events) {
 
         durationSeconds += endDate.diff(startDate, 'milliseconds');
     });
-    return moment.duration(durationSeconds).asHours();
+    return Math.round(moment.duration(durationSeconds).asHours() * 100) / 100;
 }
 
 export function groupByProject (events) {
