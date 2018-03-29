@@ -73,7 +73,7 @@ render() {
     //TODO: Fix sort
     var buttonGroups = Object.keys(groupedProjects).map(function(client, index) {
         var projectButtons = groupedProjects[client].map(function(project) {
-            var cls = "btn btn-secondary";
+            var cls = "btn btn-light";
             if(that.props.selectedProjectOptionsValue != null && project.value == that.props.selectedProjectOptionsValue.value) { 
                 cls = "btn btn-primary" 
             }
