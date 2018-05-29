@@ -11,7 +11,7 @@ class ProjectSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-         options: this.createOptionsList()
+      options: this.createOptionsList()
     }
   }
 
