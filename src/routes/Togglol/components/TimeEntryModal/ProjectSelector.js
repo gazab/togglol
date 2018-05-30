@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types';
 
 import Select from 'react-select-plus';
+import stripDiacritics from 'react-select-plus/lib/utils/stripDiacritics';
 import 'react-select-plus/dist/react-select-plus.css';
 
 import ProjectRadioGroups from './ProjectRadioGroups'
@@ -10,7 +11,7 @@ class ProjectSelector extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-         options: this.createOptionsList()
+      options: this.createOptionsList()
     }
   }
 
@@ -67,17 +68,30 @@ class ProjectSelector extends React.Component {
   }
 
   onInputKeyDown(event) {
-	switch (event.keyCode) {
-		case 13: // ENTER
-      // If user presses enter when no value is selected. Pass enter press along to parent modal
-			if(this.Select.state.inputValue == "")
-      {
-        this.props.onKeyPress(event);
-        event.preventDefault();
+    switch (event.keyCode) {
+      case 13: // ENTER
+        // If user presses enter when no value is selected. Pass enter press along to parent modal
+        if(this.Select.state.inputValue == "")
+        {
+          this.props.onKeyPress(event);
+          event.preventDefault();
+        }
+        break;
+    }
+  }
+
+  filterOption(option, filterValue) {
+    const valueToCheck =  stripDiacritics(option.client + " " + option.label).toLowerCase().replace(/^\s+|\s+$/g, '');
+    if(valueToCheck.length === 0) return false;
+    
+    const filterValues = stripDiacritics(filterValue).toLowerCase().split(" ");
+    for(var i = 0; i < filterValues.length; i++) {
+      if(valueToCheck.indexOf(filterValues[i]) < 0) {
+        return false;
       }
-      break;
-	}
-}
+    }
+    return true;
+  }
 
   render() {
     return (
@@ -92,6 +106,7 @@ class ProjectSelector extends React.Component {
             onInputKeyDown={(e) => this.onInputKeyDown(e)}
             placeholder="Find project ..."
             onChange={(project) => this.projectRadioGroups.addToProjectList({label: project.label, value: project.value, color: project.color, client: project.client})}
+            filterOption={this.filterOption}
           />
           <ProjectRadioGroups
             ref={(ref) => this.projectRadioGroups = ref} 
