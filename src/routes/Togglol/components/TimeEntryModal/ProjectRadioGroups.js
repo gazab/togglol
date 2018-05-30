@@ -78,10 +78,10 @@ render() {
                 cls = "btn btn-primary" 
             }
             
-            return (<button style={{paddingRight: '30px'}} key={project.value} onClick={() => that.selectProject(project)} type="button" className={cls}><span style={that.createDotStyle(project)}/>
+            return (<a style={{paddingRight: '30px'}} key={project.value} onClick={() => that.selectProject(project)} href="#" role="button" className={cls}><span style={that.createDotStyle(project)}/>
                         {project.label}
                         <a aria-hidden="true" style={{marginLeft: '5px', fontWeight: '700', opacity: '0.7', fontSize: '1.5em', position: 'absolute', bottom: '5px'}} onClick={(e) => that.removeProject(e, project)} >&times;</a>                            
-                    </button>)
+                    </a>)
         });
 
         return (

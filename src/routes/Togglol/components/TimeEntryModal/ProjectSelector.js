@@ -125,5 +125,4 @@ ProjectSelector.propTypes = {
   selectedProject: React.PropTypes.number
 };
 
-
 export default ProjectSelector
