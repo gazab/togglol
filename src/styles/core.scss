@@ -35,11 +35,16 @@
 
   // Fix react-select-plus z-index problem
   .Select-menu-outer {
-    z-index: 999 !important;  
+    z-index: 999 !important;
   }
 
   .rbc-event-label {
     font-size: 58% !important;
+  }
+
+  .modal-body{
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
   }
 
 }
