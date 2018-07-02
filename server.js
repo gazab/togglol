@@ -13,7 +13,7 @@ app.get('/', function (request, response) {
     response.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
-app.listen(PORT, error => (
+app.listen(PORT, '0.0.0.0', error => (
   error
     ? console.error(error)
     : console.info(`Listening on port ${PORT}. Visit http://localhost:${PORT}/ in your browser.`)
