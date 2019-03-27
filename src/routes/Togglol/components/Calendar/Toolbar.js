@@ -11,7 +11,6 @@ const messages = {
 };
 
 const Toolbar = (toolbar) => {
-  console.log(toolbar);
     const goToPrev = () => { toolbar.onNavigate('PREV'); };
     const goToNext = () => { toolbar.onNavigate('NEXT'); };
     const goToToday = () => { toolbar.onNavigate('TODAY'); };
