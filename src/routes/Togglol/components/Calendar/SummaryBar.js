@@ -8,9 +8,7 @@ class SummaryBar extends React.Component {
 
         let totalHours = getTotalDurationForEvents(events);
         let projectGroups = groupByProject(events);
-        console.log("groups");
-        console.log(projectGroups);
-
+        
         let totalCount;
         if (totalHours !== 0) {
             totalCount = <div className="progress-bar" role="progressbar" style={barStyle('gray', 10)}>Total {totalHours}h</div>
@@ -23,7 +21,6 @@ class SummaryBar extends React.Component {
                         let color = group[0].project.hex_color;
                         let name = group[0].project.name;
                         let id = group[0].projectId;
-                        console.log(color);
                         let hours = getTotalDurationForEvents(group);
                         let percentage = (hours / totalHours) * 100;
                         return (

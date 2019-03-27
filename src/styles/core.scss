@@ -42,6 +42,14 @@
     font-size: 58% !important;
   }
 
+  .rbc-date-cell {
+    padding-right: 0 !important;
+  }
+
+  .rbc-current {
+    font-weight: 600 !important;
+  }
+
   .modal-body{
     max-height: calc(100vh - 200px);
     overflow-y: auto;

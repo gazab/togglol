@@ -116,7 +116,7 @@
     "rc-switch": "^1.4.3",
     "rc-time-picker": "^2.0.2",
     "react": "^15.0.0",
-    "react-big-calendar": "^0.13.0",
+    "react-big-calendar": "^0.15.0",
     "react-dnd": "^2.3.0",
     "react-dnd-html5-backend": "^2.3.0",
     "react-dom": "^15.0.0",

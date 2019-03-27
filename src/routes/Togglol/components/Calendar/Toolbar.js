@@ -11,11 +11,10 @@ const messages = {
 };
 
 const Toolbar = (toolbar) => {
-  console.log(toolbar);
     const goToPrev = () => { toolbar.onNavigate('PREV'); };
     const goToNext = () => { toolbar.onNavigate('NEXT'); };
     const goToToday = () => { toolbar.onNavigate('TODAY'); };
-    const changeView = view => { console.log(view); toolbar.onViewChange(view); };
+    const changeView = view => { toolbar.onViewChange(view); };
     
     function viewNamesGroup () {
       let viewNames = toolbar.views;

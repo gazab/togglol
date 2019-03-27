@@ -22,6 +22,7 @@ const DragAndDropCalendar = withDragAndDrop(BigCalendar);
 import CreateTimeEntryModal from '../TimeEntryModal/CreateTimeEntryModal';
 import TimeEntryEvent from './TimeEntryEvent';
 import WeekHeader from './WeekHeader';
+import MonthDayCell from './MonthDayCell';
 import { createTogglEntry } from '../../../../toggl/toggl.js';
 import Toolbar from './Toolbar';
 
@@ -31,6 +32,10 @@ const CustomToolbar = ({events}) => props => (
 
 const DynamicWeekHeader = ({events}) => props => (
     <WeekHeader events={events} {...props} />
+);
+
+const DynamicMonthDayCell = ({events}) => props => (
+    <MonthDayCell events={events} {...props} />
 );
 
 class TogglolCalendar extends React.Component {
@@ -171,6 +176,7 @@ class TogglolCalendar extends React.Component {
         let components = {
             event: TimeEntryEvent, // used by each view (Month, Day, Week)
             week: {header: DynamicWeekHeader({events: eventList})},
+            month: {dateHeader: DynamicMonthDayCell({events: eventList})},
             toolbar: CustomToolbar({events: eventList})
         };
         return (
