@@ -61,7 +61,7 @@ export function deleteTimeEntry (entryId: TimeEntryObject) {
 
 export function fetchTimeEntries(start: string, end: string): Function {
   return (dispatch: Function, getState: Function): Promise => {
-    return fetch('https://www.toggl.com/api/v8/time_entries?start_date=' + start + '&end_date=' + end, {
+    return fetch('https://api.track.toggl.com/api/v8/time_entries?start_date=' + start + '&end_date=' + end, {
         headers: buildRequestHeader(getState()),
         mode: 'cors',
     })
@@ -71,7 +71,7 @@ export function fetchTimeEntries(start: string, end: string): Function {
 
 export function fetchUserInfo(): Function {
   return (dispatch: Function, getState: Function): Promise => {
-    return fetch('https://www.toggl.com/api/v8/me?with_related_data=true', {
+    return fetch('https://api.track.toggl.com/api/v8/me?with_related_data=true', {
         headers: buildRequestHeader(getState()),
     })
       .then(response => dispatch(getUserInfo(response.json())))
@@ -80,7 +80,7 @@ export function fetchUserInfo(): Function {
 
 export function requestCreateOrUpdateTimeEntry(timeEntry): Function {
   return (dispatch: Function, getState: Function): Promise => {
-    var url = 'https://www.toggl.com/api/v8/time_entries';
+    var url = 'https://api.track.toggl.com/api/v8/time_entries';
     if(timeEntry.id > 0)
       url = url + '/' + timeEntry.id;
     return fetch(url, {
@@ -94,7 +94,7 @@ export function requestCreateOrUpdateTimeEntry(timeEntry): Function {
 
 export function requestDeleteTimeEntry(entryId): Function {
   return (dispatch: Function, getState: Function): Promise => {
-    return fetch('https://www.toggl.com/api/v8/time_entries/' + entryId, {
+    return fetch('https://api.track.toggl.com/api/v8/time_entries/' + entryId, {
         headers: buildRequestHeader(getState()),
         method: 'DELETE'
     })
